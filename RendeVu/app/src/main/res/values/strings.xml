@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RendeVu</string>
+    <string name="text_planned_dates">Planned Dates</string>
+    <string name="text_past_dates">Past Dates</string>
+    <string name="text_chaperones">Chaperones</string>
+    <string name="text_home">Home</string>
+
 </resources>
