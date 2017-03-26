@@ -9,7 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
+import edu.csumb.anna.rendevu.data.Chaperones;
+import edu.csumb.anna.rendevu.helpers.ChaperoneArrayAdapter;
 
 /**
  * Created by Anna on 3/25/17.
