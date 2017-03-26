@@ -15,6 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ChaperonesActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".AddChaperoneActivity"
+            android:label="@string/app_name">
+        </activity>
     </application>
 
 </manifest>

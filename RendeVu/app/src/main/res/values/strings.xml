@@ -4,5 +4,12 @@
     <string name="text_past_dates">Past Dates</string>
     <string name="text_chaperones">Chaperones</string>
     <string name="text_home">Home</string>
+    <string name="add_date">Add Date</string>
+    <string name="my_chaperones">My Chaperones</string>
+    <string name="add_chaperone">Add Chaperone</string>
+    <string name="enter">Enter</string>
+    <string name="enter_chaperone_name">Chaperone Name</string>
+    <string name="new_chaperone">New Chaperone</string>
+    <string name="enter_phone_number">Chaperone Phone Number</string>
 
 </resources>
