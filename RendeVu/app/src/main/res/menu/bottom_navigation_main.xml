@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:title="@string/text_home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_chaperones"
+        android:enabled="true"
+        android:title="@string/text_chaperones"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_past_dates"
+        android:enabled="true"
+        android:title="@string/text_past_dates"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_planned_dates"
+        android:enabled="true"
+        android:title="@string/text_planned_dates"
+        app:showAsAction="ifRoom" />
+</menu>
