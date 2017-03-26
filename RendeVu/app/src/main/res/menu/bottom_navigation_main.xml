@@ -2,24 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_home"
+        android:id="@+id/action_add_date"
         android:enabled="true"
-        android:title="@string/text_home"
+        android:icon="@drawable/ic_add_circle_outline_black_24dp"
+        android:title="@string/add_date"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_chaperones"
         android:enabled="true"
+        android:icon="@drawable/chaperone_24dp"
         android:title="@string/text_chaperones"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_past_dates"
         android:enabled="true"
+        android:icon="@drawable/ic_bookmark_border_black_24dp"
         android:title="@string/text_past_dates"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_planned_dates"
         android:enabled="true"
+        android:icon="@drawable/ic_hourglass_empty_black_24dp"
         android:title="@string/text_planned_dates"
         app:showAsAction="ifRoom" />
 </menu>

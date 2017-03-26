@@ -23,6 +23,7 @@
             android:name=".AddChaperoneActivity"
             android:label="@string/app_name">
         </activity>
+        <activity android:name=".AddDateActivity" />
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import edu.csumb.anna.rendevu.data.Chaperones;
-import edu.csumb.anna.rendevu.helpers.ChaperoneArrayAdapter;
+import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
 
 /**
  * Created by Anna on 3/25/17.
@@ -20,28 +20,21 @@ public class ChaperonesActivity extends AppCompatActivity{
 
     RecyclerView recyclerView;
     static Chaperones chaperones;
-    ChaperoneArrayAdapter itemArrayAdapter;
+    ArrayAdapter itemArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chaperones);
 
-        // Initializing list view with the custom adapter
-
         chaperones = new Chaperones();
 
-        itemArrayAdapter = new ChaperoneArrayAdapter(R.layout.list_item, chaperones.getAllChaperones());
+        // Initializing list view with the custom adapter
+        itemArrayAdapter = new ArrayAdapter(R.layout.list_item, chaperones.getAllChaperones());
         recyclerView = (RecyclerView) findViewById(R.id.item_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemArrayAdapter);
-
-        // Populate list items with existing chaperones
-//        for (int i = 0; i < 10; i++) {
-//            itemList.add(new Chaperone("item " + i));
-//        }
-
 
         int listSize = chaperones.getAllChaperones().size();
 
@@ -50,7 +43,6 @@ public class ChaperonesActivity extends AppCompatActivity{
             Log.i("nnum: ", chaperones.getAllChaperones().get(i).getChaperoneNumber());
 
         }
-
     }
 
     @Override
