@@ -63,10 +63,14 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.action_chaperones:
                                 intent = new Intent(MainActivity.this, ChaperonesActivity.class);
                                 startActivity(intent);
-                                break;
+                            break;
                             case R.id.action_past_dates:
-
+                                break;
                             case R.id.action_planned_dates:
+                                break;
+                            case R.id.action_current_location:
+                                intent = new Intent(MainActivity.this, MapsActivity.class);
+                                startActivity(intent);
 
                         }
                         return true;

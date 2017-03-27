@@ -27,4 +27,12 @@
         android:icon="@drawable/ic_hourglass_empty_black_24dp"
         android:title="@string/text_planned_dates"
         app:showAsAction="ifRoom" />
+
+    <!-- location placeholder -->
+    <item
+        android:id="@+id/action_current_location"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="@string/current_location"
+        app:showAsAction="ifRoom" />
 </menu>

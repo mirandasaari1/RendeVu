@@ -15,5 +15,6 @@
     <string name="remove">Remove</string>
     <string name="remove_chaperone">Remove Chaperone</string>
     <string name="edit">Edit</string>
-
+    <string name="current_location">location</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
