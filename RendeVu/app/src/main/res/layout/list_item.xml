@@ -25,13 +25,25 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+        <Button
+            android:id="@+id/edit_chaperone_button"
+            android:layout_width="30dp"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_edit_black_24dp"
+            android:layout_gravity="center_vertical"
+            />
+
     <Button
-        android:id="@+id/start_date_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/remove_chaperone_button"
+        android:layout_width="30dp"
+        android:background="@android:color/transparent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:drawableRight="@drawable/ic_x_24dp"
         android:layout_gravity="center_vertical"
-        android:text="@string/remove" />
+        />
 
 </LinearLayout>
     <View

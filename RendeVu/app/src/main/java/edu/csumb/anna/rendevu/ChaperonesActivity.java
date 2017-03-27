@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import edu.csumb.anna.rendevu.data.Chaperones;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
@@ -49,6 +50,10 @@ public class ChaperonesActivity extends AppCompatActivity{
     public void onResume(){
         super.onResume();
         itemArrayAdapter.notifyDataSetChanged();
+    }
+
+    public void removeButtonClicked() {
+        Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
     }
 
     public void addChaperoneActivity(View view)

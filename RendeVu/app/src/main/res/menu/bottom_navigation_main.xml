@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_home"
-        android:enabled="true"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/text_home"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/action_add_date"
         android:enabled="true"
         android:icon="@drawable/ic_add_circle_outline_black_24dp"
