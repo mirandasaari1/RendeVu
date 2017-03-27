@@ -4,14 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
     android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingLeft="15dp"
+        android:textSize="25sp"
         android:text="@string/my_chaperones"/>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/item_list"
@@ -19,20 +22,11 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
-    <LinearLayout
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:gravity="center|bottom"
-        android:orientation="vertical">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center"
-            android:onClick="addChaperoneActivity"
-            android:text="@string/add_chaperone"/>
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="addChaperoneActivity"
+        android:text="@string/add_chaperone"/>
 
 </LinearLayout>

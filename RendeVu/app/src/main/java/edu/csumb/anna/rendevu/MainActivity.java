@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Intent intent;
                         switch (item.getItemId()) {
+                            case R.id.action_home:
+
                             case R.id.action_add_date:
                                 intent = new Intent(MainActivity.this, AddDateActivity.class);
                                 startActivity(intent);
@@ -64,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
+    }
+
+    public void startDateActivity(View view) {
+        Intent intent = new Intent(MainActivity.this, StartDateActivity.class);
+        startActivity(intent);
     }
 
 //    public void startAddDateActivity(View view)
