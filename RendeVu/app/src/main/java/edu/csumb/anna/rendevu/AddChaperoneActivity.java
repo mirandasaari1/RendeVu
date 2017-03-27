@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Anna on 3/25/17.
@@ -30,6 +31,7 @@ public class AddChaperoneActivity extends AppCompatActivity{
                 String name = chaperoneName.getText().toString();
                 String number = chaperonePhone.getText().toString();
                 ChaperonesActivity.chaperones.addItem(name, number);
+                Toast.makeText(AddChaperoneActivity.this, "Chaperone Added", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
