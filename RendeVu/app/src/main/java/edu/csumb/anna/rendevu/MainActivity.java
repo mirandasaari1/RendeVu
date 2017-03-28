@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.action_planned_dates:
                                 break;
                             case R.id.action_current_location:
+                                //adds the intent for the map
                                 intent = new Intent(MainActivity.this, MapsActivity.class);
                                 startActivity(intent);
 
