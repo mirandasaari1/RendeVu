@@ -2,4 +2,11 @@
 <resources>
     <item name="itm" type="id">itm</item>
     <item name="main_layout" type="id">main_layout</item>
+    <item name="row_item2" type="id">row_item2</item>
+    <item name="row_item3" type="id">row_item3</item>
+    <item name="row_item_name" type="id">row_item_name</item>
+    <item name="row_item_date" type="id">row_item_date</item>
+    <item name="row_item_time" type="id">row_item_time</item>
+    <item name="row_item_location" type="id">row_item_location</item>
+    <item name="row_item_date_time" type="id">row_item_date_time</item>
 </resources>

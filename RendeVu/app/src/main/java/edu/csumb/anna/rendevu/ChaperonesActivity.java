@@ -2,11 +2,16 @@ package edu.csumb.anna.rendevu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,6 +32,44 @@ public class ChaperonesActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chaperones);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView)  bottomNavigationView.getChildAt(0);
+        for(int i = 0; i < menuView.getChildCount(); i++) {
+            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
+            itemView.setShiftingMode(false);
+            itemView.setChecked(false);
+        }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.action_add_date:
+                                intent = new Intent(ChaperonesActivity.this, AddDateActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.action_chaperones:
+                                intent = new Intent(ChaperonesActivity.this, ChaperonesActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.action_past_dates:
+                                break;
+                            case R.id.action_planned_dates:
+                                break;
+                            case R.id.action_current_location:
+                                //adds the intent for the map
+                                intent = new Intent(ChaperonesActivity.this, MapsActivity.class);
+                                startActivity(intent);
+
+                        }
+                        return true;
+                    }
+                });
 
         chaperones = new Chaperones();
 
