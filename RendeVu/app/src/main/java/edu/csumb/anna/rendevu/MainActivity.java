@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapterPlannedDates itemArrayAdapter;
     static PlannedDates plannedDates;
 
-
+    //girl scout cookies
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
