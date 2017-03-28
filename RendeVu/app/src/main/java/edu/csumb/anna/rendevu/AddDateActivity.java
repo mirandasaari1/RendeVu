@@ -71,7 +71,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         for(int i=0; i<nums.length; i++)
             nums[i] = Integer.toString(i);
 
-        comfortNumberPicker.setMinValue(1);
+        comfortNumberPicker.setMinValue(0);
         comfortNumberPicker.setMaxValue(10);
         comfortNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
             @Override
@@ -81,7 +81,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         });
         comfortNumberPicker.setWrapSelectorWheel(false);
         comfortNumberPicker.setDisplayedValues(nums);
-        comfortNumberPicker.setValue(1);
+        comfortNumberPicker.setValue(0);
 
     }
 
