@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     static PlannedDates plannedDates;
 
     //girl scout cookies
+
+    //another comment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
