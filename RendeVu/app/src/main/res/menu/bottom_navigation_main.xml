@@ -40,9 +40,9 @@
 
     <!-- sign_up placeholder -->
     <item
-        android:id="@+id/action_sign_up"
+        android:id="@+id/action_login_signup"
         android:enabled="true"
         android:icon="@android:drawable/stat_sys_upload_done"
-        android:title="@string/current_location"
+        android:title="@string/action_login_signup"
         app:showAsAction="ifRoom" />
 </menu>

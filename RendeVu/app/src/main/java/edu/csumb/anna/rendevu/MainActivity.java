@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.action_chaperones:
                                 intent = new Intent(MainActivity.this, ChaperonesActivity.class);
                                 startActivity(intent);
-                            break;
+                                break;
                             case R.id.action_past_dates:
                                 break;
                             case R.id.action_planned_dates:
@@ -74,7 +74,10 @@ public class MainActivity extends AppCompatActivity {
 //                                //adds the intent for the map
 //                                intent = new Intent(MainActivity.this, MapsActivity.class);
 //                                startActivity(intent);
-
+                            case R.id.action_login_signup:
+                                intent = new Intent(MainActivity.this, LoginSignupActivity.class);
+                                startActivity(intent);
+                                break;
                         }
                         return true;
                     }
