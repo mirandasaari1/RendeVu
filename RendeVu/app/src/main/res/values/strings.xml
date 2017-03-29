@@ -17,4 +17,6 @@
     <string name="edit">Edit</string>
     <string name="current_location">location</string>
     <string name="title_activity_maps">Map</string>
+    <string name="new_date">New Date</string>
+    <string name="enter_dates_name">Date\'s Name</string>
 </resources>

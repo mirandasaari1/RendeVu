@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+
     android:id="@+id/date_information"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,78 +16,82 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".AddDateActivity">
+    tools:context=".AddDateActivity"
+    android:orientation="vertical">
+
 
     <TextView
         android:id="@+id/nameTextView"
-        android:text="Date's Name: "
-        android:layout_width="wrap_content"
+        android:text="@string/new_date"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/nameEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/enter_dates_name"
         android:inputType="text"
-        android:layout_below="@+id/nameTextView" />
+         />
 
     <EditText
         android:id="@+id/dateEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nameEditText" />
+         />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SELECT DATE"
         android:id="@+id/dateButton"
-        android:layout_below="@+id/dateEditText" />
+        />
 
     <EditText
         android:id="@+id/timeEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dateButton" />
+        />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SELECT TIME"
         android:id="@+id/timeButton"
-        android:layout_below="@+id/timeEditText" />
+        />
 
     <TextView
         android:id="@+id/comfortTextView"
         android:text="Select Date Comfort Level"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/timeButton" />
+        />
 
     <NumberPicker
         android:id="@+id/comfortNumberPicker"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/comfortTextView" />
+        />
 
     <TextView
         android:id="@+id/selectedComfortTextView"
         android:text=""
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/comfortNumberPicker" />
 
     <TextView
         android:id="@+id/additionalTextView"
         android:text="Any other things to know about the date? (history, meeting, caution, ideas?)"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/selectedComfortTextView" />
 
     <EditText
         android:id="@+id/additionalEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:layout_below="@+id/additionalTextView"/>
@@ -88,18 +99,21 @@
     <Button
         android:id="@+id/selectChaperoneButton"
         android:text="Add Date Chaperones"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/additionalEditText" />
 
     <Button
         android:id="@+id/submitDateButton"
         android:text="Add Date"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/selectChaperoneButton"
         android:layout_centerInParent="true" />
 
+
+
+</LinearLayout>
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -109,5 +123,4 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_navigation_main" />
-
-</RelativeLayout>
+    </RelativeLayout>
