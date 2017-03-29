@@ -20,4 +20,7 @@
     <string name="new_date">New Date</string>
     <string name="enter_dates_name">Date\'s Name</string>
     <string name="action_login_signup">Sign Up</string>
+    <string name="sign_out">sign out</string>
+    <string name="disconnect">disconnect</string>
+    <string name="loading">loading :)</string>
 </resources>
