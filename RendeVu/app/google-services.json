@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "616298123307",
+    "firebase_url": "https://rendevu-7998e.firebaseio.com",
+    "project_id": "rendevu-7998e",
+    "storage_bucket": "rendevu-7998e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616298123307:android:c5153d52bd9981b0",
+        "android_client_info": {
+          "package_name": "edu.csumb.anna.rendevu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616298123307-mmn4nnoj95pdi2i1fuulo1a9d0m6dem8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.csumb.anna.rendevu",
+            "certificate_hash": "4a7462490a007eb786e6780c028c1545f309d58f"
+          }
+        },
+        {
+          "client_id": "616298123307-a3f5gcrcjv37eer1i4ooeqahee5vt1s8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNQYLFyLqKExXzygxp4nWuqvoZ2iUO_gw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616298123307-a3f5gcrcjv37eer1i4ooeqahee5vt1s8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

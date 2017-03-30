@@ -29,10 +29,20 @@
         app:showAsAction="ifRoom" />
 
     <!-- location placeholder -->
+    <!--
     <item
         android:id="@+id/action_current_location"
         android:enabled="true"
         android:icon="@android:drawable/ic_dialog_map"
         android:title="@string/current_location"
+        app:showAsAction="ifRoom" />
+        -->
+
+    <!-- sign_up placeholder -->
+    <item
+        android:id="@+id/action_login_signup"
+        android:enabled="true"
+        android:icon="@android:drawable/stat_sys_upload_done"
+        android:title="@string/action_login_signup"
         app:showAsAction="ifRoom" />
 </menu>

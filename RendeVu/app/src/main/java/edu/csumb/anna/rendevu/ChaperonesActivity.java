@@ -61,10 +61,10 @@ public class ChaperonesActivity extends AppCompatActivity{
                                 break;
                             case R.id.action_planned_dates:
                                 break;
-                            case R.id.action_current_location:
-                                //adds the intent for the map
-                                intent = new Intent(ChaperonesActivity.this, MapsActivity.class);
-                                startActivity(intent);
+//                            case R.id.action_current_location:
+//                                //adds the intent for the map
+//                                intent = new Intent(ChaperonesActivity.this, MapsActivity.class);
+//                                startActivity(intent);
 
                         }
                         return true;
