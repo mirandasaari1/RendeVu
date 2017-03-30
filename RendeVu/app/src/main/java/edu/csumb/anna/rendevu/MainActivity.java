@@ -13,25 +13,40 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import edu.csumb.anna.rendevu.api.HerokuService;
+import edu.csumb.anna.rendevu.data.Location;
 import edu.csumb.anna.rendevu.data.PlannedDates;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapterPlannedDates;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayAdapterPlannedDates itemArrayAdapter;
     static PlannedDates plannedDates;
-
-    //girl scout cookies
-
-    //another comment
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://intense-spire-89631.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final HerokuService service = retrofit.create(HerokuService.class);
 
         plannedDates = new PlannedDates();
 
@@ -82,7 +97,57 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+//        final TextView textView = (TextView) findViewById(R.id.response_textview);
+//        final Button button = (Button) findViewById(R.id.test_button);
+//
+//
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Call<ResponseBody> call = service.hello();
+////                call.enqueue(new Callback<ResponseBody>() {
+////                    @Override
+////                    public void onResponse(Call<ResponseBody> _,
+////                                           Response<ResponseBody> response) {
+////                        try {
+////                            textView.setText(response.body().string());
+////                        } catch (IOException e) {
+////                            e.printStackTrace();
+////                            textView.setText(e.getMessage());
+////                        }
+////                    }
+////
+////                    @Override
+////                    public void onFailure(Call<ResponseBody> _, Throwable t) {
+////                        t.printStackTrace();
+////                        textView.setText(t.getMessage());
+////                    }
+////                });
+//
+//                Location location = new Location();
+//
+//                Call<Location> createCall = service.sendLocationData(location);
+//                createCall.enqueue(new Callback<Location>() {
+//                    @Override
+//                    public void onResponse(Call<Location> _, Response<Location> resp) {
+//                        Location newLocation = resp.body();
+//                        textView.setText("Response: " + newLocation.getlang());
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Location> _, Throwable t) {
+//                        t.printStackTrace();
+//                        textView.setText(t.getMessage());
+//                    }
+//                });
+//
+//            }
+//        });
+
     }
+
+
 
     public void startDateActivity(View view) {
         Intent intent = new Intent(MainActivity.this, StartDateActivity.class);
