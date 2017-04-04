@@ -26,4 +26,6 @@
     <string name="text_keep_your_dates_on_lock">Keep Your Love Life On Lock</string>
     <string name="text_dates">Dates</string>
     <string name="text_profile">Profile</string>
+    <string name="text_your_next_date">Your Next Date</string>
+    <string name="text_your_last_date">Your Last Date</string>
 </resources>
