@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_add_date"
+        android:id="@+id/home"
         android:enabled="true"
-        android:icon="@drawable/ic_add_circle_outline_black_24dp"
-        android:title="@string/add_date"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/text_home"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_chaperones"
         android:enabled="true"
-        android:icon="@drawable/chaperone_24dp"
+        android:icon="@drawable/ic_people_black_24dp"
         android:title="@string/text_chaperones"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_past_dates"
+        android:id="@+id/action_dates"
         android:enabled="true"
-        android:icon="@drawable/ic_bookmark_border_black_24dp"
-        android:title="@string/text_past_dates"
+        android:icon="@drawable/ic_heart_border_black_24dp"
+        android:title="@string/text_dates"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_planned_dates"
+        android:id="@+id/action_profile"
         android:enabled="true"
-        android:icon="@drawable/ic_hourglass_empty_black_24dp"
-        android:title="@string/text_planned_dates"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/text_profile"
         app:showAsAction="ifRoom" />
 
     <!-- location placeholder -->

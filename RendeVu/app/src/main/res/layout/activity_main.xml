@@ -12,6 +12,43 @@
         android:paddingTop="10dp"
         android:orientation="vertical">
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/enter_number">
+        </View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            android:text="@string/text_keep_your_dates_on_lock" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/enter_number">
+        </View>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_date_button"
+            android:text="@string/add_date"
+            />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@+id/enter_number">
+        </View>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

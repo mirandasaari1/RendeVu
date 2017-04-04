@@ -49,18 +49,17 @@ public class ChaperonesActivity extends AppCompatActivity{
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Intent intent;
                         switch (item.getItemId()) {
-                            case R.id.action_add_date:
-                                intent = new Intent(ChaperonesActivity.this, AddDateActivity.class);
-                                startActivity(intent);
-                                break;
+//                            case R.id.action_add_date:
+//                                intent = new Intent(ChaperonesActivity.this, AddDateActivity.class);
+//                                startActivity(intent);
+//                                break;
                             case R.id.action_chaperones:
                                 intent = new Intent(ChaperonesActivity.this, ChaperonesActivity.class);
                                 startActivity(intent);
                                 break;
-                            case R.id.action_past_dates:
+                            case R.id.action_dates:
                                 break;
-                            case R.id.action_planned_dates:
-                                break;
+
 //                            case R.id.action_current_location:
 //                                //adds the intent for the map
 //                                intent = new Intent(ChaperonesActivity.this, MapsActivity.class);

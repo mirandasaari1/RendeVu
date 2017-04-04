@@ -73,17 +73,17 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Intent intent;
                         switch (item.getItemId()) {
-                            case R.id.action_add_date:
-                                intent = new Intent(MainActivity.this, AddDateActivity.class);
-                                startActivity(intent);
-                                break;
+//                            case R.id.action_add_date:
+//                                intent = new Intent(MainActivity.this, AddDateActivity.class);
+//                                startActivity(intent);
+//                                break;
                             case R.id.action_chaperones:
                                 intent = new Intent(MainActivity.this, ChaperonesActivity.class);
                                 startActivity(intent);
                                 break;
-                            case R.id.action_past_dates:
-                                break;
-                            case R.id.action_planned_dates:
+                            case R.id.action_dates:
+                                intent = new Intent(MainActivity.this, DatesActivity.class);
+                                startActivity(intent);
                                 break;
 //                            case R.id.action_current_location:
 //                                //adds the intent for the map

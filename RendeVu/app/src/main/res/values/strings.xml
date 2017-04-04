@@ -23,4 +23,7 @@
     <string name="sign_out">sign out</string>
     <string name="disconnect">disconnect</string>
     <string name="loading">loading :)</string>
+    <string name="text_keep_your_dates_on_lock">Keep Your Love Life On Lock</string>
+    <string name="text_dates">Dates</string>
+    <string name="text_profile">Profile</string>
 </resources>
