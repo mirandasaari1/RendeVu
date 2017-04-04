@@ -6,22 +6,11 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 import edu.csumb.anna.rendevu.api.HerokuService;
-import edu.csumb.anna.rendevu.data.Location;
-import edu.csumb.anna.rendevu.data.PlannedDates;
-import edu.csumb.anna.rendevu.helpers.ArrayAdapterPlannedDates;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,10 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-    ArrayAdapterPlannedDates itemArrayAdapter;
-    static PlannedDates plannedDates;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         final HerokuService service = retrofit.create(HerokuService.class);
-
-        plannedDates = new PlannedDates();
-
-
-        itemArrayAdapter = new ArrayAdapterPlannedDates(R.layout.list_item_with_buton, plannedDates.getAllPlannedDates());
-        recyclerView = (RecyclerView) findViewById(R.id.item_list_with_button);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(itemArrayAdapter);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -73,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Intent intent;
                         switch (item.getItemId()) {
-//                            case R.id.action_add_date:
-//                                intent = new Intent(MainActivity.this, AddDateActivity.class);
-//                                startActivity(intent);
-//                                break;
                             case R.id.action_chaperones:
                                 intent = new Intent(MainActivity.this, ChaperonesActivity.class);
                                 startActivity(intent);
@@ -85,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
                                 intent = new Intent(MainActivity.this, DatesActivity.class);
                                 startActivity(intent);
                                 break;
-//                            case R.id.action_current_location:
-//                                //adds the intent for the map
-//                                intent = new Intent(MainActivity.this, MapsActivity.class);
+//                            case R.id.action_profile:
+//                                intent = new Intent(MainActivity.this, ProfileActivity.class);
 //                                startActivity(intent);
+//                                break;
                             case R.id.action_login_signup:
                                 intent = new Intent(MainActivity.this, LoginSignupActivity.class);
                                 startActivity(intent);
@@ -97,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+        final Button button = (Button) findViewById(R.id.add_date_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddDateActivity.class);
+                startActivity(intent);
+            }
+        });
 
 //        final TextView textView = (TextView) findViewById(R.id.response_textview);
 //        final Button button = (Button) findViewById(R.id.test_button);
@@ -147,28 +127,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-    public void startDateActivity(View view) {
-        Intent intent = new Intent(MainActivity.this, StartDateActivity.class);
-        startActivity(intent);
-    }
-
-//    public void startAddDateActivity(View view)
-//    {
-//        Intent intent = new Intent(MainActivity.this, AddDateActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    public void startPastDatesActivity(View view)
-//    {
-//        Intent intent = new Intent(MainActivity.this, PastDatesActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    public void startPlannedDatesActivity(View view)
-//    {
-//        Intent intent = new Intent(MainActivity.this, PlannedDatesActivity.class);
-//        startActivity(intent);
-//    }
 }

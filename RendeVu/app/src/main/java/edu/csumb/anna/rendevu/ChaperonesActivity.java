@@ -49,22 +49,22 @@ public class ChaperonesActivity extends AppCompatActivity{
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Intent intent;
                         switch (item.getItemId()) {
-//                            case R.id.action_add_date:
-//                                intent = new Intent(ChaperonesActivity.this, AddDateActivity.class);
-//                                startActivity(intent);
-//                                break;
-                            case R.id.action_chaperones:
-                                intent = new Intent(ChaperonesActivity.this, ChaperonesActivity.class);
+                            case R.id.action_home:
+                                intent = new Intent(ChaperonesActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 break;
                             case R.id.action_dates:
+                                intent = new Intent(ChaperonesActivity.this, DatesActivity.class);
+                                startActivity(intent);
                                 break;
-
-//                            case R.id.action_current_location:
-//                                //adds the intent for the map
-//                                intent = new Intent(ChaperonesActivity.this, MapsActivity.class);
-//                                startActivity(intent);
-
+                            case R.id.action_profile:
+                                intent = new Intent(ChaperonesActivity.this, ProfileActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.action_login_signup:
+                                intent = new Intent(ChaperonesActivity.this, LoginSignupActivity.class);
+                                startActivity(intent);
+                                break;
                         }
                         return true;
                     }
