@@ -17,4 +17,15 @@
     <string name="edit">Edit</string>
     <string name="current_location">location</string>
     <string name="title_activity_maps">Map</string>
+    <string name="new_date">New Date</string>
+    <string name="enter_dates_name">Date\'s Name</string>
+    <string name="action_login_signup">Sign Up</string>
+    <string name="sign_out">sign out</string>
+    <string name="disconnect">disconnect</string>
+    <string name="loading">loading :)</string>
+    <string name="text_keep_your_dates_on_lock">Keep Your Love Life On Lock</string>
+    <string name="text_dates">Dates</string>
+    <string name="text_profile">Profile</string>
+    <string name="text_your_next_date">Your Next Date</string>
+    <string name="text_your_last_date">Your Last Date</string>
 </resources>
