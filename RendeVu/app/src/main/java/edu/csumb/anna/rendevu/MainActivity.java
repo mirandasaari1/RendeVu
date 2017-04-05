@@ -11,36 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import edu.csumb.anna.rendevu.api.HerokuService;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import edu.csumb.anna.rendevu.api.RendeVuAPI;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
-    final static HerokuService service = null;
-
-    final String postURL = "https://salvhernandez-salvhernandez.c9users.io/todo/api/v1.0/tasks";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://intense-spire-89631.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        HerokuService service = retrofit.create(HerokuService.class);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -91,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //makeServerRequest();
+
+        //posts to the server
+        RendeVuAPI a = new RendeVuAPI();
+        a.postLocation("12", "300", "400", MainActivity.this);
     }
 
     public void toastIt(String aMessage){
