@@ -28,6 +28,7 @@ public class ActiveDateActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                 }
+                //create time stamp for end date
             });
         }
 
