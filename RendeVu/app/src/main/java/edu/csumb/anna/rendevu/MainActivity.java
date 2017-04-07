@@ -9,29 +9,17 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import edu.csumb.anna.rendevu.api.HerokuService;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import edu.csumb.anna.rendevu.api.RendeVuAPI;
 
 
 public class MainActivity extends AppCompatActivity {
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://intense-spire-89631.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        final HerokuService service = retrofit.create(HerokuService.class);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -77,54 +65,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        }
 
-//        final TextView textView = (TextView) findViewById(R.id.response_textview);
-//        final Button button = (Button) findViewById(R.id.test_button);
-//
-//
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Call<ResponseBody> call = service.hello();
-////                call.enqueue(new Callback<ResponseBody>() {
-////                    @Override
-////                    public void onResponse(Call<ResponseBody> _,
-////                                           Response<ResponseBody> response) {
-////                        try {
-////                            textView.setText(response.body().string());
-////                        } catch (IOException e) {
-////                            e.printStackTrace();
-////                            textView.setText(e.getMessage());
-////                        }
-////                    }
-////
-////                    @Override
-////                    public void onFailure(Call<ResponseBody> _, Throwable t) {
-////                        t.printStackTrace();
-////                        textView.setText(t.getMessage());
-////                    }
-////                });
-//
-//                Location location = new Location();
-//
-//                Call<Location> createCall = service.sendLocationData(location);
-//                createCall.enqueue(new Callback<Location>() {
-//                    @Override
-//                    public void onResponse(Call<Location> _, Response<Location> resp) {
-//                        Location newLocation = resp.body();
-//                        textView.setText("Response: " + newLocation.getlang());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Location> _, Throwable t) {
-//                        t.printStackTrace();
-//                        textView.setText(t.getMessage());
-//                    }
-//                });
-//
-//            }
-//        });
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        //posts to the server
+        RendeVuAPI a = new RendeVuAPI();
+        a.postLocation("12", "300", "400", MainActivity.this);
+    }
+
+    public void toastIt(String aMessage){
+        Toast.makeText(this, aMessage,
+                Toast.LENGTH_SHORT).show();
     }
 
 }
