@@ -28,4 +28,5 @@
     <string name="text_profile">Profile</string>
     <string name="text_your_next_date">Your Next Date</string>
     <string name="text_your_last_date">Your Last Date</string>
+    <string name="sign_up_message">Looks like its the first time you use RendeVu, please add your phone number</string>
 </resources>

@@ -2,6 +2,8 @@ package edu.csumb.anna.rendevu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
@@ -95,9 +97,27 @@ public class LoginSignupActivity extends AppCompatActivity implements
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // [START_EXCLUDE]
-                updateUI(user);
-                // [END_EXCLUDE]
+
+
+/*
+                //gets extras
+                Bundle extras = getIntent().getExtras();
+                boolean reSignIn = false;
+
+                if (extras != null)
+                {
+                    reSignIn = extras.getBoolean("reSignIn", false);
+                }
+
+*/
+
+//                //if the user wants to reSignIn, then signout
+//                if(reSignIn) {
+//                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//                    signOut();
+//                }
+//                else
+                    updateUI(user);
             }
         };
         // [END auth_state_listener]
@@ -222,19 +242,19 @@ public class LoginSignupActivity extends AppCompatActivity implements
                 //            mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
                 //            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
                 toastIt("Welcome: " + user.getDisplayName());
-                toastIt(user.getEmail());
-                toastIt(user.getUid());
+                //toastIt(user.getEmail());
+                //toastIt(user.getUid());
 
-                //adding user to users db
+                //adding user to local users db
                 RendeVuDB db = new RendeVuDB(this);
                 db.insertUser(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString());
 
                 ////////////////////////////////////////////////////////////////////////////////////////
                 //if user is not in the server, then it needs to signup
                 //posts to the server
-                RendeVuAPI a = new RendeVuAPI();
+                RendeVuAPI apiLink = new RendeVuAPI();
                 String resp = null;
-                resp = a.postLogin(user.getUid(), LoginSignupActivity.this);
+                resp = apiLink.postLogin(user.getUid(), LoginSignupActivity.this);
 
                 if (resp == null)
                     return;
@@ -256,15 +276,27 @@ public class LoginSignupActivity extends AppCompatActivity implements
 
                 //if user is not in the server, sign up
                 if (!isUserInServer) {
-                    resp = a.postSignup(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString(), LoginSignupActivity.this);
 
-                    if (resp != null)
-                        Log.d(TAG, "FROM THE OBJECT...SIGNUP" + resp);
+                    Intent intent = new Intent(LoginSignupActivity.this, GetNumberActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("userID", user.getUid());
+                    intent.putExtra("fullName", user.getDisplayName());
+                    intent.putExtra("email", user.getEmail());
+                    intent.putExtra("imgURL", user.getPhotoUrl().toString());
+                    startActivity(intent);
                 }
 
                 //if the user is in the server, move on to the next activity and clear the stack
                 else{
 
+                    //updates the current user preference
+                    SharedPreferences.Editor editor = getSharedPreferences("loginInfo", MODE_PRIVATE).edit();
+                    editor.putString("userID", user.getUid());
+
+                    Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("userID", user.getUid());
+                    startActivity(intent);
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////
 
