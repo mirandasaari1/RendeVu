@@ -8,12 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -28,6 +26,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.gms.common.api.Status;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import edu.csumb.anna.rendevu.api.RendeVuAPI;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 public class LoginSignupActivity extends AppCompatActivity implements
@@ -213,29 +215,74 @@ public class LoginSignupActivity extends AppCompatActivity implements
 
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
-        if (user != null) {
-//            mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-//            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-            toastIt("Welcome: "+user.getDisplayName());
-            toastIt(user.getEmail());
-            toastIt(user.getUid());
+        boolean isUserInServer = false;
 
-            //adding user to users db
-            RendeVuDB db = new RendeVuDB(this);
-            db.insertUser(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString());
+        try {
+            if (user != null) {
+                //            mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
+                //            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+                toastIt("Welcome: " + user.getDisplayName());
+                toastIt(user.getEmail());
+                toastIt(user.getUid());
 
+                //adding user to users db
+                RendeVuDB db = new RendeVuDB(this);
+                db.insertUser(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString());
 
-            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-        } else {
-            //mStatusTextView.setText(R.string.signed_out);
-            //mDetailTextView.setText(null);
+                ////////////////////////////////////////////////////////////////////////////////////////
+                //if user is not in the server, then it needs to signup
+                //posts to the server
+                RendeVuAPI a = new RendeVuAPI();
+                String resp = null;
+                resp = a.postLogin(user.getUid(), LoginSignupActivity.this);
 
-            toastIt("signed out");
+                if (resp == null)
+                    return;
 
-            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+                Log.d(TAG, "FROM THE OBJECT...LOGIN" + resp);
+
+                JSONObject json = new JSONObject(resp);
+                if (json != null) {
+                    JSONObject data = json.getJSONObject("data");
+                    String userIDHeader = data.getString("userID");
+                    Log.d(TAG, "FROM LOGIN JSON" + userIDHeader);
+
+                    //user has ot signed up
+                    if(userIDHeader.equals("false"))
+                        isUserInServer = false;
+                    else if(userIDHeader.equals("true"))
+                        isUserInServer = true;
+                }
+
+                //if user is not in the server, sign up
+                if (!isUserInServer) {
+                    resp = a.postSignup(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString(), LoginSignupActivity.this);
+
+                    if (resp != null)
+                        Log.d(TAG, "FROM THE OBJECT...SIGNUP" + resp);
+                }
+
+                //if the user is in the server, move on to the next activity and clear the stack
+                else{
+
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////
+
+                findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+                findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            } else {
+                //mStatusTextView.setText(R.string.signed_out);
+                //mDetailTextView.setText(null);
+
+                toastIt("signed out");
+
+                findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+                findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+            }
+        } catch (JSONException e) {
+        e.printStackTrace();
         }
+
     }
 
     public void toastIt(String aMessage){
