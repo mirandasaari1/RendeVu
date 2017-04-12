@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.gms.common.api.Status;
 
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
+
 public class LoginSignupActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener{
@@ -217,6 +219,10 @@ public class LoginSignupActivity extends AppCompatActivity implements
             toastIt("Welcome: "+user.getDisplayName());
             toastIt(user.getEmail());
             toastIt(user.getUid());
+
+            //adding user to users db
+            RendeVuDB db = new RendeVuDB(this);
+            db.insertUser(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString());
 
 
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);

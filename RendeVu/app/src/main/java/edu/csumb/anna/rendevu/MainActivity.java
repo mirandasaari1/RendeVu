@@ -11,7 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.stetho.Stetho;
+
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -65,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //to access dev tools in chrome and see the database contents
+        Stetho.initializeWithDefaults(this);
         }
 
     @Override
