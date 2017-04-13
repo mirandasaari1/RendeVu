@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     final String TAG = "MainActivity";
 
+    //0 is permission granted
+    //int locationPermission = 1;
+
 
     private final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
@@ -113,10 +116,11 @@ public class MainActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             checkPermissions();
-        } else {//if permissions are enabled
-            //GoogleApiClient();
-//            mGoogleApiClient.connect();
+        } else {//permission is good
+            startRendeVuService();
         }
+
+        //toastIt("locationPermission: "+locationPermission);
     }
 
     public void checkPermissions() {
@@ -176,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
                     // contacts-related task you need to do.
 
                     Log.d(TAG, "permission granted");
+                    //locationPermission = PackageManager.PERMISSION_GRANTED;
+
                     //goes to the search portion
                     //onSearch();
                     if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -191,6 +197,9 @@ public class MainActivity extends AppCompatActivity {
 //                    mGoogleApiClient.connect();
 //                    mMap.setMyLocationEnabled(true);
                     //mapLocation();
+
+                    //starts the CUSTOM SERVICE
+                    startRendeVuService();
 
                 }else {
                     //on permission denied
@@ -213,6 +222,10 @@ public class MainActivity extends AppCompatActivity {
     public void toastIt(String aMessage){
         Toast.makeText(this, aMessage,
                 Toast.LENGTH_SHORT).show();
+    }
+
+    public void startRendeVuService(){
+        startService(new Intent(this, RendeVuService.class));
     }
 
 }
