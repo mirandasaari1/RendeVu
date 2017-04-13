@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         Stetho.initializeWithDefaults(this);
 
         SharedPreferences prefs = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-        String userID = prefs.getString("userID", "nothing");
+        String userID = prefs.getString("userID", "none");
 
         toastIt(userID);
 
@@ -214,9 +214,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        //posts to the server
-        RendeVuAPI a = new RendeVuAPI();
-        a.postLocation("12", "300", "400", MainActivity.this);
+//        //posts to the server
+//        RendeVuAPI a = new RendeVuAPI();
+//        a.postLocation("12", "300", "400", MainActivity.this);
     }
 
     public void toastIt(String aMessage){

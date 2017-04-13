@@ -1,6 +1,7 @@
 package edu.csumb.anna.rendevu.api;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -45,7 +46,7 @@ public class RendeVuAPI {
      * @param longitude
      * @param anActivity
      */
-    public void postLocation(final String id, final String latitude, final String longitude, final Activity anActivity){
+    public void postLocation(final String id, final String latitude, final String longitude, final Context anActivity){
         //done with koush ion
 
         //gets system time

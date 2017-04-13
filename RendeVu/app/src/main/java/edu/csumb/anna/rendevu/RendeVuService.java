@@ -3,6 +3,7 @@ package edu.csumb.anna.rendevu;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -17,6 +18,8 @@ import android.util.Log;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import edu.csumb.anna.rendevu.api.RendeVuAPI;
+
 /**
  * Created by Sal on 4/13/2017.
  */
@@ -30,7 +33,7 @@ public class RendeVuService extends Service implements LocationListener {
     Location location;
     private Handler mHandler = new Handler();
     private Timer mTimer = null;
-    long notify_interval = 1000;
+    long notify_interval = 5000;
     public static String str_receiver = "edu.csumb.anna.rendevu";
     Intent intent;
 
@@ -96,7 +99,7 @@ public class RendeVuService extends Service implements LocationListener {
                     // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 20, this);
                 if (locationManager!=null){
                     location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if (location!=null){
@@ -113,9 +116,9 @@ public class RendeVuService extends Service implements LocationListener {
             }
 
 
-            if (isGPSEnable){
+            else if (isGPSEnable){
                 location = null;
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,this);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,20,this);
                 if (locationManager!=null){
                     location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     if (location!=null){
@@ -148,6 +151,18 @@ public class RendeVuService extends Service implements LocationListener {
     }
 
     private void fn_update(Location location){
+        String latitude = Double.toString(location.getLatitude());
+        String longitude = Double.toString(location.getLongitude());
+
+        //posts to the server
+
+        RendeVuAPI a = new RendeVuAPI();
+
+        SharedPreferences prefs = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        String userID = prefs.getString("userID", "nothing");
+
+        //posts location to the server
+        a.postLocation(userID, latitude, longitude, RendeVuService.this);
 
         intent.putExtra("latutide",location.getLatitude()+"");
         intent.putExtra("longitude",location.getLongitude()+"");
