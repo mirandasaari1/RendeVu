@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             checkPermissions();
         } else {//permission is good
-            startRendeVuService();
+            //startRendeVuService();
         }
 
         //toastIt("locationPermission: "+locationPermission);
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                     //mapLocation();
 
                     //starts the CUSTOM SERVICE
-                    startRendeVuService();
+                    //startRendeVuService();
 
                 }else {
                     //on permission denied
@@ -225,6 +225,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startRendeVuService(){
+        startService(new Intent(this, RendeVuService.class));
+    }
+
+    public void stopRendeVuService(){
         startService(new Intent(this, RendeVuService.class));
     }
 
