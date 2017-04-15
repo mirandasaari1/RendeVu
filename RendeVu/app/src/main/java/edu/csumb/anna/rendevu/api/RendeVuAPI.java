@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Sal on 4/5/2017.
@@ -23,9 +25,13 @@ public class RendeVuAPI {
 
 
     //local test url
-    private final String localURL = "https://salvhernandez2-salvhernandez.c9users.io/api/v1.0/postInfo";
-    //heroku url
-    private final String herokuURL = "https://rendevu.herokuapp.com/api/v1.0/postInfo";
+    private final String localSignup = "https://salvhernandez2-salvhernandez.c9users.io/api/v1.0/signup";
+    private final String localLocation = "https://salvhernandez2-salvhernandez.c9users.io/api/v1.0/postInfo";
+    private final String localLogin = "https://salvhernandez2-salvhernandez.c9users.io/api/v1.0/login";
+
+    private final String  herokuSignup = "https://rendevu.herokuapp.com/api/v1.0/signup";
+    private final String herokuLocation = "https://rendevu.herokuapp.com/api/v1.0/postInfo";
+    private final String herokuLogin = "https://rendevu.herokuapp.com/api/v1.0/login";
 
 
     public RendeVuAPI(){}
@@ -33,7 +39,7 @@ public class RendeVuAPI {
 
     /**
      * This function posts to the api the latitude, longitude, userID and timestamp of when it happened.
-     * Runs the request on its own thread, otherwise an error is raised.
+     * Runs the request on its own thread, otherwise an error is raised. Async.
      * @param id
      * @param latitude
      * @param longitude
@@ -42,77 +48,145 @@ public class RendeVuAPI {
     public void postLocation(final String id, final String latitude, final String longitude, final Activity anActivity){
         //done with koush ion
 
+        //gets system time
+        Long tsLong = System.currentTimeMillis()/1000;
+        final String timestamp = tsLong.toString();
 
-        Thread thread_two = new Thread() {
-            @Override
-            public void run() {
+        //add json properties
+        JsonObject json = new JsonObject();
+        json.addProperty("userID", id);
+        json.addProperty("latitude", latitude);
+        json.addProperty("longitude", longitude);
+        json.addProperty("timestamp", timestamp);
+        Ion.with(anActivity)
+                .load(herokuLocation)
+                .setLogging("RendeVuApi", Log.DEBUG)
+                .setJsonObjectBody(json)
+                .asString()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<String>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<String> response) {
+                        // response contains both the headers and the string result
+                        // print the response code, ie, 200
+                        if(response.getHeaders().code() != 200)
+                            Log.d(TAG,"something went wrong");
 
-                //gets system time
-                Long tsLong = System.currentTimeMillis()/1000;
-                final String timestamp = tsLong.toString();
+                        else{
+                            Log.d(TAG,"Code: "+response.getHeaders().code());
+                            // print the String that was downloaded
+                            Log.d(TAG,"Response: "+response.getResult());
 
-                //add json properties
-                JsonObject json = new JsonObject();
-                json.addProperty("userID", id);
-                json.addProperty("latitude", latitude);
-                json.addProperty("longitude", longitude);
-                json.addProperty("timestamp", timestamp);
-                Ion.with(anActivity)
-                        .load(herokuURL)
-                        .setJsonObjectBody(json)
-                        .asString()
-                        .withResponse()
-                        .setCallback(new FutureCallback<Response<String>>() {
-                            @Override
-                            public void onCompleted(Exception e, Response<String> response) {
-                                // response contains both the headers and the string result
-                                // print the response code, ie, 200
-                                if(response.getHeaders().code() != 200)
-                                    Log.d(TAG,"something went wrong");
-
-                                else{
-                                    Log.d(TAG,"Code: "+response.getHeaders().code());
-                                    // print the String that was downloaded
-                                    Log.d(TAG,"Response: "+response.getResult());
-
-                                    //creates an object out of the result and print outs the values
+                            //creates an object out of the result and print outs the values
+                            try {
+                                JSONObject json = new JSONObject(response.getResult().toString());
+                                Iterator<String> iter = json.keys();
+                                while (iter.hasNext()) {
+                                    String key = iter.next();
                                     try {
-                                        JSONObject json = new JSONObject(response.getResult().toString());
-                                        Iterator<String> iter = json.keys();
-                                        while (iter.hasNext()) {
-                                            String key = iter.next();
-                                            try {
-                                                Object value = json.get(key);
-                                                Log.d(TAG,"from key: "+key);
-                                                Log.d(TAG,"from value: "+value.toString());
-                                            } catch (JSONException ex) {
-                                                // Something went wrong!
-                                            }
-                                        }
-                                        //Log.d(TAG,"from json: "+json.getString("description"));
-                                    } catch (JSONException e1) {
-                                        e1.printStackTrace();
+                                        Object value = json.get(key);
+                                        Log.d(TAG,"from key: "+key);
+                                        Log.d(TAG,"from value: "+value.toString());
+                                    } catch (JSONException ex) {
+                                        // Something went wrong!
                                     }
                                 }
+                                //Log.d(TAG,"from json: "+json.getString("description"));
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
                             }
-                        });
+                        }
+                    }
+                });
+    }
 
-//                                .asJsonObject()
-//                                .setCallback(new FutureCallback<JsonObject>() {
-//                                    @Override
-//                                    public void onCompleted(Exception e, JsonObject result) {
-//                                        // do stuff with the result or error
-//                                        if(result != null)
-//                                            Log.d(TAG, result.toString());
-//                                        //error
-//                                        else
-//                                            Log.d(TAG, e.toString());
-//
-//                                    }
-//                                });
-            }
-        };
+    /**
+     * Makes the signup post synchronously
+     * @param uID
+     * @param fullName
+     * @param anEmail
+     * @param imgURL
+     * @param anActivity
+     */
+    public String postSignup(final String uID, final String fullName, final String anEmail, String imgURL, String phoneNumber, final Activity anActivity){
+        String responseString = null;
+        //gets system time
+        Long tsLong = System.currentTimeMillis()/1000;
+        final String timestamp = tsLong.toString();
 
-        thread_two.start();
+        String firstName = "";
+        String lastName = "";
+
+        try{
+            String[] split = fullName.split(" ");
+            firstName = split[0];
+            lastName = split[1];
+
+            Log.d("RendeVuDB", firstName);
+            Log.d("RendeVuDB", lastName);
+        }catch (ArrayIndexOutOfBoundsException ex){
+
+        }
+
+        //add json properties
+        JsonObject json = new JsonObject();
+        json.addProperty("userID", uID);
+        json.addProperty("firstName", firstName);
+        json.addProperty("lastName", lastName);
+        json.addProperty("email", anEmail);
+        json.addProperty("phoneNumber", phoneNumber);
+        json.addProperty("timestamp", timestamp);
+        json.addProperty("imgURL", imgURL);
+
+
+        try {
+            String test = Ion.with(anActivity)
+                    .load(herokuSignup)
+                    .setJsonObjectBody(json)
+                    .asString()
+                    .get();
+
+            Log.d(TAG, test);
+            responseString = test;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (CancellationException e){
+            e.printStackTrace();
+        }
+        return responseString;
+    }
+
+    /**
+     * Makes login post and waits for the response, synchronously
+     * @param uID
+     * @param anActivity
+     * @return
+     */
+    public String postLogin(String uID, Activity anActivity){
+        String responseString = null;
+
+        Long tsLong = System.currentTimeMillis()/1000;
+        final String timestamp = tsLong.toString();
+
+        JsonObject json = new JsonObject();
+        json.addProperty("userID", uID);
+
+        try {
+            String test = Ion.with(anActivity)
+                    .load(herokuLogin)
+                    .setJsonObjectBody(json)
+                    .asString()
+                    .get();
+            responseString = test;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (CancellationException e){
+            e.printStackTrace();
+        }
+        return responseString;
     }
 }

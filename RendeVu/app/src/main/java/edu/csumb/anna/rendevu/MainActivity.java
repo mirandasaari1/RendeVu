@@ -1,5 +1,7 @@
 package edu.csumb.anna.rendevu;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -19,6 +21,7 @@ import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 public class MainActivity extends AppCompatActivity {
 
+    String userID = "none";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
 
         //to access dev tools in chrome and see the database contents
         Stetho.initializeWithDefaults(this);
+
+        SharedPreferences prefs = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        String userID = prefs.getString("userID", "nothing");
+
+        toastIt(userID);
         }
 
     @Override
