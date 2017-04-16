@@ -213,10 +213,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        //startRendeVuService();
 //        //posts to the server
 //        RendeVuAPI a = new RendeVuAPI();
 //        a.postLocation("12", "300", "400", MainActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //stopRendeVuService();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //stopRendeVuService();
     }
 
     public void toastIt(String aMessage){
@@ -229,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stopRendeVuService(){
-        startService(new Intent(this, RendeVuService.class));
+        stopService(new Intent(this, RendeVuService.class));
     }
 
 }
