@@ -2,18 +2,18 @@ package edu.csumb.anna.rendevu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -27,6 +27,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.gms.common.api.Status;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import edu.csumb.anna.rendevu.api.RendeVuAPI;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 public class LoginSignupActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
@@ -91,9 +97,27 @@ public class LoginSignupActivity extends AppCompatActivity implements
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // [START_EXCLUDE]
-                updateUI(user);
-                // [END_EXCLUDE]
+
+
+/*
+                //gets extras
+                Bundle extras = getIntent().getExtras();
+                boolean reSignIn = false;
+
+                if (extras != null)
+                {
+                    reSignIn = extras.getBoolean("reSignIn", false);
+                }
+
+*/
+
+//                //if the user wants to reSignIn, then signout
+//                if(reSignIn) {
+//                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//                    signOut();
+//                }
+//                else
+                    updateUI(user);
             }
         };
         // [END auth_state_listener]
@@ -211,25 +235,86 @@ public class LoginSignupActivity extends AppCompatActivity implements
 
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
-        if (user != null) {
-//            mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-//            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-            toastIt("Welcome: "+user.getDisplayName());
-            toastIt(user.getEmail());
-            toastIt(user.getUid());
+        boolean isUserInServer = false;
 
+        try {
+            if (user != null) {
+                //            mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
+                //            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+                toastIt("Welcome: " + user.getDisplayName());
+                //toastIt(user.getEmail());
+                //toastIt(user.getUid());
 
-            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-        } else {
-            //mStatusTextView.setText(R.string.signed_out);
-            //mDetailTextView.setText(null);
+                //adding user to local users db
+                RendeVuDB db = new RendeVuDB(this);
+                db.insertUser(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString());
 
-            toastIt("signed out");
+                ////////////////////////////////////////////////////////////////////////////////////////
+                //if user is not in the server, then it needs to signup
+                //posts to the server
+                RendeVuAPI apiLink = new RendeVuAPI();
+                String resp = null;
+                resp = apiLink.postLogin(user.getUid(), LoginSignupActivity.this);
 
-            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+                if (resp == null)
+                    return;
+
+                Log.d(TAG, "FROM THE OBJECT...LOGIN" + resp);
+
+                JSONObject json = new JSONObject(resp);
+                if (json != null) {
+                    JSONObject data = json.getJSONObject("data");
+                    String userIDHeader = data.getString("userID");
+                    Log.d(TAG, "FROM LOGIN JSON" + userIDHeader);
+
+                    //user has ot signed up
+                    if(userIDHeader.equals("false"))
+                        isUserInServer = false;
+                    else if(userIDHeader.equals("true"))
+                        isUserInServer = true;
+                }
+
+                //if user is not in the server, sign up
+                if (!isUserInServer) {
+
+                    Intent intent = new Intent(LoginSignupActivity.this, GetNumberActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("userID", user.getUid());
+                    intent.putExtra("fullName", user.getDisplayName());
+                    intent.putExtra("email", user.getEmail());
+                    intent.putExtra("imgURL", user.getPhotoUrl().toString());
+                    startActivity(intent);
+                }
+
+                //if the user is in the server, move on to the next activity and clear the stack
+                else{
+
+                    //updates the current user preference
+                    SharedPreferences.Editor editor = getSharedPreferences("loginInfo", MODE_PRIVATE).edit();
+                    editor.putString("userID", user.getUid());
+
+                    Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("userID", user.getUid());
+                    startActivity(intent);
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////
+
+                findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+                findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            } else {
+                //mStatusTextView.setText(R.string.signed_out);
+                //mDetailTextView.setText(null);
+
+                toastIt("signed out");
+
+                findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+                findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+            }
+        } catch (JSONException e) {
+        e.printStackTrace();
         }
+
     }
 
     public void toastIt(String aMessage){
