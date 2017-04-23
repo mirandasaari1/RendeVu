@@ -8,13 +8,25 @@ public class PlannedDate {
     private String dateName;
     private String dateDate;
     private String dateTime;
+    private String dateComfort;
     private String dateLocation;
+    private String dateInformation;
+    private String startTime;
+    private String endTime;
 
-    public PlannedDate(String name, String date, String time, String location) {
+    public PlannedDate(){
+
+    }
+
+    public PlannedDate(String name, String date, String time, String comfort, String location, String information, String start, String end) {
         dateName = name;
         dateDate = date;
         dateTime = time;
+        dateComfort = comfort;
         dateLocation = location;
+        dateInformation = information;
+        startTime = start;
+        endTime = end;
     }
     public String getName() {
         return dateName;
@@ -40,6 +52,10 @@ public class PlannedDate {
         this.dateTime = dateTime;
     }
 
+    public String getDateComfort() { return dateComfort; }
+
+    public void setDateComfort(String dateComfort){this.dateComfort = dateComfort; }
+
     public String getDateLocation() {
         return dateLocation;
     }
@@ -47,4 +63,28 @@ public class PlannedDate {
     public void setDateLocation(String dateLocation) {
         this.dateLocation = dateLocation;
     }
+
+    public String getDateInformation() {return dateInformation; }
+
+    public void setDateInformation(String dateInformation) {
+        this.dateInformation=dateInformation;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+
 }
