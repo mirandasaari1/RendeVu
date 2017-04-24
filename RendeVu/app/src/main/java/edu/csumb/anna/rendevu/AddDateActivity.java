@@ -8,26 +8,20 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.Button;
-import android.view.View.OnClickListener;
-import java.util.Calendar;
 import android.widget.TextView;
-import android.app.Dialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import edu.csumb.anna.rendevu.data.Chaperones;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
-import edu.csumb.anna.rendevu.storage.SelectChaperoneActivity;
 
 public class AddDateActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,12 +33,13 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     private int year, month, day, hour, minute;
     private Button timeButton;
     private Button dateButton;
+    private Button submitDateButton;
     private EditText timeEditText;
     private EditText dateEditText;
     private TextView selectedComfortTextView;
 
     private String DateName;
-    private String DateInfo = "";
+    private String DateInfo;
     private int ComfortLevel;
     private CharSequence text = "";
     private int duration = Toast.LENGTH_SHORT;
@@ -64,6 +59,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         additionalEditText = (EditText) findViewById(R.id.additionalEditText);
         timeButton = (Button) findViewById(R.id.timeButton);
         dateButton = (Button) findViewById(R.id.dateButton);
+        submitDateButton = (Button) findViewById(R.id.submitDateButton);
         timeEditText = (EditText) findViewById(R.id.timeEditText);
         dateEditText = (EditText) findViewById(R.id.dateEditText);
         comfortNumberPicker = (NumberPicker) findViewById(R.id.comfortNumberPicker);
@@ -73,6 +69,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         //Listeners
         timeButton.setOnClickListener(this);
         dateButton.setOnClickListener(this);
+        submitDateButton.setOnClickListener(this);
 
 
         DateName = nameEditText.getText().toString();
@@ -125,6 +122,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             toast.show();
             Intent intent = new Intent(AddDateActivity.this, MainActivity.class);
             startActivity(intent);
+            
         }
 
         //pick the date of the date
