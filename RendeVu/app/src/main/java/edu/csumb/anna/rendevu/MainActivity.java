@@ -278,10 +278,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        //destroys the notification
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(MainActivity.NOTIFICATION_ID);
         //stopRendeVuService();
     }
 

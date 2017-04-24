@@ -29,6 +29,7 @@ public class ButtonReceiver extends BroadcastReceiver {
 
         if(!isOK) {
             //post to the emergency endpoint
+            api.postEmergency("9999", context);
         }
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
