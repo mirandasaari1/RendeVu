@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -384,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent btPendingIntentNo = PendingIntent.getBroadcast(MainActivity.this, 1, buttonIntentNo,PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setSmallIcon(R.drawable.ic_notification_rendevu)
                 .setContentTitle("Is the date going ok?")
                 .setContentText("Let us know!")
                 .addAction(android.R.drawable.checkbox_on_background, "Yes", btPendingIntentYes)
