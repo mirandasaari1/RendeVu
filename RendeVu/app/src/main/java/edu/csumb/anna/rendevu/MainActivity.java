@@ -352,12 +352,12 @@ public class MainActivity extends AppCompatActivity {
 
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle("Something important happened")
-                .setContentText("See the details")
+                .setContentTitle("Is the date going ok?")
+                .setContentText("Let us know!")
                 .setAutoCancel(true)
                 .setContentIntent(detailsPendingIntent)
-                .addAction(android.R.drawable.ic_menu_compass, "Details", detailsPendingIntent)
-                .addAction(android.R.drawable.ic_menu_directions, "Show Map", detailsPendingIntent);
+                .addAction(android.R.drawable.checkbox_on_background, "Yes", detailsPendingIntent)
+                .addAction(android.R.drawable.ic_delete, "No", detailsPendingIntent);
 
         // Obtain NotificationManager system service in order to show the notification
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
