@@ -1,4 +1,6 @@
 package edu.csumb.anna.rendevu;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String BASE_URL = "https://rendevu.herokuapp.com/";
     private final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
+//    private int notificationId = 1;
+    public static int NOTIFICATION_ID = 1;
+
     String userID = "none";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
             itemView.setShiftingMode(false);
             itemView.setChecked(false);
         }
+
+        sendNotification();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -155,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //toastIt("locationPermission: "+locationPermission);
+
+        //to get rid of the notification when a button has been clicked
     }
 
     public void checkPermissions() {
@@ -264,6 +274,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        //destroys the notification
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(MainActivity.NOTIFICATION_ID);
         //stopRendeVuService();
     }
 
@@ -280,4 +293,76 @@ public class MainActivity extends AppCompatActivity {
         stopService(new Intent(this, RendeVuService.class));
     }
 
+    public void sendNotification(){
+        //simple notification
+        ///////////////////////////////////////
+        // NotificationCompat Builder takes care of backwards compatibility and
+        // provides clean API to create rich notifications
+//        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
+//                .setSmallIcon(android.R.drawable.ic_dialog_info)
+//                .setContentTitle("Notification title")
+//                .setContentText("Content text");
+//
+//        // Obtain NotificationManager system service in order to show the notification
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.notify(notificationId, mBuilder.build());
+
+        ///////////////////////////////////////////
+
+        //notification with activity attached to it
+        ////////////////////////////////////////////////////////////
+        // Create PendingIntent to take us to MainActivity
+        // as a result of notification action
+
+        //place the activity to go to
+//        Intent detailsIntent = new Intent(MainActivity.this, MainActivity.class);
+//        detailsIntent.putExtra("EXTRA_DETAILS_ID", 42);
+//        PendingIntent detailsPendingIntent = PendingIntent.getActivity(
+//                MainActivity.this,
+//                0,
+//                detailsIntent,
+//                PendingIntent.FLAG_UPDATE_CURRENT
+//        );
+
+        // NotificationCompat Builder takes care of backwards compatibility and
+        // provides clean API to create rich notifications
+//        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
+//                .setSmallIcon(android.R.drawable.ic_dialog_info)
+//                .setContentTitle("Something important happened")
+//                .setContentText("See the details")
+//                .setContentIntent(detailsPendingIntent)
+//                .setAutoCancel(true);
+//
+//        // Obtain NotificationManager system service in order to show the notification
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.notify(notificationId, mBuilder.build());
+        ///////////////////////////////////////////////////////////
+
+        //notifications with custom actions
+        ///////////////////////////////////////////////////////////
+
+                Intent detailsIntent = new Intent(MainActivity.this, MainActivity.class);
+        detailsIntent.putExtra("EXTRA_DETAILS_ID", 42);
+        PendingIntent detailsPendingIntent = PendingIntent.getActivity(
+                MainActivity.this,
+                0,
+                detailsIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("Something important happened")
+                .setContentText("See the details")
+                .setAutoCancel(true)
+                .setContentIntent(detailsPendingIntent)
+                .addAction(android.R.drawable.ic_menu_compass, "Details", detailsPendingIntent)
+                .addAction(android.R.drawable.ic_menu_directions, "Show Map", detailsPendingIntent);
+
+        // Obtain NotificationManager system service in order to show the notification
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        ///////////////////////////////////////////////////////////
+
+    }
 }
