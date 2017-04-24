@@ -57,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
             itemView.setChecked(false);
         }
 
+//        Testing API
+        RendeVuAPI api = new RendeVuAPI();
+//        api.postStartDate("1111", MainActivity.this);
+//        api.postEndDate("2222", MainActivity.this);
+//        api.postEmergency("3333", MainActivity.this);
+//        api.postLogin("12234", MainActivity.this);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
