@@ -1,4 +1,5 @@
 package edu.csumb.anna.rendevu;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -387,7 +388,9 @@ public class MainActivity extends AppCompatActivity {
                 .setContentTitle("Is the date going ok?")
                 .setContentText("Let us know!")
                 .addAction(android.R.drawable.checkbox_on_background, "Yes", btPendingIntentYes)
-                .addAction(android.R.drawable.ic_delete, "No", btPendingIntentNo);
+                .addAction(android.R.drawable.ic_delete, "No", btPendingIntentNo)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(Notification.PRIORITY_MAX);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
