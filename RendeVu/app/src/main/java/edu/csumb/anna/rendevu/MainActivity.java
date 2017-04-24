@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
 
+import java.util.Random;
+
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
 import edu.csumb.anna.rendevu.api.TextMessageAPI;
 import edu.csumb.anna.rendevu.data.TextMessageResponse;
@@ -63,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             itemView.setChecked(false);
         }
 
-        sendNotification();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -257,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        sendNotification();
         //startRendeVuService();
 //        //posts to the server
 //        RendeVuAPI a = new RendeVuAPI();
@@ -340,29 +343,53 @@ public class MainActivity extends AppCompatActivity {
 
         //notifications with custom actions
         ///////////////////////////////////////////////////////////
+//
+//                Intent detailsIntent = new Intent(MainActivity.this, MainActivity.class);
+//        detailsIntent.putExtra("EXTRA_DETAILS_ID", 42);
+//        PendingIntent detailsPendingIntent = PendingIntent.getActivity(
+//                MainActivity.this,
+//                0,
+//                detailsIntent,
+//                PendingIntent.FLAG_UPDATE_CURRENT
+//        );
+//
+//        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
+//                .setSmallIcon(android.R.drawable.ic_dialog_info)
+//                .setContentTitle("Is the date going ok?")
+//                .setContentText("Let us know!")
+//                .setAutoCancel(true)
+//                .setContentIntent(detailsPendingIntent)
+//                .addAction(android.R.drawable.checkbox_on_background, "Yes", detailsPendingIntent)
+//                .addAction(android.R.drawable.ic_delete, "No", detailsPendingIntent);
+//
+//        // Obtain NotificationManager system service in order to show the notification
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        ///////////////////////////////////////////////////////////
 
-                Intent detailsIntent = new Intent(MainActivity.this, MainActivity.class);
-        detailsIntent.putExtra("EXTRA_DETAILS_ID", 42);
-        PendingIntent detailsPendingIntent = PendingIntent.getActivity(
-                MainActivity.this,
-                0,
-                detailsIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        );
+       //Notifications with a broadcast receiver
+        ///////////////////////////////////////
+        //Create an Intent for the BroadcastReceiver
+        Intent buttonIntentYes = new Intent(MainActivity.this, ButtonReceiver.class);
+        buttonIntentYes.putExtra("notificationId",NOTIFICATION_ID);
+        buttonIntentYes.putExtra("isOK", true);
+
+        Intent buttonIntentNo = new Intent(MainActivity.this, ButtonReceiver.class);
+        buttonIntentNo.putExtra("notificationId",NOTIFICATION_ID+1);
+        buttonIntentNo.putExtra("isOK", false);
+
+//Create the PendingIntent
+        PendingIntent btPendingIntentYes = PendingIntent.getBroadcast(MainActivity.this, 0, buttonIntentYes,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent btPendingIntentNo = PendingIntent.getBroadcast(MainActivity.this, 1, buttonIntentNo,PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle("Is the date going ok?")
                 .setContentText("Let us know!")
-                .setAutoCancel(true)
-                .setContentIntent(detailsPendingIntent)
-                .addAction(android.R.drawable.checkbox_on_background, "Yes", detailsPendingIntent)
-                .addAction(android.R.drawable.ic_delete, "No", detailsPendingIntent);
+                .addAction(android.R.drawable.checkbox_on_background, "Yes", btPendingIntentYes)
+                .addAction(android.R.drawable.ic_delete, "No", btPendingIntentNo);
 
-        // Obtain NotificationManager system service in order to show the notification
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-        ///////////////////////////////////////////////////////////
-
     }
 }
