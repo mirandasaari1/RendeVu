@@ -286,6 +286,16 @@ public class RendeVuDB{
 
     }
 
+    //insert phone number into users table
+    public void insertPhoneNumber(String pNum){
+        ContentValues cv = new ContentValues();
+        cv.put(USERS_PHONE_NUMBER, pNum);
+        this.openWriteableDB();
+        long rowId = db.insert(DATES_TABLE, null, cv);
+        this.closeDB();
+    }
+
+
     //END USER METHODS
     //////////////////////////////////////////////////////////////////////////////////
     // DATES METHODS
@@ -356,7 +366,7 @@ public class RendeVuDB{
                 chaperonesNameList.add(chaperone);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
         return chaperonesNameList;
     }
 
@@ -369,6 +379,7 @@ public class RendeVuDB{
             chaperoneID=cID.getString(cID.getColumnIndex("chaperoneID"));
         }
         this.closeDB();
+        cID.close();
         return chaperoneID;
     }
 

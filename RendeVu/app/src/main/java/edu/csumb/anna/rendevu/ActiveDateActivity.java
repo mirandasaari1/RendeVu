@@ -25,15 +25,20 @@ public class ActiveDateActivity extends AppCompatActivity implements View.OnClic
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_active_date);
 
+            //widget variables
             Button endDateButton = (Button) findViewById(R.id.endDateButton);
+
+            //listeners
             endDateButton.setOnClickListener(this);
         }
         @Override
         public void onClick(View v) {
 
-            //adding startime of date to local dates db
+            //adding endtime of date to local db
             RendeVuDB db = new RendeVuDB(this);
             db.insertEndTime();
+
+
         }
 
 }

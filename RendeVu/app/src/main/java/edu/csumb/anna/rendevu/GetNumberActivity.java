@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 import static java.security.AccessController.getContext;
 
@@ -88,6 +89,9 @@ public class GetNumberActivity extends AppCompatActivity implements View.OnClick
             if (resp != null) {
                 toastIt("Welcome to RendeVu!");
 
+                //adds phone number of user to local db
+                RendeVuDB db = new RendeVuDB(this);
+                db.insertPhoneNumber(input);
                 Log.d(TAG, "FROM THE OBJECT...SIGNUP" + resp);
 
                 //updates the current user preference

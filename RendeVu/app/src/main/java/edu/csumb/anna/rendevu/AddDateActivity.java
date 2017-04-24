@@ -59,27 +59,28 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_date);
 
+        //widget variables
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         additionalEditText = (EditText) findViewById(R.id.additionalEditText);
         timeButton = (Button) findViewById(R.id.timeButton);
         dateButton = (Button) findViewById(R.id.dateButton);
         timeEditText = (EditText) findViewById(R.id.timeEditText);
         dateEditText = (EditText) findViewById(R.id.dateEditText);
+        comfortNumberPicker = (NumberPicker) findViewById(R.id.comfortNumberPicker);
+        selectedComfortTextView = (TextView) findViewById(R.id.selectedComfortTextView);
+        selectChaperoneButton = (Button) findViewById(R.id.selectChaperoneButton);
 
+        //Listeners
         timeButton.setOnClickListener(this);
         dateButton.setOnClickListener(this);
 
 
-        comfortNumberPicker = (NumberPicker) findViewById(R.id.comfortNumberPicker);
-        selectedComfortTextView = (TextView) findViewById(R.id.selectedComfortTextView);
+        DateName = nameEditText.getText().toString();
+        DateInfo = additionalEditText.getText().toString();
 
-        selectChaperoneButton = (Button) findViewById(R.id.selectChaperoneButton);
-
-        DateName = new String(nameEditText.getText().toString());
-        DateInfo = new String(additionalEditText.getText().toString());
-
-        //number picker
+        //number picker for comfort level
         String[] nums = new String[10];
+
         for(int i=0; i<nums.length; i++)
             nums[i] = Integer.toString(i);
 
@@ -100,6 +101,8 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     //handles chaperone selection and date submission
     @Override
     public void onClick(View v) {
+
+        //opens activity for chaperone selection
         if (v.getId() == R.id.selectChaperoneButton) {
             Intent intent = new Intent(AddDateActivity.this, SelectChaperoneActivity.class);
             startActivity(intent);
@@ -113,9 +116,8 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(intent);
         }
 
+        //submits the date information
         if (v.getId() == R.id.submitDateButton) {
-
-
             text = "Date Added!";
             duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText(this, text, duration);
@@ -125,8 +127,8 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(intent);
         }
 
+        //pick the date of the date
         if (v == dateButton) {
-
             //current date
             final Calendar c = Calendar.getInstance();
             year = c.get(Calendar.YEAR);
@@ -141,8 +143,9 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             }, year, month, day);
             datePickerDialog.show();
         }
-        if (v == timeButton) {
 
+        //pick time of the date
+        if (v == timeButton) {
             //current time
             final Calendar c = Calendar.getInstance();
             hour = c.get(Calendar.HOUR_OF_DAY);
