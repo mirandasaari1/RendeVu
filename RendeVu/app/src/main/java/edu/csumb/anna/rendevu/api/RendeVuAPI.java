@@ -162,10 +162,10 @@ public class RendeVuAPI {
     /**
      * Makes login post and waits for the response, synchronously
      * @param uID
-     * @param anActivity
+     * @param aContext
      * @return
      */
-    public String postLogin(String uID, Activity anActivity){
+    public String postLogin(String uID, Context aContext){
         String responseString = null;
 
         Long tsLong = System.currentTimeMillis()/1000;
@@ -175,7 +175,7 @@ public class RendeVuAPI {
         json.addProperty("userID", uID);
 
         try {
-            String test = Ion.with(anActivity)
+            String test = Ion.with(aContext)
                     .load(herokuLogin)
                     .setJsonObjectBody(json)
                     .asString()

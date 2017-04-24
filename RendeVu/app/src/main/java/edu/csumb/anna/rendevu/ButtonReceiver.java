@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import edu.csumb.anna.rendevu.api.RendeVuAPI;
+
 /**
  * Created by Sal on 4/24/2017.
  */
@@ -16,7 +18,7 @@ public class ButtonReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-
+        RendeVuAPI api = new RendeVuAPI();
         Bundle extras = intent.getExtras();
         boolean isOK = extras.getBoolean("isOK");
         int notificationId = extras.getInt("notificationId");
@@ -25,8 +27,9 @@ public class ButtonReceiver extends BroadcastReceiver {
         Log.d(TAG, "isOK: "+isOK);
         // Do what you want were.
 
-        // if you want cancel notification
-
+        if(!isOK) {
+            //post to the emergency endpoint
+        }
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if(isOK)
