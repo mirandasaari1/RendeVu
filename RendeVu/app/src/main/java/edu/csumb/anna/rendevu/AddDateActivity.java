@@ -5,6 +5,10 @@ import java.util.Calendar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +25,10 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import edu.csumb.anna.rendevu.data.Chaperones;
+import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
+import edu.csumb.anna.rendevu.storage.SelectChaperoneActivity;
+
 public class AddDateActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText nameEditText;
@@ -35,11 +43,15 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     private EditText dateEditText;
     private TextView selectedComfortTextView;
 
-    private String DateName = "";
+    private String DateName;
     private String DateInfo = "";
     private int ComfortLevel;
     private CharSequence text = "";
     private int duration = Toast.LENGTH_SHORT;
+
+    RecyclerView recyclerView;
+    static Chaperones chaperones;
+    ArrayAdapter itemArrayAdapter;
 
 
     @Override
@@ -63,8 +75,8 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
 
         selectChaperoneButton = (Button) findViewById(R.id.selectChaperoneButton);
 
-        DateName = nameEditText.getText().toString();
-        DateInfo = additionalEditText.getText().toString();
+        DateName = new String(nameEditText.getText().toString());
+        DateInfo = new String(additionalEditText.getText().toString());
 
         //number picker
         String[] nums = new String[10];
@@ -89,10 +101,21 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.selectChaperoneButton) {
-            //open up activitiy to select contacts
+            Intent intent = new Intent(AddDateActivity.this, SelectChaperoneActivity.class);
+            startActivity(intent);
+
+            // Create a bundle object
+            Bundle b = new Bundle();
+            b.putString("dateName",DateName);
+            // Add the bundle to the intent.
+            intent.putExtras(b);
+            // start the ResultActivity
+            startActivity(intent);
         }
 
         if (v.getId() == R.id.submitDateButton) {
+
+
             text = "Date Added!";
             duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText(this, text, duration);

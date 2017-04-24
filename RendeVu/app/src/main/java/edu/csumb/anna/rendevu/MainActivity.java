@@ -20,7 +20,15 @@ import android.widget.Toast;
 import com.facebook.stetho.Stetho;
 
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
+import edu.csumb.anna.rendevu.api.TextMessageAPI;
+import edu.csumb.anna.rendevu.data.TextMessageResponse;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     //0 is permission granted
     //int locationPermission = 1;
 
-
+    public static final String BASE_URL = "https://rendevu.herokuapp.com/";
     private final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     String userID = "none";
@@ -79,6 +87,32 @@ public class MainActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.add_date_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //api call
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+                Retrofit.Builder builder = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create());
+
+                Retrofit retrofit1 = builder.client(httpClient.build()).build();
+
+                TextMessageAPI client = retrofit1.create(TextMessageAPI.class);
+
+                Call<TextMessageResponse> call = client.makeRequest("1", "8314285108", "hi");
+
+                call.enqueue(new Callback<TextMessageResponse>() {
+                    @Override
+                    public void onResponse(Call<TextMessageResponse> call, Response<TextMessageResponse> response) {
+                        Toast.makeText(MainActivity.this, "API CALL SUCCESS", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<TextMessageResponse> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "API CALL FAILURE", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 Intent intent = new Intent(MainActivity.this, AddDateActivity.class);
                 startActivity(intent);
             }

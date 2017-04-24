@@ -1,9 +1,13 @@
 package edu.csumb.anna.rendevu.data;
 
-public class Chaperone {
+public class Chaperone extends Chaperones {
 
     private String chaperoneName;
     private String chaperoneNumber;
+
+    public Chaperone(){
+
+    }
 
     public Chaperone(String n, String n2) {
         chaperoneName = n;
