@@ -30,7 +30,7 @@ public class RendeVuDB{
     //when making a change to the database update the db version
     // database constants
     public static final String DB_NAME = "RendeVuDB.db";
-    public static final int DB_VERSION = 6;
+    public static final int DB_VERSION = 14;
 
     //users table constants
     public static final String USERS_TABLE = "users";
@@ -54,23 +54,25 @@ public class RendeVuDB{
     public static final int USERS_PHONE_NUMBER_COL = 5;
 
     //add date constants
-    public static final String DATES_TABLE = "dates";
 
-    public static final String DATE_ID = "date_id";
+    public static final String GARBAGE_ID = "_id";
+    public static final String DATES_TABLE = "_dates";
 
-    public static final String DATE_NAME = "date_name";
+    public static final String DATE_ID = "_date_id";
 
-    public static final String DATE_TIME = "time";
+    public static final String DATE_NAME = "_date_name";
 
-    public static final String DATE = "date";
+    public static final String DATE_TIME = "_time";
 
-    public static final String COMFORT_LEVEL = "comfort_level";
+    public static final String DATE = "_date";
 
-    public static final String ADDITIONAL_INFO = "additional_info";
+    public static final String COMFORT_LEVEL = "_comfort_level";
 
-    public static final String START_TIME = "start_time";
+    public static final String ADDITIONAL_INFO = "_additional_info";
 
-    public static final String END_TIME = "end_time";
+    public static final String START_TIME = "_start_time";
+
+    public static final String END_TIME = "_end_time";
 
     //public static final Calendar calendar = Calendar.getInstance();
 
@@ -106,7 +108,7 @@ public class RendeVuDB{
 
     public static final String CREATE_DATES_TABLE =
             "CREATE TABLE " + DATES_TABLE + " (" +
-                    DATE_ID + " INTEGER PRIMARY KEY AUTO INCREMENT " +
+                    DATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     DATE_NAME + " TEXT, " +
                     DATE_TIME + " TEXT, " +
                     DATE + " TEXT, " +
@@ -118,35 +120,19 @@ public class RendeVuDB{
 
     public static final String CREATE_CHAPERONES_TABLE =
             "CREATE TABLE " + CHAPERONES_TABLE + " (" +
-                    CHAPERONE_ID + " INTEGER PRIMARY KEY AUTO INCREMENT" +
+                    CHAPERONE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     CHAPERONE_NAME + " TEXT, " +
                     CHAPERONE_PHONE_NUMBER + " TEXT);";
 
     public static final String CREATE_DATE_CHAPERONES_TABLE =
                 "CREATE TABLE " + DATE_CHAPERONES_TABLE + " ( " +
-                        DATE_CHAPERONE_ID + " INTEGER PRIMARY KEY AUTO INCREMENT" +
-                        CHAPERONE_ID + " INTEGER FOREIGN KEY " +
-                        DATE_NAME + " INTEGER FOREIGN KEY);";
+                        DATE_CHAPERONE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        CHAPERONE_ID + " INTEGER, " +
+                        DATE_NAME + " INTEGER);";
 
     //variables
     private String chaperoneID="";
 
-
-
-//    public static final String CREATE_LIST_TABLE =
-//            "CREATE TABLE " + LIST_TABLE + " (" +
-//                    LIST_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                    LIST_NAME + " TEXT    NOT NULL UNIQUE);";
-//
-//    public static final String CREATE_TASK_TABLE =
-//            "CREATE TABLE " + TASK_TABLE + " (" +
-//                    TASK_ID         + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                    TASK_LIST_ID    + " INTEGER NOT NULL, " +
-//                    TASK_NAME       + " TEXT    NOT NULL, " +
-//                    TASK_NOTES      + " TEXT, " +
-//                    TASK_COMPLETED  + " TEXT, " +
-//                    TASK_HIDDEN     + " TEXT, " +
-//                    TASK_FEE        + " DOUBLE);";
 
     public static final String DROP_USERS_TABLE =
             "DROP TABLE IF EXISTS " + USERS_TABLE;
@@ -160,13 +146,6 @@ public class RendeVuDB{
     public static final String DROP_DATE_CHAPERONES_TABLE =
             "DROP TABLE IF EXISTS " + DATE_CHAPERONES_TABLE;
 
-
-
-//    public static final String DROP_LIST_TABLE =
-//            "DROP TABLE IF EXISTS " + LIST_TABLE;
-//
-//    public static final String DROP_TASK_TABLE =
-//            "DROP TABLE IF EXISTS " + TASK_TABLE;
 
     private static class DBHelper extends SQLiteOpenHelper {
 
@@ -182,8 +161,6 @@ public class RendeVuDB{
             db.execSQL(CREATE_DATES_TABLE);
             db.execSQL(CREATE_CHAPERONES_TABLE);
             db.execSQL(CREATE_DATE_CHAPERONES_TABLE);
-//            db.execSQL(CREATE_LIST_TABLE);
-//            db.execSQL(CREATE_TASK_TABLE);
         }
 
         @Override
@@ -197,8 +174,6 @@ public class RendeVuDB{
             db.execSQL(RendeVuDB.DROP_DATES_TABLE);
             db.execSQL(RendeVuDB.DROP_CHAPERONES_TABLE);
             db.execSQL(RendeVuDB.DROP_DATE_CHAPERONES_TABLE);
-//            db.execSQL(RendeVuDB.DROP_LIST_TABLE);
-//            db.execSQL(RendeVuDB.DROP_TASK_TABLE);
             onCreate(db);
         }
     }
@@ -289,6 +264,18 @@ public class RendeVuDB{
     //END USER METHODS
     //////////////////////////////////////////////////////////////////////////////////
     // DATES METHODS
+
+    // Insert a date into the database
+    public void testDate(String cName) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(DATE_NAME, cName);
+
+        this.openWriteableDB();
+        long rowID = db.insert(DATES_TABLE, null, cv);
+        this.closeDB();
+
+    }
 
     // Insert a date into the database
     public void insertDate(String cName, String cDate, String dTime, String cLevel, String aInfo) {
@@ -390,7 +377,4 @@ public class RendeVuDB{
         this.closeDB();
 
     }
-
-
-
 }

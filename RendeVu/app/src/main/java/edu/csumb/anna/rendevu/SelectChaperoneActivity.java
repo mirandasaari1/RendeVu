@@ -1,13 +1,10 @@
-package edu.csumb.anna.rendevu.storage;
+package edu.csumb.anna.rendevu;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,10 +12,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import edu.csumb.anna.rendevu.AddDateActivity;
-import edu.csumb.anna.rendevu.MainActivity;
-import edu.csumb.anna.rendevu.R;
 import edu.csumb.anna.rendevu.data.Chaperones;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 
 /**
@@ -34,6 +29,7 @@ public class SelectChaperoneActivity extends AppCompatActivity implements View.O
 
     @Override
     protected void onCreate(Bundle savedInstancedState) {
+        super.onCreate(savedInstancedState);
         setContentView(R.layout.activity_select_chaperones);
 
         chapListView = (ListView) findViewById(R.id.chaperoneList);

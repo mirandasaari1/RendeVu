@@ -262,6 +262,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         sendNotification();
+//        RendeVuDB db = new RendeVuDB(MainActivity.this);
+//        db.insertChaperone("anna", "6197");
         //startRendeVuService();
 //        //posts to the server
 //        RendeVuAPI a = new RendeVuAPI();

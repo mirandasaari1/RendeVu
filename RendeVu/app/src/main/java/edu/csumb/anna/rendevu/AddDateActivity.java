@@ -5,29 +5,21 @@ import java.util.Calendar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.Button;
-import android.view.View.OnClickListener;
-import java.util.Calendar;
 import android.widget.TextView;
-import android.app.Dialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import edu.csumb.anna.rendevu.data.Chaperones;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
-import edu.csumb.anna.rendevu.storage.SelectChaperoneActivity;
 
 public class AddDateActivity extends AppCompatActivity implements View.OnClickListener {
 
