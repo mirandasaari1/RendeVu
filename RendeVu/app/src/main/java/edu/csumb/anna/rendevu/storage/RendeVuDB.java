@@ -30,7 +30,7 @@ public class RendeVuDB{
     //when making a change to the database update the db version
     // database constants
     public static final String DB_NAME = "RendeVuDB.db";
-    public static final int DB_VERSION = 14;
+    public static final int DB_VERSION = 15;
 
     //users table constants
     public static final String USERS_TABLE = "users";
@@ -48,10 +48,10 @@ public class RendeVuDB{
     public static final int USERS_IMG_URL_COL = 3;
 
     public static final String USERS_EMAIL = "email";
-    public static final int USERS_EMAIL_COL = 4;
+    public static final int USERS_EMAIL_COL = 5;
 
     public static final String USERS_PHONE_NUMBER = "phone_number";
-    public static final int USERS_PHONE_NUMBER_COL = 5;
+    public static final int USERS_PHONE_NUMBER_COL = 4;
 
     //add date constants
 
@@ -104,6 +104,7 @@ public class RendeVuDB{
                     USERS_FIRST_NAME + " TEXT, " +
                     USERS_LAST_NAME + " TEXT, " +
                     USERS_IMG_URL + " TEXT, " +
+                    USERS_PHONE_NUMBER + " TEXT, " +
                     USERS_EMAIL + " TEXT);";
 
     public static final String CREATE_DATES_TABLE =
