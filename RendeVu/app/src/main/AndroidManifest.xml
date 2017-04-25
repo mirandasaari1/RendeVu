@@ -60,6 +60,7 @@
 
         <activity android:name=".GetNumberActivity"></activity>
         <service android:name=".RendeVuService"/>
+        <receiver android:name=".ButtonReceiver"/>
     </application>
 
 </manifest>

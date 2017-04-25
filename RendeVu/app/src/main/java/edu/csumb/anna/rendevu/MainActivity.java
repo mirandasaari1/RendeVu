@@ -1,8 +1,12 @@
 package edu.csumb.anna.rendevu;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -11,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +23,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
+
+import java.util.Random;
 
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
 import edu.csumb.anna.rendevu.api.TextMessageAPI;
@@ -41,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String BASE_URL = "https://rendevu.herokuapp.com/";
     private final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
+//    private int notificationId = 1;
+    public static int NOTIFICATION_ID = 1;
+
     String userID = "none";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             itemView.setShiftingMode(false);
             itemView.setChecked(false);
         }
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -155,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //toastIt("locationPermission: "+locationPermission);
+
+        //to get rid of the notification when a button has been clicked
     }
 
     public void checkPermissions() {
@@ -247,6 +260,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        sendNotification();
         //startRendeVuService();
 //        //posts to the server
 //        RendeVuAPI a = new RendeVuAPI();
@@ -263,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         //stopRendeVuService();
     }
 
@@ -280,4 +294,102 @@ public class MainActivity extends AppCompatActivity {
         stopService(new Intent(this, RendeVuService.class));
     }
 
+    public void sendNotification(){
+        //simple notification
+        ///////////////////////////////////////
+        // NotificationCompat Builder takes care of backwards compatibility and
+        // provides clean API to create rich notifications
+//        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
+//                .setSmallIcon(android.R.drawable.ic_dialog_info)
+//                .setContentTitle("Notification title")
+//                .setContentText("Content text");
+//
+//        // Obtain NotificationManager system service in order to show the notification
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.notify(notificationId, mBuilder.build());
+
+        ///////////////////////////////////////////
+
+        //notification with activity attached to it
+        ////////////////////////////////////////////////////////////
+        // Create PendingIntent to take us to MainActivity
+        // as a result of notification action
+
+        //place the activity to go to
+//        Intent detailsIntent = new Intent(MainActivity.this, MainActivity.class);
+//        detailsIntent.putExtra("EXTRA_DETAILS_ID", 42);
+//        PendingIntent detailsPendingIntent = PendingIntent.getActivity(
+//                MainActivity.this,
+//                0,
+//                detailsIntent,
+//                PendingIntent.FLAG_UPDATE_CURRENT
+//        );
+
+        // NotificationCompat Builder takes care of backwards compatibility and
+        // provides clean API to create rich notifications
+//        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
+//                .setSmallIcon(android.R.drawable.ic_dialog_info)
+//                .setContentTitle("Something important happened")
+//                .setContentText("See the details")
+//                .setContentIntent(detailsPendingIntent)
+//                .setAutoCancel(true);
+//
+//        // Obtain NotificationManager system service in order to show the notification
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.notify(notificationId, mBuilder.build());
+        ///////////////////////////////////////////////////////////
+
+        //notifications with custom actions
+        ///////////////////////////////////////////////////////////
+//
+//                Intent detailsIntent = new Intent(MainActivity.this, MainActivity.class);
+//        detailsIntent.putExtra("EXTRA_DETAILS_ID", 42);
+//        PendingIntent detailsPendingIntent = PendingIntent.getActivity(
+//                MainActivity.this,
+//                0,
+//                detailsIntent,
+//                PendingIntent.FLAG_UPDATE_CURRENT
+//        );
+//
+//        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
+//                .setSmallIcon(android.R.drawable.ic_dialog_info)
+//                .setContentTitle("Is the date going ok?")
+//                .setContentText("Let us know!")
+//                .setAutoCancel(true)
+//                .setContentIntent(detailsPendingIntent)
+//                .addAction(android.R.drawable.checkbox_on_background, "Yes", detailsPendingIntent)
+//                .addAction(android.R.drawable.ic_delete, "No", detailsPendingIntent);
+//
+//        // Obtain NotificationManager system service in order to show the notification
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        ///////////////////////////////////////////////////////////
+
+       //Notifications with a broadcast receiver
+        ///////////////////////////////////////
+        //Create an Intent for the BroadcastReceiver
+        Intent buttonIntentYes = new Intent(MainActivity.this, ButtonReceiver.class);
+        buttonIntentYes.putExtra("notificationId",NOTIFICATION_ID);
+        buttonIntentYes.putExtra("isOK", true);
+
+        Intent buttonIntentNo = new Intent(MainActivity.this, ButtonReceiver.class);
+        buttonIntentNo.putExtra("notificationId",NOTIFICATION_ID+1);
+        buttonIntentNo.putExtra("isOK", false);
+
+//Create the PendingIntent
+        PendingIntent btPendingIntentYes = PendingIntent.getBroadcast(MainActivity.this, 0, buttonIntentYes,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent btPendingIntentNo = PendingIntent.getBroadcast(MainActivity.this, 1, buttonIntentNo,PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
+                .setSmallIcon(R.drawable.ic_notification_rendevu)
+                .setContentTitle("Is the date going ok?")
+                .setContentText("Let us know!")
+                .addAction(android.R.drawable.checkbox_on_background, "Yes", btPendingIntentYes)
+                .addAction(android.R.drawable.ic_delete, "No", btPendingIntentNo)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(Notification.PRIORITY_MAX);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
 }

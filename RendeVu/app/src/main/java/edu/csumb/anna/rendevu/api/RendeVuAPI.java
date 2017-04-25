@@ -32,7 +32,10 @@ public class RendeVuAPI {
 
     private final String  herokuSignup = "https://rendevu.herokuapp.com/api/v1.0/signup";
     private final String herokuLocation = "https://rendevu.herokuapp.com/api/v1.0/postInfo";
+    private final String herokuStartDate = "https://rendevu.herokuapp.com/api/v1.0/startDate";
+    private final String herokuEndDate = "https://rendevu.herokuapp.com/api/v1.0/endDate";
     private final String herokuLogin = "https://rendevu.herokuapp.com/api/v1.0/login";
+    private final String herokuEmergency = "https://rendevu.herokuapp.com/api/v1.0/emergency";
 
 
     public RendeVuAPI(){}
@@ -162,10 +165,10 @@ public class RendeVuAPI {
     /**
      * Makes login post and waits for the response, synchronously
      * @param uID
-     * @param anActivity
+     * @param aContext
      * @return
      */
-    public String postLogin(String uID, Activity anActivity){
+    public String postLogin(String uID, Context aContext){
         String responseString = null;
 
         Long tsLong = System.currentTimeMillis()/1000;
@@ -175,7 +178,7 @@ public class RendeVuAPI {
         json.addProperty("userID", uID);
 
         try {
-            String test = Ion.with(anActivity)
+            String test = Ion.with(aContext)
                     .load(herokuLogin)
                     .setJsonObjectBody(json)
                     .asString()
@@ -189,5 +192,149 @@ public class RendeVuAPI {
             e.printStackTrace();
         }
         return responseString;
+    }
+
+    public void postStartDate(final String id, Context aContext){
+        //done with koush ion
+
+        //add json properties
+        JsonObject json = new JsonObject();
+        json.addProperty("userID", id);
+        Ion.with(aContext)
+                .load(herokuStartDate)
+                .setLogging("RendeVuApi", Log.DEBUG)
+                .setJsonObjectBody(json)
+                .asString()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<String>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<String> response) {
+                        // response contains both the headers and the string result
+                        // print the response code, ie, 200
+                        if(response.getHeaders().code() != 200)
+                            Log.d(TAG,"something went wrong");
+
+                        else{
+                            Log.d(TAG,"Code: "+response.getHeaders().code());
+                            // print the String that was downloaded
+                            Log.d(TAG,"Response: "+response.getResult());
+
+                            //creates an object out of the result and print outs the values
+                            try {
+                                JSONObject json = new JSONObject(response.getResult().toString());
+                                Iterator<String> iter = json.keys();
+                                while (iter.hasNext()) {
+                                    String key = iter.next();
+                                    try {
+                                        Object value = json.get(key);
+                                        Log.d(TAG,"from key: "+key);
+                                        Log.d(TAG,"from value: "+value.toString());
+                                    } catch (JSONException ex) {
+                                        // Something went wrong!
+                                    }
+                                }
+                                //Log.d(TAG,"from json: "+json.getString("description"));
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void postEndDate(final String id, Context aContext){
+        //done with koush ion
+
+        //add json properties
+        JsonObject json = new JsonObject();
+        json.addProperty("userID", id);
+        Ion.with(aContext)
+                .load(herokuEndDate)
+                .setLogging("RendeVuApi", Log.DEBUG)
+                .setJsonObjectBody(json)
+                .asString()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<String>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<String> response) {
+                        // response contains both the headers and the string result
+                        // print the response code, ie, 200
+                        if(response.getHeaders().code() != 200)
+                            Log.d(TAG,"something went wrong");
+
+                        else{
+                            Log.d(TAG,"Code: "+response.getHeaders().code());
+                            // print the String that was downloaded
+                            Log.d(TAG,"Response: "+response.getResult());
+
+                            //creates an object out of the result and print outs the values
+                            try {
+                                JSONObject json = new JSONObject(response.getResult().toString());
+                                Iterator<String> iter = json.keys();
+                                while (iter.hasNext()) {
+                                    String key = iter.next();
+                                    try {
+                                        Object value = json.get(key);
+                                        Log.d(TAG,"from key: "+key);
+                                        Log.d(TAG,"from value: "+value.toString());
+                                    } catch (JSONException ex) {
+                                        // Something went wrong!
+                                    }
+                                }
+                                //Log.d(TAG,"from json: "+json.getString("description"));
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void postEmergency(final String id, Context aContext){
+        //done with koush ion
+
+        //add json properties
+        JsonObject json = new JsonObject();
+        json.addProperty("userID", id);
+        Ion.with(aContext)
+                .load(herokuEmergency)
+                .setLogging("RendeVuApi", Log.DEBUG)
+                .setJsonObjectBody(json)
+                .asString()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<String>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<String> response) {
+                        // response contains both the headers and the string result
+                        // print the response code, ie, 200
+                        if(response.getHeaders().code() != 200)
+                            Log.d(TAG,"something went wrong");
+
+                        else{
+                            Log.d(TAG,"Code: "+response.getHeaders().code());
+                            // print the String that was downloaded
+                            Log.d(TAG,"Response: "+response.getResult());
+
+                            //creates an object out of the result and print outs the values
+                            try {
+                                JSONObject json = new JSONObject(response.getResult().toString());
+                                Iterator<String> iter = json.keys();
+                                while (iter.hasNext()) {
+                                    String key = iter.next();
+                                    try {
+                                        Object value = json.get(key);
+                                        Log.d(TAG,"from key: "+key);
+                                        Log.d(TAG,"from value: "+value.toString());
+                                    } catch (JSONException ex) {
+                                        // Something went wrong!
+                                    }
+                                }
+                                //Log.d(TAG,"from json: "+json.getString("description"));
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
     }
 }
