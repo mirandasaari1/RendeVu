@@ -8,10 +8,7 @@ import java.lang.Object;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +23,9 @@ import android.widget.Toast;
 
 import edu.csumb.anna.rendevu.data.Chaperones;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
+
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
+
 
 public class AddDateActivity extends AppCompatActivity implements View.OnClickListener {
 
