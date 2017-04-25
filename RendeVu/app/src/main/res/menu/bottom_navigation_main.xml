@@ -38,11 +38,12 @@
         app:showAsAction="ifRoom" />
         -->
 
-    <!-- sign_up placeholder -->
+    <!-- sign_up placeholder
     <item
         android:id="@+id/action_login_signup"
         android:enabled="true"
         android:icon="@android:drawable/stat_sys_upload_done"
         android:title="@string/action_login_signup"
         app:showAsAction="ifRoom" />
+        -->
 </menu>

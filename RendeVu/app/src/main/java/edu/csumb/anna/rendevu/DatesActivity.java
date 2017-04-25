@@ -62,10 +62,6 @@ public class DatesActivity extends AppCompatActivity {
                                 intent = new Intent(DatesActivity.this, ProfileActivity.class);
                                 startActivity(intent);
                                 break;
-                            case R.id.action_login_signup:
-                                intent = new Intent(DatesActivity.this, LoginSignupActivity.class);
-                                startActivity(intent);
-                                break;
                         }
                         return true;
                     }

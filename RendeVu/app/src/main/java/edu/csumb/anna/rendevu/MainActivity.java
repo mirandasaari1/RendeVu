@@ -101,10 +101,6 @@ public class MainActivity extends AppCompatActivity {
                                 intent = new Intent(MainActivity.this, ProfileActivity.class);
                                 startActivity(intent);
                                 break;
-                            case R.id.action_login_signup:
-                                intent = new Intent(MainActivity.this, LoginSignupActivity.class);
-                                startActivity(intent);
-                                break;
                         }
                         return true;
                     }

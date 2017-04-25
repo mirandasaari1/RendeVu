@@ -68,10 +68,6 @@ public class ChaperonesActivity extends AppCompatActivity{
                                 intent = new Intent(ChaperonesActivity.this, ProfileActivity.class);
                                 startActivity(intent);
                                 break;
-                            case R.id.action_login_signup:
-                                intent = new Intent(ChaperonesActivity.this, LoginSignupActivity.class);
-                                startActivity(intent);
-                                break;
                         }
                         return true;
                     }
