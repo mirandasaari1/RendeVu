@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startRendeVuService();
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -267,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        sendNotification();
+        //sendNotification();
 //        RendeVuDB db = new RendeVuDB(MainActivity.this);
 //        db.insertChaperone("anna", "6197");
         //startRendeVuService();
