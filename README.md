@@ -20,8 +20,29 @@ For the second milestone we were able to
 * Improve the overall UI for RendeVu and develop an overall color scheme/theme
 
 #### Handin 3
-
+For the third milestone a lot of the loose end came together and we were able to
+* set up twilio to send texts
+* get the active date activity up and running for when the user is on dates
+* set up a local sqlite database
+* set up a server database
+* persist to both the databases
+* rule out minor issues we had previously encountered
+* work out the overall flow of the application
+* Set up beginning and endpoints via server
+* give the user ability to select date chaperones
 
 #### Known Problems
+We do know some problems currently exist, and we plan to work them out before the final presenation, such as
+* connect the chaperones to the date, meaning be able to select chaperones per date
+* Work on the navigation bar, the formatting is off on some activities
+* work on the efficiency of the server database
+#### Pretty such it is fixed, but just in case
+* app crashing on the date comfort spinner
+* authentication issues
 
 #### With more time we would...
+We did have really high hopes for what we wished to accomplish by the end of this project, and we stil have potential for a lot.
+Although the basics of the application are working great, we had a lot of date safety features we wanted the application to have,
+but the basics took a little longer than expected. We hope to implement some extra safety features by the final presentation.
+
+## We Hope You Enjoy RenduVu!
