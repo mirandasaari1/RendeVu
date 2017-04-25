@@ -55,25 +55,32 @@ public class RendeVuDB{
 
     //add date constants
 
-    public static final String GARBAGE_ID = "_id";
+
     public static final String DATES_TABLE = "_dates";
 
     public static final String DATE_ID = "_date_id";
+    public static final int DATE_ID_COL = 0;
 
     public static final String DATE_NAME = "_date_name";
+    public static final int DATE_NAME_COL = 1;
 
     public static final String DATE_TIME = "_time";
+    public static final int DATE_TIME_COL = 2;
 
     public static final String DATE = "_date";
+    public static final int DATE_COL = 3;
 
     public static final String COMFORT_LEVEL = "_comfort_level";
+    public static final int DATE_COMFORT_LEVEL_COL = 4;
 
     public static final String ADDITIONAL_INFO = "_additional_info";
+    public static final int DATE_ADDITIONAL_INFO_COL = 5;
 
     public static final String START_TIME = "_start_time";
+    public static final int DATE_START_TIME_COL = 6;
 
     public static final String END_TIME = "_end_time";
-
+    public static final int DATE_END_TIME_COL = 7;
     //public static final Calendar calendar = Calendar.getInstance();
 
     //public static  String current_date="";
@@ -320,6 +327,50 @@ public class RendeVuDB{
         this.openWriteableDB();
         long rowId = db.insert(DATES_TABLE, null, cv);
         this.closeDB();
+    }
+
+    /**
+     * Gets all users from the database
+     * @return ArrayList of users
+     */
+    public ArrayList<String> getAllDates(){
+        ArrayList<String> dates = new ArrayList<>();
+
+        this.openReadableDB();
+        Cursor cur = db.rawQuery("SELECT * FROM " + DATES_TABLE, null);
+        boolean exist = (cur.getCount() > 0);
+
+        if(exist){
+            while (cur.moveToNext()) {
+                dates.add(getStringFromCursor(cur));
+                Log.d(TAG, "Got a user");
+            }
+        }
+        if (cur != null)
+            cur.close();
+        this.closeDB();
+        return dates;
+    }
+
+    /**
+     * Gets a User from the cursor
+     * @param cursor
+     * @return User
+     */
+    private static String getStringFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                String result = "name: "+cursor.getString(DATE_NAME_COL)+"\n";
+                result += "Info: "+cursor.getString(DATE_ADDITIONAL_INFO_COL);
+                return result;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
     }
 
 

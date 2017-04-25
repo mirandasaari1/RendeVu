@@ -59,8 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
-        //startRendeVuService();
+        RendeVuDB db = new RendeVuDB(this);
 
+        //startRendeVuService();
+        db.insertDate("herp", "22", "33", "5", "first date");
+
+        //temporary code to add dates to db
+        /////////////////////////////////////
+
+        /////////////////////////////////////
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -70,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             itemView.setShiftingMode(false);
             itemView.setChecked(false);
 
-            RendeVuDB db = new RendeVuDB(this);
             db.insertChaperone("Miranda Saari", "5037537079");
             db.insertChaperone("Josh Smith", "8314285108");
             db.insertChaperone("Sal Hernandez", "6197345766");

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
 import edu.csumb.anna.rendevu.data.PlannedDates;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapterPlannedDates;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 import static com.google.android.gms.cast.CastRemoteDisplayLocalService.startService;
 
@@ -43,21 +44,15 @@ public class SecondTabFragment extends Fragment {
         ///////////////////////////////////////////
         final ArrayList<String> mobileArray = new ArrayList<String>();
         //list of data to display
+        RendeVuDB db = new RendeVuDB(MainActivity.getAppContext());
 
-//        ArrayList<User> users = db.getUsers();
+        ArrayList<String> allDates = db.getAllDates();
 
         //get data from arraylist onto a regular array
-//        for (User aUser: users){
-//
-//            Log.d(TAG, aUser.getUsername());
-//            mobileArray.add("username: "+aUser.getUsername());
-//            mobileArray.add("password: "+aUser.getPassword());
-//
-//            mobileArray.add("");
-//        }
+        for (String aDate: allDates){
+            mobileArray.add(aDate);
+        }
 
-        mobileArray.add("derp");
-        mobileArray.add("herp");
 
         ArrayAdapter adapter = new ArrayAdapter<String>(view.getContext(), R.layout.activity_listview, mobileArray);
 
