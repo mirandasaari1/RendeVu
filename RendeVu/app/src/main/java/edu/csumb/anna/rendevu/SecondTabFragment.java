@@ -1,5 +1,7 @@
 package edu.csumb.anna.rendevu;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,8 +17,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import edu.csumb.anna.rendevu.api.RendeVuAPI;
 import edu.csumb.anna.rendevu.data.PlannedDates;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapterPlannedDates;
+
+import static com.google.android.gms.cast.CastRemoteDisplayLocalService.startService;
 
 /**
  * Created by Anna on 4/3/17.
@@ -28,7 +33,7 @@ public class SecondTabFragment extends Fragment {
     static PlannedDates plannedDates;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.planned_dates_2_0, container, false);
 
@@ -64,6 +69,7 @@ public class SecondTabFragment extends Fragment {
             {
                 //get from arraylist based on position
                 Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
+                MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
             }
         });
         //END LISTVIEW CODE
@@ -79,6 +85,4 @@ public class SecondTabFragment extends Fragment {
         return view;
 
     }
-
-
 }

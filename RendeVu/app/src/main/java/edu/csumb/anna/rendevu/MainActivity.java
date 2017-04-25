@@ -41,7 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     final String TAG = "MainActivity";
-
+    private static Context mContext;
     //0 is permission granted
     //int locationPermission = 1;
 
@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = this;
 
         //startRendeVuService();
 
@@ -74,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             db.insertChaperone("Sal Hernandez", "6197345766");
             db.insertChaperone("Anna Pomelov", "4152839158");
         }
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -134,6 +135,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, AddDateActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        final Button endDateButton = (Button) findViewById(R.id.endDateButton);
+        endDateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                stopRendeVuService();
             }
         });
 
@@ -264,6 +272,10 @@ public class MainActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    public static Context getAppContext(){
+        return mContext;
     }
     @Override
     protected void onResume() {
