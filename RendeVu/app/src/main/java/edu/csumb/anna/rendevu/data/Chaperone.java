@@ -10,11 +10,11 @@ public class Chaperone extends Chaperones {
     }
 
     public Chaperone(String n, String n2) {
-        chaperoneName = n;
-        chaperoneNumber = n2;
+        this.chaperoneName = n;
+        this.chaperoneNumber = n2;
     }
     public String getChaperoneName() {
-        return chaperoneName;
+        return this.chaperoneName;
     }
 
     public void setChaperoneName(String chaperoneName) {
@@ -22,7 +22,7 @@ public class Chaperone extends Chaperones {
     }
 
     public String getChaperoneNumber() {
-        return chaperoneNumber;
+        return this.chaperoneNumber;
     }
 
     public void setChaperoneNumber(String chaperoneNumber) {

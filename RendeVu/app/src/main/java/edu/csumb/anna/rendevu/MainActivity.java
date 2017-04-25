@@ -29,6 +29,7 @@ import java.util.Random;
 
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
 import edu.csumb.anna.rendevu.api.TextMessageAPI;
+import edu.csumb.anna.rendevu.data.Chaperone;
 import edu.csumb.anna.rendevu.data.TextMessageResponse;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
 import okhttp3.OkHttpClient;
@@ -63,8 +64,7 @@ public class MainActivity extends AppCompatActivity {
         RendeVuDB db = new RendeVuDB(this);
 
         //startRendeVuService();
-        //db.insertDate("herp", "22", "33", "5", "first date");
-
+        db.insertDate("herp", "22", "33", "5", "first date");
 
         //temporary code to add dates to db
         /////////////////////////////////////

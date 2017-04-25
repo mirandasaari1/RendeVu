@@ -92,11 +92,13 @@ public class RendeVuDB{
     public static final String CHAPERONES_TABLE = "chaperones";
 
     public static final String CHAPERONE_ID = "chaperone_id";
+    public static final int CHAPERONE_ID_COL = 0;
 
     public static final String CHAPERONE_NAME = "chaperone_name";
+    public static final int CHAPERONE_NAME_COL = 1;
 
     public static final String CHAPERONE_PHONE_NUMBER = "chaperone_phone_number";
-
+    public static final int CHAPERONE_PHONE_NUMBER_COL = 2;
     //date_chaperone table constantcs
 
     public static final String DATE_CHAPERONES_TABLE ="date_chaperones";
@@ -422,7 +424,24 @@ public class RendeVuDB{
         return chaperoneID;
     }
 
+    public ArrayList<Chaperone> getAllChaperonesFromDB(){
+        ArrayList<Chaperone> chaps = new ArrayList<>();
 
+        this.openReadableDB();
+        Cursor cur = db.rawQuery("SELECT * FROM " + CHAPERONES_TABLE, null);
+        boolean exist = (cur.getCount() > 0);
+        if(exist){
+            while (cur.moveToNext()) {
+                chaps.add(getChaperoneFromCursor(cur));
+                Log.d(TAG, "Got a user");
+            }
+        }
+        if (cur != null)
+            cur.close();
+        this.closeDB();
+
+        return chaps;
+    }
 
     //END CHAPERONES METHODS
     //////////////////////////////////////////////////////////////////////////////////
@@ -439,5 +458,30 @@ public class RendeVuDB{
         long rowID = db.insert(DATE_CHAPERONES_TABLE, null, cv);
         this.closeDB();
 
+    }
+
+    /**
+     * Gets a User from the cursor
+     * @param cursor
+     * @return User
+     */
+    private static Chaperone getChaperoneFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                Chaperone chap = new Chaperone(
+                cursor.getString(CHAPERONE_NAME_COL),
+                cursor.getString(CHAPERONE_PHONE_NUMBER_COL)
+                );
+
+                Log.d("LEL", cursor.getString(CHAPERONE_NAME_COL));
+                return chap;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
     }
 }

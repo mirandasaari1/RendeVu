@@ -13,16 +13,23 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import edu.csumb.anna.rendevu.data.Chaperone;
 import edu.csumb.anna.rendevu.data.Chaperones;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 /**
  * Created by Anna on 3/25/17.
  */
 
 public class ChaperonesActivity extends AppCompatActivity{
+    final String TAG = "ChaperonesActivity";
 
     RecyclerView recyclerView;
     static Chaperones chaperones;
@@ -70,28 +77,44 @@ public class ChaperonesActivity extends AppCompatActivity{
                     }
                 });
 
-        chaperones = new Chaperones();
 
-        // Initializing list view with the custom adapter
-        itemArrayAdapter = new ArrayAdapter(R.layout.list_item, chaperones.getAllChaperones());
-        recyclerView = (RecyclerView) findViewById(R.id.item_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(itemArrayAdapter);
+        ListView listView = (ListView) findViewById(R.id.mobile_list_chaperones);
 
-        int listSize = chaperones.getAllChaperones().size();
+        //START LISTVIEW CODE
+        ///////////////////////////////////////////
+        final ArrayList<String> mobileArray = new ArrayList<String>();
+        //list of data to display
 
-        for (int i = 0; i<listSize; i++){
-            Log.i("name: ", chaperones.getAllChaperones().get(i).getChaperoneName());
-            Log.i("nnum: ", chaperones.getAllChaperones().get(i).getChaperoneNumber());
-
+        RendeVuDB db = new RendeVuDB(this);
+        ArrayList<Chaperone> theChaperones = db.getAllChaperonesFromDB();
+        for(Chaperone chap: theChaperones){
+            Log.d(TAG, chap.getChaperoneName());
+            Log.d(TAG, chap.getChaperoneNumber());
+            String temp = "Name: "+chap.getChaperoneName()+"\n";
+            temp += "Number: "+chap.getChaperoneNumber();
+            mobileArray.add(temp);
         }
+
+        android.widget.ArrayAdapter adapter = new android.widget.ArrayAdapter<String>(this, R.layout.activity_listview, mobileArray);
+
+        listView.setAdapter(adapter);
+
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
+            {
+                //get from arraylist based on position
+                Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
+                //MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
+            }
+        });
+
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        itemArrayAdapter.notifyDataSetChanged();
+        //itemArrayAdapter.notifyDataSetChanged();
     }
 
     public void removeButtonClicked() {
