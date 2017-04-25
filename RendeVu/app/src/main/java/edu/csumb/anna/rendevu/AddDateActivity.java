@@ -1,6 +1,8 @@
 package edu.csumb.anna.rendevu;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import edu.csumb.anna.rendevu.data.Chaperones;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 public class AddDateActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,7 +32,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     private EditText additionalEditText;
     private Calendar calendar;
     private NumberPicker comfortNumberPicker;
-    private Button selectChaperoneButton;;
+    private Button selectChaperoneButton;
     private int year, month, day, hour, minute;
     private Button timeButton;
     private Button dateButton;
@@ -40,7 +43,9 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
 
     private String DateName;
     private String DateInfo;
-    private int ComfortLevel;
+    private String DateoDate;
+    private String TimeoDate;
+    private String ComfortLevel;
     private CharSequence text = "";
     private int duration = Toast.LENGTH_SHORT;
 
@@ -60,6 +65,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         timeButton = (Button) findViewById(R.id.timeButton);
         dateButton = (Button) findViewById(R.id.dateButton);
         submitDateButton = (Button) findViewById(R.id.submitDateButton);
+        selectChaperoneButton = (Button) findViewById(R.id.selectChaperoneButton);
         timeEditText = (EditText) findViewById(R.id.timeEditText);
         dateEditText = (EditText) findViewById(R.id.dateEditText);
         comfortNumberPicker = (NumberPicker) findViewById(R.id.comfortNumberPicker);
@@ -70,8 +76,9 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         timeButton.setOnClickListener(this);
         dateButton.setOnClickListener(this);
         submitDateButton.setOnClickListener(this);
+        selectChaperoneButton.setOnClickListener(this);
 
-
+        //extra variables
         DateName = nameEditText.getText().toString();
         DateInfo = additionalEditText.getText().toString();
 
@@ -89,6 +96,11 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
                 selectedComfortTextView.setText("Beginning comfort level is: " + newVal);
             }
         });
+
+        //puts into string format for db
+        ComfortLevel= String.valueOf(comfortNumberPicker.getValue());
+
+
         comfortNumberPicker.setWrapSelectorWheel(false);
         comfortNumberPicker.setDisplayedValues(nums);
         comfortNumberPicker.setValue(0);
@@ -122,7 +134,10 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             toast.show();
             Intent intent = new Intent(AddDateActivity.this, MainActivity.class);
             startActivity(intent);
-            
+
+            //adds date information to local db
+            RendeVuDB db = new RendeVuDB(this);
+            db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
         }
 
         //pick the date of the date
@@ -140,6 +155,11 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }, year, month, day);
             datePickerDialog.show();
+
+            //puts date into string for the db
+            DateoDate = dateEditText.toString().substring(0,1);
+            DateoDate += dateEditText.toString().substring(3,4);
+            DateoDate += dateEditText.toString().substring(6);
         }
 
         //pick time of the date
@@ -156,6 +176,9 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }, hour, minute, false);
             timePickerDialog.show();
+
+            //puts into strong for the database
+            TimeoDate= timeEditText.toString();
         }
     }
 }
