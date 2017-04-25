@@ -136,8 +136,8 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(intent);
 
             //adds date information to local db
-            RendeVuDB db = new RendeVuDB(this);
-            db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
+//            RendeVuDB db = new RendeVuDB(this);
+//            db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
         }
 
         //pick the date of the date
