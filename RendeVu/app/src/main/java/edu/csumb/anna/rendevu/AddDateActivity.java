@@ -99,14 +99,9 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        //puts into string format for db
-        ComfortLevel= String.valueOf(comfortNumberPicker.getValue());
-
-
         comfortNumberPicker.setWrapSelectorWheel(false);
         comfortNumberPicker.setDisplayedValues(nums);
         comfortNumberPicker.setValue(0);
-
     }
 
     //handles chaperone selection and date submission
@@ -120,34 +115,11 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
 
             // Create a bundle object
             Bundle b = new Bundle();
-            b.putString("dateName",DateName);
+            b.putString("dateName", DateName);
             // Add the bundle to the intent.
             intent.putExtras(b);
             // start the ResultActivity
             startActivity(intent);
-        }
-
-        //submits the date information
-        if (v.getId() == R.id.submitDateButton) {
-            Log.d("entered", "enter");
-            Log.d("name", DateName);
-            Log.d("date", DateoDate);
-            Log.d("Time", TimeoDate);
-            Log.d("comfort", ComfortLevel);
-            Log.d("info", DateInfo);
-            text = "Date Added!";
-            duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-//            Intent intent = new Intent(AddDateActivity.this, MainActivity.class);
-//            startActivity(intent);
-
-
-
-           // adds date information to local db
-            RendeVuDB db = new RendeVuDB(this);
-            db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
         }
 
         //pick the date of the date
@@ -166,10 +138,6 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }, year, month, day);
             datePickerDialog.show();
-
-            //puts date into string for the db
-            DateoDate=dateEditText.getText().toString();
-
         }
 
 
@@ -187,11 +155,30 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }, hour, minute, false);
             timePickerDialog.show();
+        }
 
+        //submits the date information
+        if (v.getId() == R.id.submitDateButton) {
 
+            //formats to string to be inserted into db
+            DateName = nameEditText.getText().toString();
+            DateInfo = additionalEditText.getText().toString();
+            ComfortLevel = String.valueOf(comfortNumberPicker.getValue());
+            TimeoDate = timeEditText.getText().toString();
+            DateoDate = dateEditText.getText().toString();
 
-            //puts into strong for the database
-            TimeoDate= timeEditText.getText().toString();
+            text = "Date Added!";
+            duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(this, text, duration);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+            Intent intent = new Intent(AddDateActivity.this, MainActivity.class);
+            startActivity(intent);
+
+            // adds date information to local db
+            RendeVuDB db = new RendeVuDB(this);
+            db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
+
         }
     }
 }
