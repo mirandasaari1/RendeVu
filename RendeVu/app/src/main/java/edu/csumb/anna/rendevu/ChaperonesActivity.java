@@ -77,7 +77,11 @@ public class ChaperonesActivity extends AppCompatActivity{
                     }
                 });
 
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
         ListView listView = (ListView) findViewById(R.id.mobile_list_chaperones);
 
         //START LISTVIEW CODE
@@ -108,13 +112,6 @@ public class ChaperonesActivity extends AppCompatActivity{
                 //MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
             }
         });
-
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        //itemArrayAdapter.notifyDataSetChanged();
     }
 
     public void removeButtonClicked() {

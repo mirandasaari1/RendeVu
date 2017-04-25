@@ -59,6 +59,7 @@
         </activity>
         <activity android:name=".SelectChaperoneActivity"></activity>
         <activity android:name=".GetNumberActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
         <service android:name=".RendeVuService"/>
         <receiver android:name=".ButtonReceiver"/>
     </application>

@@ -293,6 +293,9 @@ public class LoginSignupActivity extends AppCompatActivity implements
                     SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
                     SharedPreferences.Editor edit = userDetails.edit();
                     edit.putString("userID", user.getUid());
+                    edit.putString("name", user.getDisplayName());
+                    edit.putString("email", user.getEmail());
+                    edit.putString("imgURL", user.getPhotoUrl().toString());
                     edit.commit();
 
                     Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);

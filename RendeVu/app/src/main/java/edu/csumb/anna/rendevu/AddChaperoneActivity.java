@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
+
 /**
  * Created by Anna on 3/25/17.
  */
@@ -25,12 +27,16 @@ public class AddChaperoneActivity extends AppCompatActivity{
         chaperoneName = (EditText) findViewById(R.id.enter_name);
         chaperonePhone = (EditText) findViewById(R.id.enter_number);
         addChaperoneButton = (Button) findViewById(R.id.button);
+
+        final RendeVuDB db = new RendeVuDB(this);
+
         addChaperoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = chaperoneName.getText().toString();
                 String number = chaperonePhone.getText().toString();
-                ChaperonesActivity.chaperones.addItem(name, number);
+
+                db.insertChaperone(name, number);
                 Toast.makeText(AddChaperoneActivity.this, "Chaperone Added", Toast.LENGTH_SHORT).show();
                 finish();
             }

@@ -81,11 +81,6 @@ public class MainActivity extends AppCompatActivity {
             BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
             itemView.setShiftingMode(false);
             itemView.setChecked(false);
-
-            db.insertChaperone("Miranda Saari", "5037537079");
-            db.insertChaperone("Josh Smith", "8314285108");
-            db.insertChaperone("Sal Hernandez", "6197345766");
-            db.insertChaperone("Anna Pomelov", "4152839158");
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -102,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
                                 intent = new Intent(MainActivity.this, DatesActivity.class);
                                 startActivity(intent);
                                 break;
-//                            case R.id.action_profile:
-//                                intent = new Intent(MainActivity.this, ProfileActivity.class);
-//                                startActivity(intent);
-//                                break;
+                            case R.id.action_profile:
+                                intent = new Intent(MainActivity.this, ProfileActivity.class);
+                                startActivity(intent);
+                                break;
                             case R.id.action_login_signup:
                                 intent = new Intent(MainActivity.this, LoginSignupActivity.class);
                                 startActivity(intent);
