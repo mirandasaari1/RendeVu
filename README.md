@@ -30,6 +30,7 @@ For the third milestone a lot of the loose end came together and we were able to
 * work out the overall flow of the application
 * Set up beginning and endpoints via server
 * give the user ability to select date chaperones
+* display a notification with buttons to inform the service if the client is ok or not
 
 #### Known Problems
 We do know some problems currently exist, and we plan to work them out before the final presenation, such as
