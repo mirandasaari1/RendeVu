@@ -56,8 +56,7 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".LoginSignupActivity"></activity>
-
-
+        <activity android:name=".SelectChaperoneActivity"></activity>
         <activity android:name=".GetNumberActivity"></activity>
         <service android:name=".RendeVuService"/>
         <receiver android:name=".ButtonReceiver"/>
