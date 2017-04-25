@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -35,7 +36,7 @@ public class SecondTabFragment extends Fragment {
 
         //START LISTVIEW CODE
         ///////////////////////////////////////////
-        ArrayList<String> mobileArray = new ArrayList<String>();
+        final ArrayList<String> mobileArray = new ArrayList<String>();
         //list of data to display
 
 //        ArrayList<User> users = db.getUsers();
@@ -57,6 +58,14 @@ public class SecondTabFragment extends Fragment {
 
         listView.setAdapter(adapter);
 
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
+            {
+                //get from arraylist based on position
+                Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
+            }
+        });
         //END LISTVIEW CODE
         ////////////////////////////////////////////
 //        plannedDates = new PlannedDates();
