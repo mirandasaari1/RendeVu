@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -62,11 +63,15 @@ public class MainActivity extends AppCompatActivity {
         RendeVuDB db = new RendeVuDB(this);
 
         //startRendeVuService();
-        db.insertDate("herp", "22", "33", "5", "first date");
+        //db.insertDate("herp", "22", "33", "5", "first date");
+
 
         //temporary code to add dates to db
         /////////////////////////////////////
 
+        SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
+        userID = userDetails.getString("userID", "no ID");
+        toastIt("current user: "+userID);
         /////////////////////////////////////
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -153,12 +158,6 @@ public class MainActivity extends AppCompatActivity {
 
         //to access dev tools in chrome and see the database contents
         Stetho.initializeWithDefaults(this);
-
-        SharedPreferences prefs = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-        String userID = prefs.getString("userID", "none");
-
-        toastIt(userID);
-
 
         //CHECK FOR PERMISSIONS
         ///////////////////////////////////
