@@ -3,6 +3,7 @@ package edu.csumb.anna.rendevu;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.lang.Object;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -58,7 +60,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_date);
-
+        Log.d("access", "hello");
         //widget variables
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         additionalEditText = (EditText) findViewById(R.id.additionalEditText);
@@ -127,17 +129,25 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
 
         //submits the date information
         if (v.getId() == R.id.submitDateButton) {
+            Log.d("entered", "enter");
+            Log.d("name", DateName);
+            Log.d("date", DateoDate);
+            Log.d("Time", TimeoDate);
+            Log.d("comfort", ComfortLevel);
+            Log.d("info", DateInfo);
             text = "Date Added!";
             duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText(this, text, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-            Intent intent = new Intent(AddDateActivity.this, MainActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(AddDateActivity.this, MainActivity.class);
+//            startActivity(intent);
 
-            //adds date information to local db
-//            RendeVuDB db = new RendeVuDB(this);
-//            db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
+
+
+           // adds date information to local db
+            RendeVuDB db = new RendeVuDB(this);
+            db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
         }
 
         //pick the date of the date
@@ -148,6 +158,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             month = c.get(Calendar.MONTH);
             day = c.get(Calendar.DAY_OF_MONTH);
 
+
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int newYear, int monthOfYear, int dayOfMonth) {
@@ -157,10 +168,10 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             datePickerDialog.show();
 
             //puts date into string for the db
-            DateoDate = dateEditText.toString().substring(0,1);
-            DateoDate += dateEditText.toString().substring(3,4);
-            DateoDate += dateEditText.toString().substring(6);
+            DateoDate=dateEditText.getText().toString();
+
         }
+
 
         //pick time of the date
         if (v == timeButton) {
@@ -177,8 +188,10 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             }, hour, minute, false);
             timePickerDialog.show();
 
+
+
             //puts into strong for the database
-            TimeoDate= timeEditText.toString();
+            TimeoDate= timeEditText.getText().toString();
         }
     }
 }
