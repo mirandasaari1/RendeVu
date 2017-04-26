@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -28,6 +29,7 @@ import java.util.Random;
 
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
 import edu.csumb.anna.rendevu.api.TextMessageAPI;
+import edu.csumb.anna.rendevu.data.Chaperone;
 import edu.csumb.anna.rendevu.data.TextMessageResponse;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
 import okhttp3.OkHttpClient;
@@ -41,7 +43,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     final String TAG = "MainActivity";
-
+    private static Context mContext;
     //0 is permission granted
     //int locationPermission = 1;
 
@@ -57,8 +59,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startRendeVuService();
+        mContext = this;
 
+        RendeVuDB db = new RendeVuDB(this);
+
+        //startRendeVuService();
+        db.insertDate("herp", "22", "33", "5", "first date");
+
+        //temporary code to add dates to db
+        /////////////////////////////////////
+
+        SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
+        userID = userDetails.getString("userID", "no ID");
+        toastIt("current user: "+userID);
+        /////////////////////////////////////
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -67,14 +81,7 @@ public class MainActivity extends AppCompatActivity {
             BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
             itemView.setShiftingMode(false);
             itemView.setChecked(false);
-
-            RendeVuDB db = new RendeVuDB(this);
-            db.insertChaperone("Miranda Saari", "5037537079");
-            db.insertChaperone("Josh Smith", "8314285108");
-            db.insertChaperone("Sal Hernandez", "6197345766");
-            db.insertChaperone("Anna Pomelov", "4152839158");
         }
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -90,12 +97,8 @@ public class MainActivity extends AppCompatActivity {
                                 intent = new Intent(MainActivity.this, DatesActivity.class);
                                 startActivity(intent);
                                 break;
-//                            case R.id.action_profile:
-//                                intent = new Intent(MainActivity.this, ProfileActivity.class);
-//                                startActivity(intent);
-//                                break;
-                            case R.id.action_login_signup:
-                                intent = new Intent(MainActivity.this, LoginSignupActivity.class);
+                            case R.id.action_profile:
+                                intent = new Intent(MainActivity.this, ProfileActivity.class);
                                 startActivity(intent);
                                 break;
                         }
@@ -137,14 +140,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button endDateButton = (Button) findViewById(R.id.endDateButton);
+        endDateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                stopRendeVuService();
+            }
+        });
+
         //to access dev tools in chrome and see the database contents
         Stetho.initializeWithDefaults(this);
-
-        SharedPreferences prefs = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-        String userID = prefs.getString("userID", "none");
-
-        toastIt(userID);
-
 
         //CHECK FOR PERMISSIONS
         ///////////////////////////////////
@@ -264,6 +268,10 @@ public class MainActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    public static Context getAppContext(){
+        return mContext;
     }
     @Override
     protected void onResume() {

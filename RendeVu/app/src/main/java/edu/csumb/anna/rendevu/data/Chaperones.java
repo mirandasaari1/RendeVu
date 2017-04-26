@@ -13,9 +13,9 @@ public class Chaperones {
 
     public Chaperones() {
         allChaperones = new ArrayList<Chaperone>();
-        allChaperones.add(new Chaperone("Anna Pomelov", "(415)283-9158"));
-        allChaperones.add(new Chaperone("Miranda Saari", "(303)777-2846"));
-        allChaperones.add(new Chaperone("Sal Hernandez", "(409)247-1264"));
+//        allChaperones.add(new Chaperone("Anna Pomelov", "(415)283-9158"));
+//        allChaperones.add(new Chaperone("Miranda Saari", "(303)777-2846"));
+//        allChaperones.add(new Chaperone("Sal Hernandez", "(409)247-1264"));
     }
 
     public ArrayList<Chaperone> getAllChaperones() {
