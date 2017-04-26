@@ -1,5 +1,8 @@
 package edu.csumb.anna.rendevu;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +10,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +34,9 @@ import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 public class ChaperonesActivity extends AppCompatActivity{
     final String TAG = "ChaperonesActivity";
+
+
+    public static int NOTIFICATION_ID = 1;
 
     RecyclerView recyclerView;
     static Chaperones chaperones;
@@ -119,4 +126,5 @@ public class ChaperonesActivity extends AppCompatActivity{
         Intent intent = new Intent(ChaperonesActivity.this, AddChaperoneActivity.class);
         startActivity(intent);
     }
+
 }

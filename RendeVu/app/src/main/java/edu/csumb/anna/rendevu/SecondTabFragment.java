@@ -1,9 +1,13 @@
 package edu.csumb.anna.rendevu;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,12 +26,17 @@ import edu.csumb.anna.rendevu.data.PlannedDates;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapterPlannedDates;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.google.android.gms.cast.CastRemoteDisplayLocalService.startService;
 
 /**
  * Created by Anna on 4/3/17.
  */
 public class SecondTabFragment extends Fragment {
+
+
+    public static int NOTIFICATION_ID = 1;
+
     final String TAG = "SecondTabFragment";
     RecyclerView recyclerView;
     ArrayAdapterPlannedDates itemArrayAdapter;
@@ -64,6 +73,7 @@ public class SecondTabFragment extends Fragment {
             {
                 //get from arraylist based on position
                 Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
+                sendNotification();
                 MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
             }
         });
@@ -78,6 +88,34 @@ public class SecondTabFragment extends Fragment {
 //        recyclerView.setAdapter(itemArrayAdapter);
 
         return view;
+    }
 
+    public void sendNotification(){
+        //Notifications with a broadcast receiver
+        ///////////////////////////////////////
+        //Create an Intent for the BroadcastReceiver
+        Intent buttonIntentYes = new Intent(MainActivity.getAppContext(), ButtonReceiver.class);
+        buttonIntentYes.putExtra("notificationId",NOTIFICATION_ID);
+        buttonIntentYes.putExtra("isOK", true);
+
+        Intent buttonIntentNo = new Intent(MainActivity.getAppContext(), ButtonReceiver.class);
+        buttonIntentNo.putExtra("notificationId",NOTIFICATION_ID+1);
+        buttonIntentNo.putExtra("isOK", false);
+
+//Create the PendingIntent
+        PendingIntent btPendingIntentYes = PendingIntent.getBroadcast(MainActivity.getAppContext(), 0, buttonIntentYes,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent btPendingIntentNo = PendingIntent.getBroadcast(MainActivity.getAppContext(), 1, buttonIntentNo,PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.getAppContext())
+                .setSmallIcon(R.drawable.ic_notification_rendevu)
+                .setContentTitle("Is the date going ok?")
+                .setContentText("Let us know!")
+                .addAction(android.R.drawable.checkbox_on_background, "Yes", btPendingIntentYes)
+                .addAction(android.R.drawable.ic_delete, "No", btPendingIntentNo)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(Notification.PRIORITY_MAX);
+
+        NotificationManager notificationManager = (NotificationManager) MainActivity.getAppContext().getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 }

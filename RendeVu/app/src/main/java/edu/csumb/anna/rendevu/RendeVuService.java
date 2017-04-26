@@ -44,6 +44,8 @@ public class RendeVuService extends Service {
 
             RendeVuAPI a = new RendeVuAPI();
             //posts location to the server
+            SharedPreferences userDetails = RendeVuService.this.getSharedPreferences("userdetails", MODE_PRIVATE);
+            userID = userDetails.getString("userID", "no ID");
             a.postLocation(userID, latitude, longitude, RendeVuService.this);
         }
 

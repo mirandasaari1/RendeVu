@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         RendeVuDB db = new RendeVuDB(this);
 
-        sendNotification();
+        //sendNotification();
         //startRendeVuService();
-//        db.insertDate("herp", "22", "33", "5", "first date");
+        db.insertDate("derp", "22", "33", "5", "first date");
 
         //temporary code to add dates to db
         /////////////////////////////////////
