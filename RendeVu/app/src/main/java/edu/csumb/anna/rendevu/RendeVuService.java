@@ -43,8 +43,9 @@ public class RendeVuService extends Service {
             String longitude = Double.toString(location.getLongitude());
 
             RendeVuAPI a = new RendeVuAPI();
-            //posts location to the server
-            SharedPreferences userDetails = RendeVuService.this.getSharedPreferences("userdetails", MODE_PRIVATE);
+            //posts to the server
+
+            SharedPreferences userDetails = MainActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
             userID = userDetails.getString("userID", "no ID");
             a.postLocation(userID, latitude, longitude, RendeVuService.this);
         }
@@ -86,14 +87,6 @@ public class RendeVuService extends Service {
     public void onCreate() {
         Log.e(TAG, "onCreate");
         initializeLocationManager();
-
-        //posts to the server
-
-        RendeVuAPI a = new RendeVuAPI();
-
-        SharedPreferences prefs = this.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-        userID = prefs.getString("userID", "nothing");
-
 
         try {
             mLocationManager.requestLocationUpdates(
