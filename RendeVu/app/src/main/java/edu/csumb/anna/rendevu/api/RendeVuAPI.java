@@ -171,12 +171,12 @@ public class RendeVuAPI {
     public String postLogin(String uID, Context aContext){
         String responseString = null;
 
+        Log.d(TAG, "post login");
         Long tsLong = System.currentTimeMillis()/1000;
         final String timestamp = tsLong.toString();
 
         JsonObject json = new JsonObject();
         json.addProperty("userID", uID);
-
         try {
             String test = Ion.with(aContext)
                     .load(herokuLogin)
