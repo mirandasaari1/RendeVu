@@ -286,6 +286,14 @@ public class LoginSignupActivity extends AppCompatActivity implements
                     intent.putExtra("fullName", user.getDisplayName());
                     intent.putExtra("email", user.getEmail());
                     intent.putExtra("imgURL", user.getPhotoUrl().toString());
+
+                    SharedPreferences.Editor editor = getSharedPreferences("loginInfo", MODE_PRIVATE).edit();
+                    editor.putString("userID", user.getUid());
+                    editor.putString("fullName", user.getDisplayName());
+                    editor.putString("email", user.getEmail());
+                    editor.putString("imgURL", user.getPhotoUrl().toString());
+                    editor.commit();
+
                     startActivity(intent);
                 }
 
@@ -295,6 +303,10 @@ public class LoginSignupActivity extends AppCompatActivity implements
                     //updates the current user preference
                     SharedPreferences.Editor editor = getSharedPreferences("loginInfo", MODE_PRIVATE).edit();
                     editor.putString("userID", user.getUid());
+                    editor.putString("fullName", user.getDisplayName());
+                    editor.putString("email", user.getEmail());
+                    editor.putString("imgURL", user.getPhotoUrl().toString());
+                    editor.commit();
 
                     Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

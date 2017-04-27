@@ -79,9 +79,9 @@ public class ProfileActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
+        SharedPreferences userDetails = this.getSharedPreferences("loginInfo", MODE_PRIVATE);
         String userID = userDetails.getString("userID", "no ID");
-        String name = userDetails.getString("name", "no name");
+        String name = userDetails.getString("fullName", "no name");
         String email = userDetails.getString("email", "no email");
         String imgURL = userDetails.getString("imgURL", "no imgURL");
 

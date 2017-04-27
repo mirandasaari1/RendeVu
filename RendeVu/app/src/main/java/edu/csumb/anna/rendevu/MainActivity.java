@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         //temporary code to add dates to db
         /////////////////////////////////////
 
-        SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
+        SharedPreferences userDetails = this.getSharedPreferences("loginInfo", MODE_PRIVATE);
         userID = userDetails.getString("userID", "no ID");
         toastIt("current user: "+userID);
         /////////////////////////////////////

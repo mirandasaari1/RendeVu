@@ -94,10 +94,17 @@ public class GetNumberActivity extends AppCompatActivity implements View.OnClick
                 db.insertPhoneNumber(input);
                 Log.d(TAG, "FROM THE OBJECT...SIGNUP" + resp);
 
-                SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
-                SharedPreferences.Editor edit = userDetails.edit();
-                edit.putString("userID", userID);
-                edit.commit();
+//                SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
+//                SharedPreferences.Editor edit = userDetails.edit();
+//                edit.putString("userID", userID);
+//                edit.commit();
+
+                SharedPreferences.Editor editor = getSharedPreferences("loginInfo", MODE_PRIVATE).edit();
+                editor.putString("userID", userID);
+                editor.putString("fullName", fullName);
+                editor.putString("email", email);
+                editor.putString("imgURL", imgURL);
+                editor.commit();
 
                 //clears the activity stack
                 Intent intent = new Intent(GetNumberActivity.this, MainActivity.class);
