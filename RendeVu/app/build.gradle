@@ -6,7 +6,7 @@ android {
             keyAlias 'RendeVu'
             keyPassword 'bennie'
             storeFile file('D:/android.jks')
-            storePassword 'throwaway'
+            storePassword 'bennie'
         }
     }
     compileSdkVersion 25
@@ -16,7 +16,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 3
-        versionName "3.0"
+        versionName '3.0'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // Enabling multidex support.
@@ -27,6 +27,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+            minifyEnabled true
         }
     }
     productFlavors {

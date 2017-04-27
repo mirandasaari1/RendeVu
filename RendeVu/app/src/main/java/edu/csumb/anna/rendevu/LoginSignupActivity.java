@@ -120,7 +120,7 @@ public class LoginSignupActivity extends AppCompatActivity implements
 //                    signOut();
 //                }
 //                else
-                    updateUI(user);
+                updateUI(user);
             }
         };
         // [END auth_state_listener]
@@ -293,13 +293,8 @@ public class LoginSignupActivity extends AppCompatActivity implements
                 else{
 
                     //updates the current user preference
-                    SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
-                    SharedPreferences.Editor edit = userDetails.edit();
-                    edit.putString("userID", user.getUid());
-                    edit.putString("name", user.getDisplayName());
-                    edit.putString("email", user.getEmail());
-                    edit.putString("imgURL", user.getPhotoUrl().toString());
-                    edit.commit();
+                    SharedPreferences.Editor editor = getSharedPreferences("loginInfo", MODE_PRIVATE).edit();
+                    editor.putString("userID", user.getUid());
 
                     Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -320,7 +315,7 @@ public class LoginSignupActivity extends AppCompatActivity implements
                 findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
             }
         } catch (JSONException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
 
     }

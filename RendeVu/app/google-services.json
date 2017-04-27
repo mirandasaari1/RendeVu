@@ -15,19 +15,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "616298123307-dl3ptucod6oockvgqf0ls536kqsm9g7p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.csumb.anna.rendevu",
+            "certificate_hash": "7c1d816d6d308cd07cc95836b969a51b645551c7"
+          }
+        },
+        {
           "client_id": "616298123307-r4qh15570feua5n1bc8hq0m4qkd86a7b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "edu.csumb.anna.rendevu",
             "certificate_hash": "905ceca251fa289bb5ca23c48971c195e7307075"
-          }
-        },
-        {
-          "client_id": "616298123307-4h6k9kvqk9pt1thgpuj767tulecesqvh.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "edu.csumb.anna.rendevu",
-            "certificate_hash": "4a7462490a007eb786e6780c028c1545f309d58f"
           }
         },
         {
