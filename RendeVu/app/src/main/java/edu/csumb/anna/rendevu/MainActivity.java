@@ -24,6 +24,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.Random;
 
@@ -63,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         RendeVuDB db = new RendeVuDB(this);
 
+        //sendNotification();
         //startRendeVuService();
-        db.insertDate("herp", "22", "33", "5", "first date");
+        db.insertDate("derp", "22", "33", "5", "first date");
 
         //temporary code to add dates to db
         /////////////////////////////////////

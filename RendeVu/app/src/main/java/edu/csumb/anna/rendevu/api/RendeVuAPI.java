@@ -12,7 +12,9 @@ import com.koushikdutta.ion.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
@@ -171,12 +173,35 @@ public class RendeVuAPI {
     public String postLogin(String uID, Context aContext){
         String responseString = null;
 
-        Log.d(TAG, "post login");
         Long tsLong = System.currentTimeMillis()/1000;
         final String timestamp = tsLong.toString();
 
+
+        HashMap<Integer, String> hm = new HashMap<Integer, String>();
+        hm.put(61616, "sal");
+        hm.put(79797, "derp");
+
+
+        String chapPayload = "{";
+
+        boolean firstCheck = false;
+        for (Map.Entry<Integer, String> entry : hm.entrySet()) {
+
+            if (firstCheck)
+                chapPayload +=",";
+
+            chapPayload += "\""+entry.getValue()+"\": ["+
+                    "{\"name\":\""+entry.getValue()+"\"," +
+                    "\"phone_number\":\""+entry.getKey()+"\"}" +
+                    " ]";
+            firstCheck = true;
+        }
+        chapPayload += "}";
+
         JsonObject json = new JsonObject();
         json.addProperty("userID", uID);
+        json.addProperty("chaperones", chapPayload);
+
         try {
             String test = Ion.with(aContext)
                     .load(herokuLogin)

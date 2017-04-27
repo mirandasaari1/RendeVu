@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.gms.common.api.Status;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +64,7 @@ public class LoginSignupActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_signup);
+
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
