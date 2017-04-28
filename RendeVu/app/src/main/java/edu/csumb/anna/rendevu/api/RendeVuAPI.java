@@ -190,10 +190,10 @@ public class RendeVuAPI {
             if (firstCheck)
                 chapPayload +=",";
 
-            chapPayload += "\""+entry.getValue()+"\": ["+
+            chapPayload += "\""+entry.getValue()+"\":["+
                     "{\"name\":\""+entry.getValue()+"\"," +
                     "\"phone_number\":\""+entry.getKey()+"\"}" +
-                    " ]";
+                    "]";
             firstCheck = true;
         }
         chapPayload += "}";
