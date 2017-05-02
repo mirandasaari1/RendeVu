@@ -12,11 +12,16 @@ import com.koushikdutta.ion.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+
+import edu.csumb.anna.rendevu.MainActivity;
+import edu.csumb.anna.rendevu.data.Chaperone;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 /**
  * Created by Sal on 4/5/2017.
@@ -176,31 +181,9 @@ public class RendeVuAPI {
         Long tsLong = System.currentTimeMillis()/1000;
         final String timestamp = tsLong.toString();
 
-
-        HashMap<Integer, String> hm = new HashMap<Integer, String>();
-        hm.put(61616, "sal");
-        hm.put(79797, "derp");
-
-
-        String chapPayload = "{";
-
-        boolean firstCheck = false;
-        for (Map.Entry<Integer, String> entry : hm.entrySet()) {
-
-            if (firstCheck)
-                chapPayload +=",";
-
-            chapPayload += "\""+entry.getValue()+"\": ["+
-                    "{\"name\":\""+entry.getValue()+"\"," +
-                    "\"phone_number\":\""+entry.getKey()+"\"}" +
-                    " ]";
-            firstCheck = true;
-        }
-        chapPayload += "}";
-
         JsonObject json = new JsonObject();
         json.addProperty("userID", uID);
-        json.addProperty("chaperones", chapPayload);
+        //json.addProperty("chaperones", chapPayload);
 
         try {
             String test = Ion.with(aContext)
@@ -222,9 +205,30 @@ public class RendeVuAPI {
     public void postStartDate(final String id, Context aContext){
         //done with koush ion
 
+
+        String chapPayload = "{";
+        boolean firstCheck = false;
+
+        RendeVuDB db = new RendeVuDB(MainActivity.getAppContext());
+
+        ArrayList<Chaperone> theChaperones = db.getAllChaperonesFromDB();
+
+        int count = 0;
+        for (Chaperone a : theChaperones) {
+            if (firstCheck)
+                chapPayload +=",";
+
+            chapPayload += "\""+(count++)+"\":["+
+                    "{\"name\":\""+a.getChaperoneName()+"\"," +
+                    "\"phone_number\":\""+a.getChaperoneNumber()+"\"}" +
+                    "]";
+            firstCheck = true;
+        }
+        chapPayload += "}";
         //add json properties
         JsonObject json = new JsonObject();
         json.addProperty("userID", id);
+        json.addProperty("chaperones", chapPayload);
         Ion.with(aContext)
                 .load(herokuStartDate)
                 .setLogging("RendeVuApi", Log.DEBUG)

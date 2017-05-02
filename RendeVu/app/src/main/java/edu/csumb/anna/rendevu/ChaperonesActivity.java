@@ -94,6 +94,7 @@ public class ChaperonesActivity extends AppCompatActivity{
 
         RendeVuDB db = new RendeVuDB(this);
         ArrayList<Chaperone> theChaperones = db.getAllChaperonesFromDB();
+
         for(Chaperone chap: theChaperones){
             Log.d(TAG, chap.getChaperoneName());
             Log.d(TAG, chap.getChaperoneNumber());
