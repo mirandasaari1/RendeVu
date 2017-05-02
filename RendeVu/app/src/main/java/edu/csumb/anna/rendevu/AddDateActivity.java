@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.DatePicker;
@@ -34,7 +35,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     private EditText additionalEditText;
     private Calendar calendar;
     private NumberPicker comfortNumberPicker;
-    private Button selectChaperoneButton;
+    //private Button selectChaperoneButton;
     private int year, month, day, hour, minute;
     private Button timeButton;
     private Button dateButton;
@@ -67,25 +68,22 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         timeButton = (Button) findViewById(R.id.timeButton);
         dateButton = (Button) findViewById(R.id.dateButton);
         submitDateButton = (Button) findViewById(R.id.submitDateButton);
-        selectChaperoneButton = (Button) findViewById(R.id.selectChaperoneButton);
         timeEditText = (EditText) findViewById(R.id.timeEditText);
         dateEditText = (EditText) findViewById(R.id.dateEditText);
         comfortNumberPicker = (NumberPicker) findViewById(R.id.comfortNumberPicker);
         selectedComfortTextView = (TextView) findViewById(R.id.selectedComfortTextView);
-        selectChaperoneButton = (Button) findViewById(R.id.selectChaperoneButton);
 
         //Listeners
         timeButton.setOnClickListener(this);
         dateButton.setOnClickListener(this);
         submitDateButton.setOnClickListener(this);
-        selectChaperoneButton.setOnClickListener(this);
 
         //extra variables
         DateName = nameEditText.getText().toString();
         DateInfo = additionalEditText.getText().toString();
 
         //number picker for comfort level
-        String[] nums = new String[10];
+        String[] nums = new String[11];
 
         for(int i=0; i<nums.length; i++)
             nums[i] = Integer.toString(i);
@@ -98,29 +96,29 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
                 selectedComfortTextView.setText("Beginning comfort level is: " + newVal);
             }
         });
-
         comfortNumberPicker.setWrapSelectorWheel(false);
         comfortNumberPicker.setDisplayedValues(nums);
         comfortNumberPicker.setValue(0);
+
     }
 
     //handles chaperone selection and date submission
     @Override
     public void onClick(View v) {
 
-        //opens activity for chaperone selection
-        if (v.getId() == R.id.selectChaperoneButton) {
-            Intent intent = new Intent(AddDateActivity.this, SelectChaperoneActivity.class);
-            startActivity(intent);
-
-            // Create a bundle object
-            Bundle b = new Bundle();
-            b.putString("dateName", DateName);
-            // Add the bundle to the intent.
-            intent.putExtras(b);
-            // start the ResultActivity
-            startActivity(intent);
-        }
+//        //opens activity for chaperone selection
+//        if (v.getId() == R.id.selectChaperoneButton) {
+//            Intent intent = new Intent(AddDateActivity.this, SelectChaperoneActivity.class);
+//            startActivity(intent);
+//
+//            // Create a bundle object
+//            Bundle b = new Bundle();
+//            b.putString("dateName", DateName);
+//            // Add the bundle to the intent.
+//            intent.putExtras(b);
+//            // start the ResultActivity
+//            startActivity(intent);
+//        }
 
         //pick the date of the date
         if (v == dateButton) {
