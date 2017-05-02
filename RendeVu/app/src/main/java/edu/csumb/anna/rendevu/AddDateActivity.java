@@ -6,11 +6,16 @@ import java.util.Date;
 import java.lang.Object;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -60,7 +65,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_date);
+        setContentView(R.layout.activity_add_date_2);
         Log.d("access", "hello");
         //widget variables
         nameEditText = (EditText) findViewById(R.id.nameEditText);
@@ -99,6 +104,39 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         comfortNumberPicker.setWrapSelectorWheel(false);
         comfortNumberPicker.setDisplayedValues(nums);
         comfortNumberPicker.setValue(0);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView)  bottomNavigationView.getChildAt(0);
+        for(int i = 0; i < menuView.getChildCount(); i++) {
+            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
+            itemView.setShiftingMode(false);
+            itemView.setChecked(false);
+        }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.action_chaperones:
+                                intent = new Intent(AddDateActivity.this, ChaperonesActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.action_dates:
+                                intent = new Intent(AddDateActivity.this, DatesActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.action_profile:
+                                intent = new Intent(AddDateActivity.this, ProfileActivity.class);
+                                startActivity(intent);
+                                break;
+                        }
+                        return true;
+                    }
+                });
 
     }
 
