@@ -1,5 +1,6 @@
 package edu.csumb.anna.rendevu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,10 +18,15 @@ import android.view.MenuItem;
 
 public class DatesActivity extends AppCompatActivity {
 
+
+    private static Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dates);
+
+        mContext = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -103,4 +109,8 @@ public class DatesActivity extends AppCompatActivity {
         }
     }
 
+
+    public static Context getAppContext(){
+        return mContext;
+    }
 }

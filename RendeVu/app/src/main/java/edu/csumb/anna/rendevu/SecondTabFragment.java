@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.NotificationCompat;
@@ -26,6 +27,7 @@ import edu.csumb.anna.rendevu.data.PlannedDates;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapterPlannedDates;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.google.android.gms.cast.CastRemoteDisplayLocalService.startService;
 
@@ -74,6 +76,11 @@ public class SecondTabFragment extends Fragment {
                 //get from arraylist based on position
                 Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
                 sendNotification();
+                RendeVuAPI api = new RendeVuAPI();
+                SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
+                String userID = userDetails.getString("userID", "noID");
+
+                api.postStartDate(userID, MainActivity.getAppContext());
                 MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
             }
         });
