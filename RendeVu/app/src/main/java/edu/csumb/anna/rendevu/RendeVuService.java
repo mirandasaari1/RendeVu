@@ -4,6 +4,8 @@ package edu.csumb.anna.rendevu;
  * Created by Sal on 4/13/2017.
  */
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +14,9 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
@@ -24,6 +28,8 @@ public class RendeVuService extends Service {
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
     private static String userID = "none";
+    private int ALARM_REQUEST_CODE = 99;
+
 
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
@@ -45,7 +51,7 @@ public class RendeVuService extends Service {
             RendeVuAPI a = new RendeVuAPI();
             //posts to the server
 
-            SharedPreferences userDetails = MainActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
+            SharedPreferences userDetails = RendeVuService.this.getSharedPreferences("loginInfo", MODE_PRIVATE);
             userID = userDetails.getString("userID", "no ID");
             a.postLocation(userID, latitude, longitude, RendeVuService.this);
         }
@@ -79,6 +85,7 @@ public class RendeVuService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
+        //set notification alarms
         super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
@@ -87,7 +94,9 @@ public class RendeVuService extends Service {
     public void onCreate() {
         Log.e(TAG, "onCreate");
         initializeLocationManager();
-
+        //set notification alarms
+        //registerAlarm(this);
+        startRepeatingTask();
         try {
             mLocationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
@@ -110,6 +119,7 @@ public class RendeVuService extends Service {
 
     @Override
     public void onDestroy() {
+        stopRepeatingTask();
         Log.e(TAG, "onDestroy");
         super.onDestroy();
         if (mLocationManager != null) {
@@ -138,5 +148,35 @@ public class RendeVuService extends Service {
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         }
+    }
+
+    private final static int INTERVAL = 1000 * 60 * 15; //5 minutes
+    Handler mHandler = new Handler();
+
+    Runnable mHandlerTask = new Runnable()
+    {
+        boolean firstTime = true;
+        @Override
+        public void run() {
+            if(!firstTime) {
+                RVNotifications notify = new RVNotifications();
+                notify.sendNotification(RendeVuService.this);
+                mHandler.postDelayed(mHandlerTask, INTERVAL);
+            }
+            else{
+                firstTime = false;
+                mHandler.postDelayed(mHandlerTask, INTERVAL);
+            }
+        }
+    };
+
+    void startRepeatingTask()
+    {
+        mHandlerTask.run();
+    }
+
+    void stopRepeatingTask()
+    {
+        mHandler.removeCallbacks(mHandlerTask);
     }
 }
