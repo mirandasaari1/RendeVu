@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         //sendNotification();
         //startRendeVuService();
-        db.insertDate("derp", "22", "33", "5", "first date");
+        //db.insertDate("derp", "22", "33", "5", "first date");
 
         //temporary code to add dates to db
         /////////////////////////////////////

@@ -9,7 +9,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,13 +19,6 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/nameEditText"
-                android:text="SELECT DATE" />
 
             <TextView
                 android:id="@+id/nameTextView"
@@ -51,37 +46,41 @@
                 android:text="SELECT DATE"
                 android:id="@+id/dateButton"
                 android:layout_below="@+id/nameEditText"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/dateTextView" />
 
-            <EditText
-                android:id="@+id/dateEditText"
+            <TextView
+                android:id="@+id/dateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:gravity="center"
+                android:textSize="20sp"
                 android:inputType="textPersonName"
                 android:layout_below="@+id/nameEditText"
                 android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/dateButton"
-                android:layout_alignBottom="@+id/dateButton" />
+                android:layout_above="@+id/timeButton" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/button4"
+                android:layout_below="@+id/dateButton"
                 android:text="SELECT TIME"
                 android:id="@+id/timeButton"
-                android:layout_toEndOf="@+id/dateEditText" />
+                android:layout_toEndOf="@+id/dateTextView" />
 
-            <EditText
-                android:id="@+id/timeEditText"
+            <TextView
+                android:id="@+id/timeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/timeButton"
-                android:layout_alignParentStart="true"
                 android:ems="10"
+                android:textSize="20sp"
+                android:gravity="center"
                 android:inputType="textPersonName"
-                android:layout_toStartOf="@+id/button4" />
+                android:layout_above="@+id/comfortTextView"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/dateTextView" />
 
             <TextView
                 android:layout_width="wrap_content"

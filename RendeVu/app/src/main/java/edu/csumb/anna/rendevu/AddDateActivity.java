@@ -45,8 +45,8 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
     private Button timeButton;
     private Button dateButton;
     private Button submitDateButton;
-    private EditText timeEditText;
-    private EditText dateEditText;
+    private TextView timeTextView;
+    private TextView dateTextView;
     private TextView selectedComfortTextView;
 
     private String DateName;
@@ -73,8 +73,8 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         timeButton = (Button) findViewById(R.id.timeButton);
         dateButton = (Button) findViewById(R.id.dateButton);
         submitDateButton = (Button) findViewById(R.id.submitDateButton);
-        timeEditText = (EditText) findViewById(R.id.timeEditText);
-        dateEditText = (EditText) findViewById(R.id.dateEditText);
+        timeTextView = (TextView) findViewById(R.id.timeTextView);
+        dateTextView = (TextView) findViewById(R.id.dateTextView);
         comfortNumberPicker = (NumberPicker) findViewById(R.id.comfortNumberPicker);
         selectedComfortTextView = (TextView) findViewById(R.id.selectedComfortTextView);
 
@@ -166,11 +166,10 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             month = c.get(Calendar.MONTH);
             day = c.get(Calendar.DAY_OF_MONTH);
 
-
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int newYear, int monthOfYear, int dayOfMonth) {
-                    dateEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + newYear);
+                    dateTextView.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + newYear);
                 }
             }, year, month, day);
             datePickerDialog.show();
@@ -187,7 +186,7 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int newMinute) {
-                    timeEditText.setText(hourOfDay + ":" + newMinute);
+                    timeTextView.setText(hourOfDay + ":" + newMinute);
                 }
             }, hour, minute, false);
             timePickerDialog.show();
@@ -196,12 +195,19 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
         //submits the date information
         if (v.getId() == R.id.submitDateButton) {
 
+
             //formats to string to be inserted into db
             DateName = nameEditText.getText().toString();
             DateInfo = additionalEditText.getText().toString();
             ComfortLevel = String.valueOf(comfortNumberPicker.getValue());
-            TimeoDate = timeEditText.getText().toString();
-            DateoDate = dateEditText.getText().toString();
+            TimeoDate = timeTextView.getText().toString();
+            DateoDate = dateTextView.getText().toString();
+
+            //checks that all required fields have been filled
+            if(DateName.equals("") || ComfortLevel.equals("") || TimeoDate.equals("") || DateoDate.equals("")){
+                toastIt("please fill all required fields");
+                return;
+            }
 
             text = "Date Added!";
             duration = Toast.LENGTH_LONG;
@@ -216,6 +222,11 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
             db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
 
         }
+    }
+
+    public void toastIt(String aMessage){
+        Toast.makeText(this, aMessage,
+                Toast.LENGTH_SHORT).show();
     }
 }
 
