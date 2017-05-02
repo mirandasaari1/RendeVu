@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
@@ -69,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
         //sendNotification();
         //startRendeVuService();
         //db.insertDate("derp", "22", "33", "5", "first date");
+
+        /*for(Chaperone chap: theChaperones){
+            Log.d(TAG, chap.getChaperoneName());
+            Log.d(TAG, chap.getChaperoneNumber());
+            String temp = "Name: "+chap.getChaperoneName()+"\n";
+            temp += "Number: "+chap.getChaperoneNumber();
+        }*/
 
         //temporary code to add dates to db
         /////////////////////////////////////

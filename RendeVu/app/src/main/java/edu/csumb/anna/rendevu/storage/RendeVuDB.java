@@ -25,7 +25,7 @@ import edu.csumb.anna.rendevu.data.PlannedDates;
  */
 
 public class RendeVuDB{
-    final String TAG = "UsersDB";
+    final String TAG = "RendeVuDB";
 
     //when making a change to the database update the db version
     // database constants
@@ -155,6 +155,8 @@ public class RendeVuDB{
 
     public static final String DROP_DATE_CHAPERONES_TABLE =
             "DROP TABLE IF EXISTS " + DATE_CHAPERONES_TABLE;
+
+
 
 
     private static class DBHelper extends SQLiteOpenHelper {
@@ -354,27 +356,6 @@ public class RendeVuDB{
         return dates;
     }
 
-    /**
-     * Gets a User from the cursor
-     * @param cursor
-     * @return User
-     */
-    private static String getStringFromCursor(Cursor cursor) {
-        if (cursor == null || cursor.getCount() == 0){
-            return null;
-        }
-        else {
-            try {
-                String result = "name: "+cursor.getString(DATE_NAME_COL)+"\n";
-                result += "Info: "+cursor.getString(DATE_ADDITIONAL_INFO_COL);
-                return result;
-            }
-            catch(Exception e) {
-                return null;
-            }
-        }
-    }
-
 
     //END USER METHODS
     //////////////////////////////////////////////////////////////////////////////////
@@ -430,10 +411,11 @@ public class RendeVuDB{
         this.openReadableDB();
         Cursor cur = db.rawQuery("SELECT * FROM " + CHAPERONES_TABLE, null);
         boolean exist = (cur.getCount() > 0);
+        Log.d(TAG, "count of cursor: "+cur.getCount());
         if(exist){
             while (cur.moveToNext()) {
                 chaps.add(getChaperoneFromCursor(cur));
-                Log.d(TAG, "Got a user");
+                //Log.d(TAG, "chap name: "+getChaperoneFromCursor(cur).getChaperoneName());
             }
         }
         if (cur != null)
@@ -465,19 +447,41 @@ public class RendeVuDB{
      * @param cursor
      * @return User
      */
-    private static Chaperone getChaperoneFromCursor(Cursor cursor) {
+    private Chaperone getChaperoneFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            Log.d(TAG, "cursor is null or count is 0");
+            return null;
+        }
+        else {
+            try {
+                String name = cursor.getString(CHAPERONE_NAME_COL);
+                String phone = cursor.getString(CHAPERONE_PHONE_NUMBER_COL);
+                Log.d(TAG, name);
+                Log.d(TAG, phone);
+
+                Chaperone chap = new Chaperone(name,phone);
+                return chap;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Gets a User from the cursor
+     * @param cursor
+     * @return User
+     */
+    private static String getStringFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
             return null;
         }
         else {
             try {
-                Chaperone chap = new Chaperone(
-                cursor.getString(CHAPERONE_NAME_COL),
-                cursor.getString(CHAPERONE_PHONE_NUMBER_COL)
-                );
-
-                Log.d("LEL", cursor.getString(CHAPERONE_NAME_COL));
-                return chap;
+                String result = "name: "+cursor.getString(DATE_NAME_COL)+"\n";
+                result += "Info: "+cursor.getString(DATE_ADDITIONAL_INFO_COL);
+                return result;
             }
             catch(Exception e) {
                 return null;
