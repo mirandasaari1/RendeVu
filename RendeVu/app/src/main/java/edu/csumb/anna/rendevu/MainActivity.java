@@ -155,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
         final Button endDateButton = (Button) findViewById(R.id.endDateButton);
         endDateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //posts to end date endpoint
+                RendeVuAPI api = new RendeVuAPI();
+                api.postEndDate(userID, MainActivity.this);
                 stopRendeVuService();
             }
         });
