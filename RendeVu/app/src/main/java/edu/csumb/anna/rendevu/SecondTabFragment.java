@@ -75,7 +75,10 @@ public class SecondTabFragment extends Fragment {
             {
                 //get from arraylist based on position
                 Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
-                sendNotification();
+
+//                RVNotifications notify = new RVNotifications();
+//                notify.sendNotification(MainActivity.getAppContext());
+
                 RendeVuAPI api = new RendeVuAPI();
                 SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
                 String userID = userDetails.getString("userID", "noID");
@@ -95,34 +98,5 @@ public class SecondTabFragment extends Fragment {
 //        recyclerView.setAdapter(itemArrayAdapter);
 
         return view;
-    }
-
-    public void sendNotification(){
-        //Notifications with a broadcast receiver
-        ///////////////////////////////////////
-        //Create an Intent for the BroadcastReceiver
-        Intent buttonIntentYes = new Intent(MainActivity.getAppContext(), ButtonReceiver.class);
-        buttonIntentYes.putExtra("notificationId",NOTIFICATION_ID);
-        buttonIntentYes.putExtra("isOK", true);
-
-        Intent buttonIntentNo = new Intent(MainActivity.getAppContext(), ButtonReceiver.class);
-        buttonIntentNo.putExtra("notificationId",NOTIFICATION_ID+1);
-        buttonIntentNo.putExtra("isOK", false);
-
-//Create the PendingIntent
-        PendingIntent btPendingIntentYes = PendingIntent.getBroadcast(MainActivity.getAppContext(), 0, buttonIntentYes,PendingIntent.FLAG_ONE_SHOT);
-        PendingIntent btPendingIntentNo = PendingIntent.getBroadcast(MainActivity.getAppContext(), 1, buttonIntentNo,PendingIntent.FLAG_ONE_SHOT);
-
-        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.getAppContext())
-                .setSmallIcon(R.drawable.ic_notification_rendevu)
-                .setContentTitle("Is the date going ok?")
-                .setContentText("Let us know!")
-                .addAction(android.R.drawable.checkbox_on_background, "Yes", btPendingIntentYes)
-                .addAction(android.R.drawable.ic_delete, "No", btPendingIntentNo)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setPriority(Notification.PRIORITY_MAX);
-
-        NotificationManager notificationManager = (NotificationManager) MainActivity.getAppContext().getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 }
