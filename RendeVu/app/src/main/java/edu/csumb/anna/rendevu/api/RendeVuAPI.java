@@ -228,7 +228,7 @@ public class RendeVuAPI {
         //add json properties
         JsonObject json = new JsonObject();
         json.addProperty("userID", id);
-        json.addProperty("userID", chapPayload);
+        json.addProperty("chaperones", chapPayload);
         Ion.with(aContext)
                 .load(herokuStartDate)
                 .setLogging("RendeVuApi", Log.DEBUG)
