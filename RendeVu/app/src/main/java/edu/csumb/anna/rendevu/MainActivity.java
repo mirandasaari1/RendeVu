@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         //sendNotification();
         //startRendeVuService();
-        db.insertDate("derp", "22", "33", "5", "first date");
+        //db.insertDate("derp", "22", "33", "5", "first date");
 
         /*for(Chaperone chap: theChaperones){
             Log.d(TAG, chap.getChaperoneName());

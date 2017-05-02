@@ -181,6 +181,27 @@ public class RendeVuAPI {
         Long tsLong = System.currentTimeMillis()/1000;
         final String timestamp = tsLong.toString();
 
+        HashMap<Integer, String> hm = new HashMap<Integer, String>();
+        hm.put(61616, "sal");
+        hm.put(79797, "derp");
+
+
+        String chapPayload = "{";
+
+        boolean firstCheck = false;
+        for (Map.Entry<Integer, String> entry : hm.entrySet()) {
+
+            if (firstCheck)
+                chapPayload +=",";
+
+            chapPayload += "\""+entry.getValue()+"\":["+
+                    "{\"name\":\""+entry.getValue()+"\"," +
+                    "\"phone_number\":\""+entry.getKey()+"\"}" +
+                    "]";
+            firstCheck = true;
+        }
+        chapPayload += "}";
+      
         JsonObject json = new JsonObject();
         json.addProperty("userID", uID);
         //json.addProperty("chaperones", chapPayload);

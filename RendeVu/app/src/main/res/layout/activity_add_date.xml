@@ -7,113 +7,102 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<LinearLayout
 
-    android:id="@+id/date_information"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    tools:context=".AddDateActivity"
-    android:orientation="vertical">
-
-
-    <TextView
-        android:id="@+id/nameTextView"
-        android:text="@string/new_date"
+    <LinearLayout
+        android:id="@+id/date_information"
         android:layout_width="match_parent"
-        android:textSize="20sp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true" />
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        tools:context=".AddDateActivity"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/nameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_dates_name"
-        android:inputType="text"
-         />
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/new_date"
+            android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/dateEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         />
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_dates_name"
+            android:inputType="text"
+             />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SELECT DATE"
-        android:id="@+id/dateButton"
-        />
+        <EditText
+            android:id="@+id/dateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             />
 
-    <EditText
-        android:id="@+id/timeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SELECT DATE"
+            android:id="@+id/dateButton"
+            />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SELECT TIME"
-        android:id="@+id/timeButton"
-        />
+        <EditText
+            android:id="@+id/timeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 
-    <TextView
-        android:id="@+id/comfortTextView"
-        android:text="Select Date Comfort Level"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SELECT TIME"
+            android:id="@+id/timeButton"
+            />
 
-    <NumberPicker
-        android:id="@+id/comfortNumberPicker"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        />
+        <TextView
+            android:id="@+id/comfortTextView"
+            android:text="Select Date Comfort Level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 
-    <TextView
-        android:id="@+id/selectedComfortTextView"
-        android:text=""
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/comfortNumberPicker" />
+        <NumberPicker
+            android:id="@+id/comfortNumberPicker"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            />
 
-    <TextView
-        android:id="@+id/additionalTextView"
-        android:text="Any other things to know about the date? (history, meeting, caution, ideas?)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selectedComfortTextView" />
+        <TextView
+            android:id="@+id/selectedComfortTextView"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/comfortNumberPicker" />
 
-    <EditText
-        android:id="@+id/additionalEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:layout_below="@+id/additionalTextView"/>
+        <TextView
+            android:id="@+id/additionalTextView"
+            android:text="Any other things to know about the date? (history, meeting, caution, ideas?)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selectedComfortTextView" />
 
-    <Button
-        android:id="@+id/selectChaperoneButton"
-        android:text="Add Date Chaperones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/additionalEditText" />
+        <EditText
+            android:id="@+id/additionalEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:layout_below="@+id/additionalTextView"/>
 
-    <Button
-        android:id="@+id/submitDateButton"
-        android:text="Add Date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selectChaperoneButton"
-        android:layout_centerInParent="true" />
-
-
-
-</LinearLayout>
+        <Button
+            android:id="@+id/submitDateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selectChaperoneButton"
+            android:layout_centerInParent="true"
+            android:text="Add Date" />
+    </LinearLayout>
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -123,4 +112,4 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_navigation_main" />
-    </RelativeLayout>
+</RelativeLayout>
