@@ -13,11 +13,28 @@ public class PlannedDate {
     private String dateInformation;
     private String startTime;
     private String endTime;
+    private int id;
+
+    public void setDateName(String dateName) {
+        this.dateName = dateName;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDateName() {
+
+        return dateName;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public PlannedDate(){
 
     }
-
     public PlannedDate(String name, String date, String time, String comfort, String location, String information, String start, String end) {
         dateName = name;
         dateDate = date;
@@ -28,6 +45,16 @@ public class PlannedDate {
         startTime = start;
         endTime = end;
     }
+
+    public PlannedDate(int id, String name, String info, String date, String dateTime){
+        this.id = id;
+        this.dateName = name;
+        this.dateInformation = info;
+        this.dateDate = date;
+        this.dateTime = dateTime;
+    }
+
+
     public String getName() {
         return dateName;
     }

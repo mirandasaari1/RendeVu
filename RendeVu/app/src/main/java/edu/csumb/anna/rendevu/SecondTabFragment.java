@@ -23,8 +23,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
+import edu.csumb.anna.rendevu.data.PlannedDate;
 import edu.csumb.anna.rendevu.data.PlannedDates;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapterPlannedDates;
+import edu.csumb.anna.rendevu.helpers.MyCustomAdapter;
+import edu.csumb.anna.rendevu.helpers.PlannedDatesCustomAdapter;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -57,36 +60,34 @@ public class SecondTabFragment extends Fragment {
         //list of data to display
         RendeVuDB db = new RendeVuDB(MainActivity.getAppContext());
 
-        ArrayList<String> allDates = db.getAllDates();
+        ArrayList<PlannedDate> allDates = db.getAllDates();
 
-        //get data from arraylist onto a regular array
-        for (String aDate: allDates){
-            mobileArray.add(aDate);
-        }
+//        //get data from arraylist onto a regular array
+//        for (String aDate: allDates){
+//            mobileArray.add(aDate);
+//        }
 
+        //ArrayAdapter adapter = new ArrayAdapter<String>(view.getContext(), R.layout.activity_listview, mobileArray);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(view.getContext(), R.layout.activity_listview, mobileArray);
-
+        PlannedDatesCustomAdapter adapter = new PlannedDatesCustomAdapter(allDates, DatesActivity.getAppContext());
         listView.setAdapter(adapter);
-
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
-            {
-                //get from arraylist based on position
-                Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
-
-//                RVNotifications notify = new RVNotifications();
-//                notify.sendNotification(MainActivity.getAppContext());
-
-                RendeVuAPI api = new RendeVuAPI();
-                SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
-                String userID = userDetails.getString("userID", "noID");
-
-                api.postStartDate(userID, MainActivity.getAppContext());
-                MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
+//            {
+//                //get from arraylist based on position
+//                Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
+//
+////                RVNotifications notify = new RVNotifications();
+////                notify.sendNotification(MainActivity.getAppContext());
+//
+//                RendeVuAPI api = new RendeVuAPI();
+//                SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
+//                String userID = userDetails.getString("userID", "noID");
+//
+//                api.postStartDate(userID, MainActivity.getAppContext());
+//                MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
+//            }
+//        });
         //END LISTVIEW CODE
         ////////////////////////////////////////////
 //        plannedDates = new PlannedDates();

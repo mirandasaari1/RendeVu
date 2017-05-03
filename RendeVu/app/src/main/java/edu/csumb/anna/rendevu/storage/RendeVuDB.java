@@ -337,8 +337,8 @@ public class RendeVuDB{
      * Gets all users from the database
      * @return ArrayList of users
      */
-    public ArrayList<String> getAllDates(){
-        ArrayList<String> dates = new ArrayList<>();
+    public ArrayList<PlannedDate> getAllDates(){
+        ArrayList<PlannedDate> dates = new ArrayList<>();
 
         this.openReadableDB();
         Cursor cur = db.rawQuery("SELECT * FROM " + DATES_TABLE, null);
@@ -485,15 +485,21 @@ public class RendeVuDB{
      * @param cursor
      * @return User
      */
-    private static String getStringFromCursor(Cursor cursor) {
+    private static PlannedDate getStringFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
             return null;
         }
         else {
             try {
-                String result = "name: "+cursor.getString(DATE_NAME_COL)+"\n";
-                result += "Info: "+cursor.getString(DATE_ADDITIONAL_INFO_COL);
-                return result;
+
+                int id =  cursor.getInt(DATE_ID_COL);
+                String name =  cursor.getString(DATE_NAME_COL);
+                String info =  cursor.getString(DATE_ADDITIONAL_INFO_COL);
+                String date =  cursor.getString(DATE_COL);
+                String time = cursor.getString(DATE_TIME_COL);
+
+                PlannedDate pd = new PlannedDate(id, name, info, date, time);
+                return pd;
             }
             catch(Exception e) {
                 return null;
