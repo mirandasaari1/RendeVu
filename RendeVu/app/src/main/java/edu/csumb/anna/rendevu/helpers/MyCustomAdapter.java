@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import edu.csumb.anna.rendevu.ChaperonesActivity;
 import edu.csumb.anna.rendevu.R;
 import edu.csumb.anna.rendevu.data.Chaperone;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 /**
  * Created by Sal on 5/2/2017.
@@ -70,8 +72,18 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 //do something
-                list.remove(position); //or some other task
                 Log.d(TAG, "delete clicked");
+                Log.d(TAG, ""+list.get(position).getChaperoneID());
+
+                //delete from db
+                RendeVuDB db = new RendeVuDB(context);
+                db.deleteChaperoneFromDB(list.get(position).getChaperoneID());
+
+                //show it
+                ArrayList<Chaperone> theChaperones = db.getAllChaperonesFromDB();
+
+                list = theChaperones;
+                //list.remove(position); //or some other task
                 notifyDataSetChanged();
             }
         });

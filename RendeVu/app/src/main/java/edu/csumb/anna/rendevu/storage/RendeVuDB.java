@@ -425,6 +425,16 @@ public class RendeVuDB{
         return chaps;
     }
 
+    public int deleteChaperoneFromDB(int id){
+            String where = CHAPERONE_ID + "= ?";
+            String[] whereArgs = { String.valueOf(id) };
+
+            this.openWriteableDB();
+            int rowCount = db.delete(CHAPERONES_TABLE, where, whereArgs);
+            this.closeDB();
+
+            return rowCount;
+    }
     //END CHAPERONES METHODS
     //////////////////////////////////////////////////////////////////////////////////
     // DATE CHAPERONES METHODS
