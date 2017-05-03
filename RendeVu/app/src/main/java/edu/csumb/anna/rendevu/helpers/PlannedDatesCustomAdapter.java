@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import edu.csumb.anna.rendevu.ChaperonesActivity;
 import edu.csumb.anna.rendevu.DatesActivity;
@@ -33,7 +35,7 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
     private ArrayList<PlannedDate> list = new ArrayList<PlannedDate>();
     private Context context;
 
-    final String TAG = "MyCustomAdapter";
+    final String TAG = "PlannedDatesCA";
 
     public PlannedDatesCustomAdapter(ArrayList<PlannedDate> list, Context context) {
         this.list = list;
@@ -102,15 +104,28 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
                 Log.d(TAG, "edit clicked");
                 Log.d(TAG, ""+list.get(position).getId());
                 Log.d(TAG, ""+list.get(position).getName());
-                notifyDataSetChanged();
 
-                //start date
-                RendeVuAPI api = new RendeVuAPI();
+                //update date info
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("kk:mm");
+                String format = simpleDateFormat.format(new Date());
+                Log.d(TAG, "Current Timestamp: " + format);
+
+
+                RendeVuDB db = new RendeVuDB(context);
+                db.updateDateStartTime(list.get(position).getId(), format);
+
+                //get current info
                 SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
                 String userID = userDetails.getString("userID", "noID");
 
-                api.postStartDate(userID, DatesActivity.getAppContext());
-                DatesActivity.getAppContext().startService(new Intent(DatesActivity.getAppContext(), RendeVuService.class));
+//                //start date
+//                RendeVuAPI api = new RendeVuAPI();
+//                api.postStartDate(userID, DatesActivity.getAppContext());
+//
+//                //start service
+//                DatesActivity.getAppContext().startService(new Intent(DatesActivity.getAppContext(), RendeVuService.class));
+
+                notifyDataSetChanged();
             }
         });
 
