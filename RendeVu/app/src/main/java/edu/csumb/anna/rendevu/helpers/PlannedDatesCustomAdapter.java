@@ -84,14 +84,14 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
                 Log.d(TAG, ""+list.get(position).getId());
 
                 //delete from db
-                //RendeVuDB db = new RendeVuDB(context);
-//                db.deleteChaperoneFromDB(list.get(position).getId());
+                RendeVuDB db = new RendeVuDB(context);
+                db.deletePlannedDateFromDB(list.get(position).getId());
 
                 //show it
-                //ArrayList<PlannedDate> theChaperones = db.getAllDates();
+                ArrayList<PlannedDate> theChaperones = db.getAllDates();
 
-                //list = theChaperones;
-                list.remove(position); //or some other task
+                list = theChaperones;
+                //list.remove(position); //or some other task
                 notifyDataSetChanged();
             }
         });

@@ -299,6 +299,17 @@ public class RendeVuDB{
 
     }
 
+    public int deletePlannedDateFromDB(int id){
+        String where = DATE_ID + "= ?";
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.delete(DATES_TABLE, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
     // Insert a date into the database
     public void insertDate(String cName, String cDate, String dTime, String cLevel, String aInfo) {
 
