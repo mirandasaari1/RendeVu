@@ -60,7 +60,7 @@ public class SecondTabFragment extends Fragment {
         //list of data to display
         RendeVuDB db = new RendeVuDB(MainActivity.getAppContext());
 
-        ArrayList<PlannedDate> allDates = db.getAllDates();
+        ArrayList<PlannedDate> allDates = db.getPlannedDates();
 
 //        //get data from arraylist onto a regular array
 //        for (String aDate: allDates){

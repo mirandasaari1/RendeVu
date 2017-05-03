@@ -34,6 +34,7 @@ import java.util.Random;
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
 import edu.csumb.anna.rendevu.api.TextMessageAPI;
 import edu.csumb.anna.rendevu.data.Chaperone;
+import edu.csumb.anna.rendevu.data.PlannedDate;
 import edu.csumb.anna.rendevu.data.TextMessageResponse;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
 import okhttp3.OkHttpClient;
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         mContext = this;
 
         RendeVuDB db = new RendeVuDB(this);
+        for(PlannedDate p: db.getPastDates()){
+            Log.d(TAG, p.getDateName());
+        }
+
+
 
         //sendNotification();
         //startRendeVuService();
