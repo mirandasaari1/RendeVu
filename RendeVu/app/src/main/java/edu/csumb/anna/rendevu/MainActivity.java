@@ -4,9 +4,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -24,6 +26,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -45,7 +58,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks
+        , GoogleApiClient.OnConnectionFailedListener
+        , LocationListener {
 
     final String TAG = "MainActivity";
     private static Context mContext;
@@ -54,6 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String BASE_URL = "https://rendevu.herokuapp.com/";
     private final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+
+    private GoogleMap mMap;
+
+    //////////////////////////////////////////////////////////
+    //Define a request code to send to Google Play services
+    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private double currentLatitude;
+    private double currentLongitude;
+    ////////////////////////////////////////////////////////
 
 //    private int notificationId = 1;
     public static int NOTIFICATION_ID = 1;
@@ -183,17 +209,48 @@ public class MainActivity extends AppCompatActivity {
 
         ///////////////////////////////////////////
 
+        //START MAP
+        ///////////////////////////////////
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        //////////////////////////////////
+
+        //NEW CODE FOR LOCATION
+        ////////////////////////////////////
+        buildGoogleApiClient();
+        // Create the LocationRequest object
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);//set to high accuracy for most accurate latLon
+        // .setInterval(10 * 1000);        // 10 seconds, in milliseconds
+        //.setFastestInterval(1 * 1000); // 1 second, in milliseconds
+        ////////////////////////////////////
+
+
+
+
         //checks if the user has enabled the right permission
         ////////////////////////////////////////////////////
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             checkPermissions();
-        } else {//permission is good
-            //startRendeVuService();
+        } else {//if permissions are enabled
+            //GoogleApiClient();
+            mGoogleApiClient.connect();
         }
 
         //toastIt("locationPermission: "+locationPermission);
 
         //to get rid of the notification when a button has been clicked
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        //Toast.makeText(this,"buildGoogleApiClient",Toast.LENGTH_SHORT).show();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
     public void checkPermissions() {
@@ -267,12 +324,8 @@ public class MainActivity extends AppCompatActivity {
                         // for ActivityCompat#requestPermissions for more details.
                         return;
                     }
-//                    mGoogleApiClient.connect();
-//                    mMap.setMyLocationEnabled(true);
-                    //mapLocation();
-
-                    //starts the CUSTOM SERVICE
-                    //startRendeVuService();
+                    mGoogleApiClient.connect();
+                    mMap.setMyLocationEnabled(true);
 
                 }else {
                     //on permission denied
@@ -326,32 +379,136 @@ public class MainActivity extends AppCompatActivity {
         stopService(new Intent(this, RendeVuService.class));
     }
 
-//    public void sendNotification(){
-//       //Notifications with a broadcast receiver
-//        ///////////////////////////////////////
-//        //Create an Intent for the BroadcastReceiver
-//        Intent buttonIntentYes = new Intent(MainActivity.this, ButtonReceiver.class);
-//        buttonIntentYes.putExtra("notificationId",NOTIFICATION_ID);
-//        buttonIntentYes.putExtra("isOK", true);
-//
-//        Intent buttonIntentNo = new Intent(MainActivity.this, ButtonReceiver.class);
-//        buttonIntentNo.putExtra("notificationId",NOTIFICATION_ID+1);
-//        buttonIntentNo.putExtra("isOK", false);
-//
-////Create the PendingIntent
-//        PendingIntent btPendingIntentYes = PendingIntent.getBroadcast(MainActivity.this, 0, buttonIntentYes,PendingIntent.FLAG_ONE_SHOT);
-//        PendingIntent btPendingIntentNo = PendingIntent.getBroadcast(MainActivity.this, 1, buttonIntentNo,PendingIntent.FLAG_ONE_SHOT);
-//
-//        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(MainActivity.this)
-//                .setSmallIcon(R.drawable.ic_notification_rendevu)
-//                .setContentTitle("Is the date going ok?")
-//                .setContentText("Let us know!")
-//                .addAction(android.R.drawable.checkbox_on_background, "Yes", btPendingIntentYes)
-//                .addAction(android.R.drawable.ic_delete, "No", btPendingIntentNo)
-//                .setDefaults(Notification.DEFAULT_ALL)
-//                .setPriority(Notification.PRIORITY_MAX);
-//
-//        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-//    }
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        /*ADD A MARKER
+        LatLng csumb = new LatLng(36.652527, -121.797277);
+
+        CameraUpdate center = CameraUpdateFactory.newLatLng(csumb);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(5);
+
+        //marker
+        //mMap.moveCamera(center);
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+        mMap.addMarker(new MarkerOptions().position(csumb).title(":)"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(csumb, 5));
+
+        */
+        //when the map is ready, it checks if the lcoation permissions are set
+        //then turns on location
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            //buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
+            centerMapOnMyLocation();
+            //Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+            //       mGoogleApiClient);
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        android.location.Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+
+        if (location == null) {
+            //LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            Log.d(TAG, "location is null");
+
+        } else {
+            //If everything went fine lets get latitude and longitude
+            //enables the fusedlocation
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            currentLatitude = location.getLatitude();
+            currentLongitude = location.getLongitude();
+            //ToastIt(""+currentLatitude);
+        }
+
+    }
+
+    private void centerMapOnMyLocation() {
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
+        LatLng myLocation = new LatLng(currentLatitude,
+                currentLongitude);
+
+        CameraUpdate center = CameraUpdateFactory.newLatLng(myLocation);
+        //CameraUpdate zoom = CameraUpdateFactory.zoomTo(5);
+
+        //marker
+        //mMap.moveCamera(center);
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 18));
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {}
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+            /*
+             * Google Play services can resolve some errors it detects.
+             * If the error has a resolution, try sending an Intent to
+             * start a Google Play services activity that can resolve
+             * error.
+             */
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                    /*
+                     * Thrown if Google Play services canceled the original
+                     * PendingIntent
+                     */
+                Log.d(TAG, "Location services canceled original pendingintern");
+            } catch (IntentSender.SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+                /*
+                 * If no resolution is available, display a dialog to the
+                 * user with the error.
+                 */
+            Log.d(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        currentLatitude = location.getLatitude();
+        currentLongitude = location.getLongitude();
+
+        centerMapOnMyLocation();
+
+        //ToastIt("Location Changed "+currentLatitude + " WORKS " + currentLongitude + "");
+        Log.d(TAG, "onLocationChanged "+currentLatitude + " , " + currentLongitude + "");
+    }
 }
