@@ -26,20 +26,21 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:text="Edit"
-        android:textColor="#0099CC" />
+        android:textColor="#0099CC"
+        android:layout_alignBottom="@+id/delete_btn" />
 
     <Button
         android:id="@+id/delete_btn"
         android:layout_width="80dp"
         android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/edit_btn"
-        android:layout_marginTop="3dp"
         android:background="#FFFFFF"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:text="Delete"
-        android:textColor="#0099CC" />
+        android:textColor="#0099CC"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/edit_btn"
+        android:layout_alignBottom="@+id/phoneNumber" />
 
     <TextView
         android:id="@+id/phoneNumber"
