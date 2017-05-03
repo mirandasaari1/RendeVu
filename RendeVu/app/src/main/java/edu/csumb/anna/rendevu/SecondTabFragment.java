@@ -58,7 +58,7 @@ public class SecondTabFragment extends Fragment {
         ///////////////////////////////////////////
         final ArrayList<String> mobileArray = new ArrayList<String>();
         //list of data to display
-        RendeVuDB db = new RendeVuDB(MainActivity.getAppContext());
+        RendeVuDB db = new RendeVuDB(DatesActivity.getAppContext());
 
         ArrayList<PlannedDate> allDates = db.getPlannedDates();
 

@@ -300,7 +300,7 @@ public class RendeVuDB{
 
 
 
-    public int deletePlannedDateFromDB(int id){
+    public int deleteDateFromDB(int id){
         String where = DATE_ID + "= ?";
         String[] whereArgs = { String.valueOf(id) };
 

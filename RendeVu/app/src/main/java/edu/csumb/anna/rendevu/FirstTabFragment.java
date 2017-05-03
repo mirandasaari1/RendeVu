@@ -8,9 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import edu.csumb.anna.rendevu.data.PlannedDate;
 import edu.csumb.anna.rendevu.data.PlannedDates;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapterPlannedDates;
+import edu.csumb.anna.rendevu.helpers.PastDatesCustomAdapter;
+import edu.csumb.anna.rendevu.helpers.PlannedDatesCustomAdapter;
+import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 /**
  * Created by Anna on 4/3/17.
@@ -23,15 +30,34 @@ public class FirstTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.planned_dates, container, false);
+        View view = inflater.inflate(R.layout.planned_dates_2_0, container, false);
+        ListView listView = (ListView) view.findViewById(R.id.mobile_list);
 
-        plannedDates = new PlannedDates();
+        //START LISTVIEW CODE
+        ///////////////////////////////////////////
+        final ArrayList<String> mobileArray = new ArrayList<String>();
+        //list of data to display
+        RendeVuDB db = new RendeVuDB(DatesActivity.getAppContext());
 
-        itemArrayAdapter = new ArrayAdapterPlannedDates(R.layout.past_dates_item_list, plannedDates.getAllPlannedDates());
-        recyclerView = (RecyclerView) view.findViewById(R.id.item_list_with_button);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(itemArrayAdapter);
+        ArrayList<PlannedDate> pastDates = db.getPastDates();
+
+//        //get data from arraylist onto a regular array
+//        for (String aDate: allDates){
+//            mobileArray.add(aDate);
+//        }
+
+        //ArrayAdapter adapter = new ArrayAdapter<String>(view.getContext(), R.layout.activity_listview, mobileArray);
+
+        PastDatesCustomAdapter adapter = new PastDatesCustomAdapter(pastDates, DatesActivity.getAppContext());
+        listView.setAdapter(adapter);
+//
+//        plannedDates = new PlannedDates();
+//
+//        itemArrayAdapter = new ArrayAdapterPlannedDates(R.layout.past_dates_item_list, plannedDates.getAllPlannedDates());
+//        recyclerView = (RecyclerView) view.findViewById(R.id.item_list_with_button);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setAdapter(itemArrayAdapter);
 
         return view;
 

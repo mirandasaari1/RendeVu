@@ -31,13 +31,13 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Sal on 5/2/2017.
  */
 
-public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapter {
+public class PastDatesCustomAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<PlannedDate> list = new ArrayList<PlannedDate>();
     private Context context;
 
     final String TAG = "PlannedDatesCA";
 
-    public PlannedDatesCustomAdapter(ArrayList<PlannedDate> list, Context context) {
+    public PastDatesCustomAdapter(ArrayList<PlannedDate> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -63,7 +63,7 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.listview_planned_dates_edit_delete, null);
+            view = inflater.inflate(R.layout.listview_past_dates, null);
         }
 
         //Handle TextView and display string from your list
@@ -90,48 +90,12 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
                 db.deleteDateFromDB(list.get(position).getId());
 
                 //show it
-                ArrayList<PlannedDate> theChaperones = db.getAllDates();
-
+                ArrayList<PlannedDate> theChaperones = db.getPastDates();
                 list = theChaperones;
                 //list.remove(position); //or some other task
                 notifyDataSetChanged();
             }
         });
-        startBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
-                Log.d(TAG, "edit clicked");
-                Log.d(TAG, ""+list.get(position).getId());
-                Log.d(TAG, ""+list.get(position).getName());
-
-                //update date info
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("kk:mm");
-                String format = simpleDateFormat.format(new Date());
-                Log.d(TAG, "Current Timestamp: " + format);
-
-
-                RendeVuDB db = new RendeVuDB(context);
-                db.updateDateStartTime(list.get(position).getId(), format);
-
-                //get current info
-                SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
-                String userID = userDetails.getString("userID", "noID");
-
-                //start date
-                RendeVuAPI api = new RendeVuAPI();
-                api.postStartDate(userID, DatesActivity.getAppContext());
-
-                //start service
-                DatesActivity.getAppContext().startService(new Intent(DatesActivity.getAppContext(), RendeVuService.class));
-
-                //go to main activity
-
-
-                notifyDataSetChanged();
-            }
-        });
-
         return view;
     }
 }

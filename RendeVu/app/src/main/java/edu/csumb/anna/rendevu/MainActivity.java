@@ -66,13 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
-        RendeVuDB db = new RendeVuDB(this);
-        for(PlannedDate p: db.getPastDates()){
-            Log.d(TAG, p.getDateName());
-        }
-
-
-
         //sendNotification();
         //startRendeVuService();
         //db.insertDate("derp", "22", "33", "5", "first date");
