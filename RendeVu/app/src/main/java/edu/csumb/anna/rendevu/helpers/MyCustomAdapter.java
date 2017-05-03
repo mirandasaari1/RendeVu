@@ -1,6 +1,7 @@
 package edu.csumb.anna.rendevu.helpers;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import edu.csumb.anna.rendevu.R;
+import edu.csumb.anna.rendevu.data.Chaperone;
 
 /**
  * Created by Sal on 5/2/2017.
  */
 
 public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<Chaperone> list = new ArrayList<Chaperone>();
     private Context context;
 
+    final String TAG = "MyCustomAdapter";
 
-
-    public MyCustomAdapter(ArrayList<String> list, Context context) {
+    public MyCustomAdapter(ArrayList<Chaperone> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -54,24 +56,33 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
 
         //Handle TextView and display string from your list
         TextView listItemText = (TextView)view.findViewById(R.id.label);
-        listItemText.setText(list.get(position));
+        listItemText.setText("name: "+list.get(position).getChaperoneName());
+
+        //Handle TextView and display string from your list
+        TextView listItemTextNum = (TextView)view.findViewById(R.id.phoneNumber);
+        listItemTextNum.setText("phone: "+list.get(position).getChaperoneNumber());
 
         //Handle buttons and add onClickListeners
         Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-        Button addBtn = (Button)view.findViewById(R.id.add_btn);
+        Button editBtn = (Button)view.findViewById(R.id.edit_btn);
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 //do something
                 list.remove(position); //or some other task
+                Log.d(TAG, "delete clicked");
                 notifyDataSetChanged();
             }
         });
-        addBtn.setOnClickListener(new View.OnClickListener(){
+        editBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 //do something
+                Log.d(TAG, "edit clicked");
+                Log.d(TAG, list.get(position).getChaperoneName());
+                Log.d(TAG, ""+list.get(position).getChaperoneID());
+
                 notifyDataSetChanged();
             }
         });

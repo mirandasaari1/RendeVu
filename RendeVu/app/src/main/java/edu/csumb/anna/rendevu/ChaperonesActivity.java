@@ -93,23 +93,23 @@ public class ChaperonesActivity extends AppCompatActivity{
         final ArrayList<String> mobileArray = new ArrayList<String>();
         //list of data to display
 
-        RendeVuDB db = new RendeVuDB(this);
-//        ArrayList<Chaperone> theChaperones = db.getAllChaperonesFromDB();
-//
-//        for(Chaperone chap: theChaperones){
-//            Log.d(TAG, chap.getChaperoneName());
-//            Log.d(TAG, chap.getChaperoneNumber());
-//            String temp = "Name: "+chap.getChaperoneName()+"\n";
-//            temp += "Number: "+chap.getChaperoneNumber();
-//            mobileArray.add(temp);
-//        }
 
-        //generate list
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("item1");
-        list.add("item2");
+        RendeVuDB db = new RendeVuDB(this);
+        ArrayList<Chaperone> theChaperones = db.getAllChaperonesFromDB();
+
+        for(Chaperone chap: theChaperones){
+            Log.d(TAG, chap.getChaperoneName());
+            Log.d(TAG, chap.getChaperoneNumber());
+            String temp = "Name: "+chap.getChaperoneName()+"\n";
+            temp += "Number: "+chap.getChaperoneNumber();
+            mobileArray.add(temp);
+        }
+//        //generate list
+//        ArrayList<String> list = new ArrayList<String>();
+//        list.add("item1");
+//        list.add("item2");
         //instantiate custom adapter
-        MyCustomAdapter adapter = new MyCustomAdapter(list, this);
+        MyCustomAdapter adapter = new MyCustomAdapter(theChaperones, this);
 
         //handle listview and assign adapter
         ListView lView = (ListView)findViewById(R.id.mobile_list_chaperones);

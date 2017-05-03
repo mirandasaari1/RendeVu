@@ -456,10 +456,12 @@ public class RendeVuDB{
             try {
                 String name = cursor.getString(CHAPERONE_NAME_COL);
                 String phone = cursor.getString(CHAPERONE_PHONE_NUMBER_COL);
+                int id = cursor.getInt(CHAPERONE_ID_COL);
                 Log.d(TAG, name);
                 Log.d(TAG, phone);
+                Log.d(TAG, ""+id);
 
-                Chaperone chap = new Chaperone(name,phone);
+                Chaperone chap = new Chaperone(name,phone, id);
                 return chap;
             }
             catch(Exception e) {
