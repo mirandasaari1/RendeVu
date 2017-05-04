@@ -118,6 +118,13 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
                 SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
                 String userID = userDetails.getString("userID", "noID");
 
+                //set date ID on preferences
+                //set date Name on preferences
+
+                SharedPreferences.Editor editor = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE).edit();
+                editor.putInt("dateID", list.get(position).getId());
+                editor.commit();
+
                 //start date
                 RendeVuAPI api = new RendeVuAPI();
                 api.postStartDate(userID, DatesActivity.getAppContext());

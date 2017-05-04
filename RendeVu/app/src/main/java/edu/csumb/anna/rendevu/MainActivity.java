@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public static int NOTIFICATION_ID = 1;
 
     String userID = "none";
+
+    int dateID = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         final SharedPreferences userDetails = this.getSharedPreferences("loginInfo", MODE_PRIVATE);
         userID = userDetails.getString("userID", "no ID");
+        dateID = userDetails.getInt("dateID", -1);
+
+        toastIt("current date: "+dateID);
         toastIt("current user: "+userID);
         /////////////////////////////////////
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
