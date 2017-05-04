@@ -64,7 +64,6 @@
         android:text="@string/add_chaperone" />
 
 
-
     </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView

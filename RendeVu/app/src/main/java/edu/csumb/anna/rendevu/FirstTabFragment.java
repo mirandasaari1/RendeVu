@@ -1,5 +1,6 @@
 package edu.csumb.anna.rendevu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -46,6 +48,14 @@ public class FirstTabFragment extends Fragment {
 //            mobileArray.add(aDate);
 //        }
 
+        final Button addDateButton = (Button) view.findViewById(R.id.addDatePlanned);
+        addDateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //posts to end date endpoint;
+                Intent intent = new Intent(DatesActivity.getAppContext(), AddDateActivity.class);
+                startActivity(intent);
+            }
+        });
         //ArrayAdapter adapter = new ArrayAdapter<String>(view.getContext(), R.layout.activity_listview, mobileArray);
 
         PastDatesCustomAdapter adapter = new PastDatesCustomAdapter(pastDates, DatesActivity.getAppContext());

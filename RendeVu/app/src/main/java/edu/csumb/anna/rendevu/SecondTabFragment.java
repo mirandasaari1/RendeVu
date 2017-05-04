@@ -18,7 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -69,35 +71,23 @@ public class SecondTabFragment extends Fragment {
 
         //ArrayAdapter adapter = new ArrayAdapter<String>(view.getContext(), R.layout.activity_listview, mobileArray);
 
+        final Button addDateButton = (Button) view.findViewById(R.id.addDatePlanned);
+        addDateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //posts to end date endpoint;
+                Intent intent = new Intent(DatesActivity.getAppContext(), AddDateActivity.class);
+                startActivity(intent);
+            }
+        });
+
         PlannedDatesCustomAdapter adapter = new PlannedDatesCustomAdapter(allDates, DatesActivity.getAppContext());
         listView.setAdapter(adapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
-//            {
-//                //get from arraylist based on position
-//                Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
-//
-////                RVNotifications notify = new RVNotifications();
-////                notify.sendNotification(MainActivity.getAppContext());
-//
-//                RendeVuAPI api = new RendeVuAPI();
-//                SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
-//                String userID = userDetails.getString("userID", "noID");
-//
-//                api.postStartDate(userID, MainActivity.getAppContext());
-//                MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
-//            }
-//        });
-        //END LISTVIEW CODE
-        ////////////////////////////////////////////
-//        plannedDates = new PlannedDates();
-//
-//        itemArrayAdapter = new ArrayAdapterPlannedDates(R.layout.list_item_with_buton, plannedDates.getAllPlannedDates());
-//        recyclerView = (RecyclerView) view.findViewById(R.id.item_list_with_button);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(itemArrayAdapter);
 
         return view;
+    }
+
+    public void toastIt(String aMessage){
+        Toast.makeText(DatesActivity.getAppContext(), aMessage,
+                Toast.LENGTH_SHORT).show();
     }
 }
