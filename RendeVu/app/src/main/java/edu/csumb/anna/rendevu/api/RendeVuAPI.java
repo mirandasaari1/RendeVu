@@ -45,8 +45,6 @@ public class RendeVuAPI {
     private final String herokuEmergency = "https://rendevu.herokuapp.com/api/v1.0/emergency";
     private final String herokuSend = "https://rendevu.herokuapp.com/api/v1.0/send";
 
-
-
     public RendeVuAPI(){}
 
 

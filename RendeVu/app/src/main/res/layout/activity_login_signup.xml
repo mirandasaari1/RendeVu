@@ -14,30 +14,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="visible"
-        tools:visibility="gone" />
+        android:visibility="visible"/>
 
-    <LinearLayout
-        android:id="@+id/sign_out_and_disconnect"
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/signInWelcome"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
-
-        <Button
-            android:id="@+id/sign_out_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/sign_out"/>
-
-        <Button
-            android:id="@+id/disconnect_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/disconnect"/>
-    </LinearLayout>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="83dp"
+        android:text="Welcome to RendeVu!"
+        android:textSize="20sp" />
 </RelativeLayout>
