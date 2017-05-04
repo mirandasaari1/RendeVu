@@ -2,182 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingEnd="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="70dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout2"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/enter_number">
-        </View>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_above="@+id/map"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_gravity="center_horizontal"
-            android:textSize="20sp"
-            android:text="@string/text_keep_your_dates_on_lock" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/enter_number">
-        </View>
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="20sp" />
 
 
-        <LinearLayout
-            android:id="@+id/next_date_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="20sp"
-                android:text="@string/text_your_next_date" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text="Orlando Bloom"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text="Yogurtland"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text="Tuesday, March 15"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text="7pm"
-                />
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/last_date_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp">
-            </View>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="20sp"
-                android:text="@string/text_your_last_date" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text="Tom Cruise"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text="Alcohol Bar"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text="Friday, March 10"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text="6pm"
-                />
-        </LinearLayout>
-
-
-        <!--<Button-->
-            <!--android:text="Button"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/test_button" />-->
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/response_textview"-->
-            <!--/>-->
-
-        <Button
-            android:id="@+id/endDateButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="End Date" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:gravity="center|bottom"
-            android:orientation="vertical" >
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_date_button"
-                android:text="@string/add_date"
-                />
-        </LinearLayout>
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="384dp"
+            android:layout_height="200sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
+            tools:context="edu.csumb.anna.rendevu.MainActivity" />
 
     </LinearLayout>
-
-
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -188,6 +46,53 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_navigation_main" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true">
+
+        <Button
+        android:id="@+id/endDateButton"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+            android:background="#FFFFFF"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="End Date"
+        android:textColor="#0099CC"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
+
+
+        <Button
+            android:id="@+id/add_date_button"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/endDateButton"
+            android:background="#FFFFFF"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="@string/add_date"
+            android:textColor="#0099CC"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/emergencyButton"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/add_date_button"
+            android:background="#FFFFFF"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="message chaperones"
+            android:textColor="#0099CC" />
+    </RelativeLayout>
 
 </RelativeLayout>
 

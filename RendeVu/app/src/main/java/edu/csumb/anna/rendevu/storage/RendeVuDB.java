@@ -296,7 +296,19 @@ public class RendeVuDB{
         this.openWriteableDB();
         long rowID = db.insert(DATES_TABLE, null, cv);
         this.closeDB();
+    }
 
+
+
+    public int deleteDateFromDB(int id){
+        String where = DATE_ID + "= ?";
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.delete(DATES_TABLE, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
     }
 
     // Insert a date into the database
@@ -313,6 +325,20 @@ public class RendeVuDB{
         long rowID = db.insert(DATES_TABLE, null, cv);
         this.closeDB();
 
+    }
+
+    public int updateDateStartTime(int id, String time){
+        ContentValues cv = new ContentValues();
+        cv.put(START_TIME, time);
+
+        String where = DATE_ID + "= ?";
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.update(DATES_TABLE, cv, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
     }
 
     //Insert start date timestamp
@@ -337,8 +363,8 @@ public class RendeVuDB{
      * Gets all users from the database
      * @return ArrayList of users
      */
-    public ArrayList<String> getAllDates(){
-        ArrayList<String> dates = new ArrayList<>();
+    public ArrayList<PlannedDate> getAllDates(){
+        ArrayList<PlannedDate> dates = new ArrayList<>();
 
         this.openReadableDB();
         Cursor cur = db.rawQuery("SELECT * FROM " + DATES_TABLE, null);
@@ -346,7 +372,7 @@ public class RendeVuDB{
 
         if(exist){
             while (cur.moveToNext()) {
-                dates.add(getStringFromCursor(cur));
+                dates.add(getPlannedDateFromCursor(cur));
                 Log.d(TAG, "Got a user");
             }
         }
@@ -356,6 +382,58 @@ public class RendeVuDB{
         return dates;
     }
 
+    /**
+     * Gets dates that do not have a start time
+     * @return
+     */
+    public ArrayList<PlannedDate> getPlannedDates(){
+        ArrayList<PlannedDate> dates = new ArrayList<>();
+        this.openReadableDB();
+        Cursor cur = db.rawQuery("SELECT * FROM " + DATES_TABLE + " WHERE "+START_TIME+" IS NULL", null);
+        Log.d(TAG,"cursor count: "+cur.getCount());
+
+        boolean exist = (cur.getCount() > 0);
+
+        if(exist){
+            while (cur.moveToNext()) {
+                dates.add(getPlannedDateFromCursor(cur));
+                Log.d(TAG, "Got a user");
+            }
+        }
+        if (cur != null)
+            cur.close();
+        this.closeDB();
+        return dates;
+    }
+
+    /**
+     * Gets past dates, which are the ones that alreadu have a start time
+     * @return
+     */
+    public ArrayList<PlannedDate> getPastDates(){
+        ArrayList<PlannedDate> dates = new ArrayList<>();
+
+        String where = START_TIME + "!= ?";
+        String[] whereArgs = { "" };
+
+        this.openReadableDB();
+        Cursor cur = db.query(DATES_TABLE,
+                null, where, whereArgs, null, null, null);
+        Log.d(TAG,"cursor count: "+cur.getCount());
+
+        boolean exist = (cur.getCount() > 0);
+        if(exist){
+            while (cur.moveToNext()) {
+                Log.d(TAG, "inside while loop");
+                dates.add(getPastDateFromCursor(cur));
+                Log.d(TAG, "Got a user");
+            }
+        }
+        if (cur != null)
+            cur.close();
+        this.closeDB();
+        return dates;
+    }
 
     //END USER METHODS
     //////////////////////////////////////////////////////////////////////////////////
@@ -425,6 +503,16 @@ public class RendeVuDB{
         return chaps;
     }
 
+    public int deleteChaperoneFromDB(int id){
+            String where = CHAPERONE_ID + "= ?";
+            String[] whereArgs = { String.valueOf(id) };
+
+            this.openWriteableDB();
+            int rowCount = db.delete(CHAPERONES_TABLE, where, whereArgs);
+            this.closeDB();
+
+            return rowCount;
+    }
     //END CHAPERONES METHODS
     //////////////////////////////////////////////////////////////////////////////////
     // DATE CHAPERONES METHODS
@@ -456,10 +544,12 @@ public class RendeVuDB{
             try {
                 String name = cursor.getString(CHAPERONE_NAME_COL);
                 String phone = cursor.getString(CHAPERONE_PHONE_NUMBER_COL);
+                int id = cursor.getInt(CHAPERONE_ID_COL);
                 Log.d(TAG, name);
                 Log.d(TAG, phone);
+                Log.d(TAG, ""+id);
 
-                Chaperone chap = new Chaperone(name,phone);
+                Chaperone chap = new Chaperone(name,phone, id);
                 return chap;
             }
             catch(Exception e) {
@@ -473,15 +563,42 @@ public class RendeVuDB{
      * @param cursor
      * @return User
      */
-    private static String getStringFromCursor(Cursor cursor) {
+    private PlannedDate getPlannedDateFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
             return null;
         }
         else {
             try {
-                String result = "name: "+cursor.getString(DATE_NAME_COL)+"\n";
-                result += "Info: "+cursor.getString(DATE_ADDITIONAL_INFO_COL);
-                return result;
+
+                int id =  cursor.getInt(DATE_ID_COL);
+                String name =  cursor.getString(DATE_NAME_COL);
+                String info =  cursor.getString(DATE_ADDITIONAL_INFO_COL);
+                String date =  cursor.getString(DATE_COL);
+                String time = cursor.getString(DATE_TIME_COL);
+
+                PlannedDate pd = new PlannedDate(id, name, info, date, time);
+                return pd;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+    }
+
+    private PlannedDate getPastDateFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                Log.d(TAG, "past date from cursor");
+                int id =  cursor.getInt(DATE_ID_COL);
+                String name =  cursor.getString(DATE_NAME_COL);
+                String info =  cursor.getString(DATE_ADDITIONAL_INFO_COL);
+                String date =  cursor.getString(DATE_COL);
+                String time = cursor.getString(DATE_TIME_COL);
+                PlannedDate pd = new PlannedDate(id, name, info, date, time);
+                return pd;
             }
             catch(Exception e) {
                 return null;

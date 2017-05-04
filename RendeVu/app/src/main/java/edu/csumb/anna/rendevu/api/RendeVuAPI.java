@@ -43,6 +43,8 @@ public class RendeVuAPI {
     private final String herokuEndDate = "https://rendevu.herokuapp.com/api/v1.0/endDate";
     private final String herokuLogin = "https://rendevu.herokuapp.com/api/v1.0/login";
     private final String herokuEmergency = "https://rendevu.herokuapp.com/api/v1.0/emergency";
+    private final String herokuSend = "https://rendevu.herokuapp.com/api/v1.0/send";
+
 
 
     public RendeVuAPI(){}
@@ -348,6 +350,88 @@ public class RendeVuAPI {
         json.addProperty("userID", id);
         Ion.with(aContext)
                 .load(herokuEmergency)
+                .setLogging("RendeVuApi", Log.DEBUG)
+                .setJsonObjectBody(json)
+                .asString()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<String>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<String> response) {
+                        // response contains both the headers and the string result
+                        // print the response code, ie, 200
+                        if(response.getHeaders().code() != 200)
+                            Log.d(TAG,"something went wrong");
+
+                        else{
+                            Log.d(TAG,"Code: "+response.getHeaders().code());
+                            // print the String that was downloaded
+                            Log.d(TAG,"Response: "+response.getResult());
+
+                            //creates an object out of the result and print outs the values
+                            try {
+                                JSONObject json = new JSONObject(response.getResult().toString());
+                                Iterator<String> iter = json.keys();
+                                while (iter.hasNext()) {
+                                    String key = iter.next();
+                                    try {
+                                        Object value = json.get(key);
+                                        Log.d(TAG,"from key: "+key);
+                                        Log.d(TAG,"from value: "+value.toString());
+                                    } catch (JSONException ex) {
+                                        // Something went wrong!
+                                    }
+                                }
+                                //Log.d(TAG,"from json: "+json.getString("description"));
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
+     * Will send the current location aling with the chaperone info
+     * @param id
+     * @param latitude
+     * @param longitude
+     * @param aContext
+     */
+    public void postSend(final String id, final String latitude, final String longitude, Context aContext){
+        //done with koush ion
+
+
+
+        Long tsLong = System.currentTimeMillis()/1000;
+        final String timestamp = tsLong.toString();
+
+        RendeVuDB db = new RendeVuDB(MainActivity.getAppContext());
+        ArrayList<Chaperone> theChaperones = db.getAllChaperonesFromDB();
+
+        String chapPayload = "{";
+        boolean firstCheck = false;
+
+        int count = 0;
+        for (Chaperone a : theChaperones) {
+            if (firstCheck)
+                chapPayload +=",";
+
+            chapPayload += "\""+(count++)+"\":["+
+                    "{\"name\":\""+a.getChaperoneName()+"\"," +
+                    "\"phone_number\":\""+a.getChaperoneNumber()+"\"}" +
+                    "]";
+            firstCheck = true;
+        }
+        chapPayload += "}";
+        //add json properties
+        JsonObject json = new JsonObject();
+        json.addProperty("userID", id);
+        json.addProperty("chaperones", chapPayload);
+        json.addProperty("latitude", latitude);
+        json.addProperty("longitude", longitude);
+        json.addProperty("timestamp", timestamp);
+        Ion.with(aContext)
+                .load(herokuSend)
                 .setLogging("RendeVuApi", Log.DEBUG)
                 .setJsonObjectBody(json)
                 .asString()

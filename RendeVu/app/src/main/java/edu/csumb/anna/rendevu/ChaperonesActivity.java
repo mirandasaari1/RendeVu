@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import edu.csumb.anna.rendevu.data.Chaperone;
 import edu.csumb.anna.rendevu.data.Chaperones;
 import edu.csumb.anna.rendevu.helpers.ArrayAdapter;
+import edu.csumb.anna.rendevu.helpers.MyCustomAdapter;
 import edu.csumb.anna.rendevu.storage.RendeVuDB;
 
 /**
@@ -92,30 +93,40 @@ public class ChaperonesActivity extends AppCompatActivity{
         final ArrayList<String> mobileArray = new ArrayList<String>();
         //list of data to display
 
+
         RendeVuDB db = new RendeVuDB(this);
         ArrayList<Chaperone> theChaperones = db.getAllChaperonesFromDB();
 
-        for(Chaperone chap: theChaperones){
-            Log.d(TAG, chap.getChaperoneName());
-            Log.d(TAG, chap.getChaperoneNumber());
-            String temp = "Name: "+chap.getChaperoneName()+"\n";
-            temp += "Number: "+chap.getChaperoneNumber();
-            mobileArray.add(temp);
-        }
+//        for(Chaperone chap: theChaperones){
+//            Log.d(TAG, chap.getChaperoneName());
+//            Log.d(TAG, chap.getChaperoneNumber());
+//            String temp = "Name: "+chap.getChaperoneName()+"\n";
+//            temp += "Number: "+chap.getChaperoneNumber();
+//            mobileArray.add(temp);
+//        }
+//        //generate list
+//        ArrayList<String> list = new ArrayList<String>();
+//        list.add("item1");
+//        list.add("item2");
+        //instantiate custom adapter
+        MyCustomAdapter adapter = new MyCustomAdapter(theChaperones, this);
 
-        android.widget.ArrayAdapter adapter = new android.widget.ArrayAdapter<String>(this, R.layout.activity_listview, mobileArray);
-
-        listView.setAdapter(adapter);
-
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
-            {
-                //get from arraylist based on position
-                Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
-                //MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
-            }
-        });
+        //handle listview and assign adapter
+        ListView lView = (ListView)findViewById(R.id.mobile_list_chaperones);
+        lView.setAdapter(adapter);
+//        android.widget.ArrayAdapter adapter = new android.widget.ArrayAdapter<String>(this, R.layout.listview_edit_delete, mobileArray);
+//
+//        listView.setAdapter(adapter);
+//
+//        listView.setAdapter(adapter);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
+//            {
+//                //get from arraylist based on position
+//                Log.d(TAG, "position clicked: "+mobileArray.get(itemPosition));
+//                //MainActivity.getAppContext().startService(new Intent(MainActivity.getAppContext(), RendeVuService.class));
+//            }
+//        });
     }
 
     public void removeButtonClicked() {

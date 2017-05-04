@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:text="Planned Dates"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:textSize="30sp" />
-
     <ListView
         android:id="@+id/mobile_list"
         android:layout_width="wrap_content"
