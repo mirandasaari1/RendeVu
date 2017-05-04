@@ -41,7 +41,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import edu.csumb.anna.rendevu.api.RendeVuAPI;
@@ -108,12 +110,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //temporary code to add dates to db
         /////////////////////////////////////
 
-        final SharedPreferences userDetails = this.getSharedPreferences("loginInfo", MODE_PRIVATE);
-        userID = userDetails.getString("userID", "no ID");
-        dateID = userDetails.getInt("dateID", -1);
-
-        toastIt("current date: "+dateID);
-        toastIt("current user: "+userID);
         /////////////////////////////////////
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -188,7 +184,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //posts to end date endpoint
                 RendeVuAPI api = new RendeVuAPI();
                 api.postEndDate(userID, MainActivity.this);
-                stopRendeVuService();
+
+                //if use is on a date disable service, else,  let the user know
+                if(dateID == -1){
+                    toastIt("you are not on a date right now");
+                }
+                else{
+                    //adds end time for date
+                    RendeVuDB db = new RendeVuDB(MainActivity.this);
+
+
+                    //update date info
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("kk:mm");
+                    String format = simpleDateFormat.format(new Date());
+                    Log.d(TAG, "Current Timestamp: " + format);
+
+                    db.updateEndTime(dateID, format);
+
+                    //updates the date ID
+                    SharedPreferences.Editor editor = getSharedPreferences("loginInfo", MODE_PRIVATE).edit();
+                    editor.putInt("dateID", -1);
+                    editor.commit();
+                    stopRendeVuService();
+                }
             }
         });
 
@@ -358,13 +376,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
 
-        //sendNotification();
-//        RendeVuDB db = new RendeVuDB(MainActivity.this);
-//        db.insertChaperone("anna", "6197");
-        //startRendeVuService();
-//        //posts to the server
-//        RendeVuAPI a = new RendeVuAPI();
-//        a.postLocation("12", "300", "400", MainActivity.this);
+
+        final SharedPreferences userDetails = this.getSharedPreferences("loginInfo", MODE_PRIVATE);
+        userID = userDetails.getString("userID", "no ID");
+        dateID = userDetails.getInt("dateID", -1);
+        toastIt("current date: "+dateID);
+        toastIt("current user: "+userID);
     }
 
     @Override
@@ -525,4 +542,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //ToastIt("Location Changed "+currentLatitude + " WORKS " + currentLongitude + "");
         Log.d(TAG, "onLocationChanged "+currentLatitude + " , " + currentLongitude + "");
     }
+
+
 }

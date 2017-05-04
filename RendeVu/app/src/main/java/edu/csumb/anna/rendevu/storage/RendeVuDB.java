@@ -341,6 +341,20 @@ public class RendeVuDB{
         return rowCount;
     }
 
+    public int updateEndTime(int id, String time){
+        ContentValues cv = new ContentValues();
+        cv.put(END_TIME, time);
+
+        String where = DATE_ID + "= ?";
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.update(DATES_TABLE, cv, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
     //Insert start date timestamp
     public void insertStartTime(){
         ContentValues cv = new ContentValues();
