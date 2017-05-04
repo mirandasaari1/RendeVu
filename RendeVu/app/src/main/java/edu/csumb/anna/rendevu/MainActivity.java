@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
@@ -87,8 +88,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public static int NOTIFICATION_ID = 1;
 
     String userID = "none";
+    String userName = "User";
 
     int dateID = -1;
+
+    private TextView welcomeTV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         /////////////////////////////////////
 
         /////////////////////////////////////
+
+        welcomeTV = (TextView) findViewById(R.id.signInWelcome);
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -380,6 +387,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         final SharedPreferences userDetails = this.getSharedPreferences("loginInfo", MODE_PRIVATE);
         userID = userDetails.getString("userID", "no ID");
         dateID = userDetails.getInt("dateID", -1);
+        userName = userDetails.getString("fullName", "User");
+
+        welcomeTV.setText("Hello "+userName);
+
         toastIt("current date: "+dateID);
         toastIt("current user: "+userID);
     }
