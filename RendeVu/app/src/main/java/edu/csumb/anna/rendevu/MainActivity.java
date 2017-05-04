@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //temporary code to add dates to db
         /////////////////////////////////////
 
-        SharedPreferences userDetails = this.getSharedPreferences("loginInfo", MODE_PRIVATE);
+        final SharedPreferences userDetails = this.getSharedPreferences("loginInfo", MODE_PRIVATE);
         userID = userDetails.getString("userID", "no ID");
         toastIt("current user: "+userID);
         /////////////////////////////////////
@@ -184,6 +184,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 RendeVuAPI api = new RendeVuAPI();
                 api.postEndDate(userID, MainActivity.this);
                 stopRendeVuService();
+            }
+        });
+
+        final Button emergencyButton = (Button) findViewById(R.id.emergencyButton);
+        emergencyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //posts to end date endpoint
+                RendeVuAPI api = new RendeVuAPI();
+                api.postSend(userID, String.valueOf(currentLatitude), String.valueOf(currentLongitude), MainActivity.this);
             }
         });
 

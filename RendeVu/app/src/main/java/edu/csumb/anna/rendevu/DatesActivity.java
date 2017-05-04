@@ -85,10 +85,10 @@ public class DatesActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new FirstTabFragment();
+                    return new SecondTabFragment();
                 case 1:
                 default:
-                    return new SecondTabFragment();
+                    return new FirstTabFragment();
             }
         }
 
@@ -101,10 +101,10 @@ public class DatesActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Past Dates";
+                    return "Planned Dates";
                 case 1:
                 default:
-                    return "Planned Dates";
+                    return "Past Dates";
             }
         }
     }

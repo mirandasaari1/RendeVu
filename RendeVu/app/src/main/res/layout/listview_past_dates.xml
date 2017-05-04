@@ -27,7 +27,8 @@
         android:text="Delete"
         android:textColor="#0099CC"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/info" />
 
     <TextView
         android:id="@+id/info"
