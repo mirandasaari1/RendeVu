@@ -23,7 +23,9 @@
 
 ## Technologies
 ![alt text](http://www.programwitherik.com/content/images/2015/06/heroku3.png "heroku")
-![alt text](http://flask.pocoo.org/static/logo/flask.png "twitter api")
+![alt text](https://www.python.org/static/community_logos/python-logo-master-v3-TM.png "python")
+![alt text](http://flask.pocoo.org/static/logo/flask.png "flask")
+![alt text](https://raw.githubusercontent.com/docker-library/docs/01c12653951b2fe592c1f93a13b4e289ada0e3a1/postgres/logo.png "postgreSQL")
 ![alt text](https://tctechcrunch2011.files.wordpress.com/2017/02/android-studio-logo.png "android studio")
 
 ## We Hope You Enjoy RenduVu!
