@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -154,32 +155,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         final Button button = (Button) findViewById(R.id.add_date_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                //api call
-                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
-                Retrofit.Builder builder = new Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create());
-
-                Retrofit retrofit1 = builder.client(httpClient.build()).build();
-
-                TextMessageAPI client = retrofit1.create(TextMessageAPI.class);
-
-                Call<TextMessageResponse> call = client.makeRequest("1", "8314285108", "hi");
-
-                call.enqueue(new Callback<TextMessageResponse>() {
-                    @Override
-                    public void onResponse(Call<TextMessageResponse> call, Response<TextMessageResponse> response) {
-                        Toast.makeText(MainActivity.this, "API CALL SUCCESS", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<TextMessageResponse> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, "API CALL FAILURE", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
                 Intent intent = new Intent(MainActivity.this, AddDateActivity.class);
                 startActivity(intent);
             }
@@ -235,16 +210,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         /////////////////////////////////////////////
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.INTERNET);
-        Log.d(TAG, "INTERNET permission " + permissionCheck);
+        //Log.d(TAG, "INTERNET permission " + permissionCheck);
 
         int permissionCheck3 = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION);
-        Log.d(TAG, "FINE location permission " + permissionCheck3);
+//        Log.d(TAG, "FINE location permission " + permissionCheck3);
 
         // Assume thisActivity is the current activity
         int permissionCheck2 = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION);
-        Log.d(TAG, "COARSE location permission " + permissionCheck2);
+//        Log.d(TAG, "COARSE location permission " + permissionCheck2);
 
         ///////////////////////////////////////////
 
@@ -296,12 +271,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Assume thisActivity is the current activity
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION);
-        Log.d(TAG, "FINE location permission " + permissionCheck);
+//        Log.d(TAG, "FINE location permission " + permissionCheck);
 
         // Assume thisActivity is the current activity
         int permissionCheck2 = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION);
-        Log.d(TAG, "COARSE location permission " + permissionCheck2);
+//        Log.d(TAG, "COARSE location permission " + permissionCheck2);
 
         //NEW
         //ASKS FOR THE PERMISSIONS
@@ -348,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
-                    Log.d(TAG, "permission granted");
+//                    Log.d(TAG, "permission granted");
                     //locationPermission = PackageManager.PERMISSION_GRANTED;
 
                     //goes to the search portion
@@ -478,7 +453,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (location == null) {
             //LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-            Log.d(TAG, "location is null");
+//            Log.d(TAG, "location is null");
 
         } else {
             //If everything went fine lets get latitude and longitude
@@ -529,7 +504,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                      * Thrown if Google Play services canceled the original
                      * PendingIntent
                      */
-                Log.d(TAG, "Location services canceled original pendingintern");
+//                Log.d(TAG, "Location services canceled original pendingintern");
             } catch (IntentSender.SendIntentException e) {
                 // Log the error
                 e.printStackTrace();
@@ -539,7 +514,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                  * If no resolution is available, display a dialog to the
                  * user with the error.
                  */
-            Log.d(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
+//            Log.d(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
         }
     }
 
@@ -551,7 +526,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         centerMapOnMyLocation();
 
         //ToastIt("Location Changed "+currentLatitude + " WORKS " + currentLongitude + "");
-        Log.d(TAG, "onLocationChanged "+currentLatitude + " , " + currentLongitude + "");
+//        Log.d(TAG, "onLocationChanged "+currentLatitude + " , " + currentLongitude + "");
     }
 
 

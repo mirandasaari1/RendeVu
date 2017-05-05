@@ -34,7 +34,9 @@
             android:id="@+id/signOutProfileButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign Out" />
+            android:background="@color/buttonBackground"
+            android:text="Sign Out"
+            android:textColor="@color/colorPrimary" />
     </LinearLayout>
 
 

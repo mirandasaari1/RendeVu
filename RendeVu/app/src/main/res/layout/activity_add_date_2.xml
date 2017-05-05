@@ -46,6 +46,8 @@
                 android:text="SELECT DATE"
                 android:id="@+id/dateButton"
                 android:layout_below="@+id/nameEditText"
+                android:textColor="@color/colorPrimary"
+                android:background="#FFFFFF"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/dateTextView" />
 
@@ -67,6 +69,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/dateButton"
                 android:text="SELECT TIME"
+                android:textColor="@color/colorPrimary"
+                android:background="#FFFFFF"
                 android:id="@+id/timeButton"
                 android:layout_toEndOf="@+id/dateTextView" />
 
@@ -137,6 +141,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/additionalEditText"
                 android:layout_alignParentEnd="true"
+                android:textColor="@color/colorPrimary"
+                android:background="#FFFFFF"
                 android:layout_alignParentStart="true"
                 android:text="Add Date"/>
         </RelativeLayout>

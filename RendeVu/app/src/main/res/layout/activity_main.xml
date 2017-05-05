@@ -57,11 +57,11 @@
         android:id="@+id/endDateButton"
         android:layout_width="80dp"
         android:layout_height="40dp"
-            android:background="#FFFFFF"
+            android:background="@color/buttonBackground"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:text="End Date"
-        android:textColor="#0099CC"
+        android:textColor="@color/colorPrimary"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true" />
@@ -73,11 +73,11 @@
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/endDateButton"
-            android:background="#FFFFFF"
+            android:background="@color/buttonBackground"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:text="@string/add_date"
-            android:textColor="#0099CC"
+            android:textColor="@color/colorPrimary"
             android:layout_alignParentEnd="true" />
 
         <Button
@@ -87,11 +87,11 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/add_date_button"
-            android:background="#FFFFFF"
+            android:background="@color/buttonBackground"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:text="message chaperones"
-            android:textColor="#0099CC" />
+            android:textColor="@color/colorPrimary"/>
     </RelativeLayout>
 
 </RelativeLayout>

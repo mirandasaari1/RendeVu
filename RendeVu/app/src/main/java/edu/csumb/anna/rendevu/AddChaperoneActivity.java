@@ -1,8 +1,14 @@
 package edu.csumb.anna.rendevu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +36,39 @@ public class AddChaperoneActivity extends AppCompatActivity{
 
         final RendeVuDB db = new RendeVuDB(this);
 
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView)  bottomNavigationView.getChildAt(0);
+        for(int i = 0; i < menuView.getChildCount(); i++) {
+            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
+            itemView.setShiftingMode(false);
+            itemView.setChecked(false);
+        }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.action_chaperones:
+                                intent = new Intent(AddChaperoneActivity.this, ChaperonesActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.action_dates:
+                                intent = new Intent(AddChaperoneActivity.this, DatesActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.action_profile:
+                                intent = new Intent(AddChaperoneActivity.this, ProfileActivity.class);
+                                startActivity(intent);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
         addChaperoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,8 +77,13 @@ public class AddChaperoneActivity extends AppCompatActivity{
 
                 db.insertChaperone(name, number);
                 Toast.makeText(AddChaperoneActivity.this, "Chaperone Added", Toast.LENGTH_SHORT).show();
+                toastIt("New Chaperone Added!");
                 finish();
             }
         });
+    }
+    public void toastIt(String aMessage){
+        Toast.makeText(this, aMessage,
+                Toast.LENGTH_SHORT).show();
     }
 }

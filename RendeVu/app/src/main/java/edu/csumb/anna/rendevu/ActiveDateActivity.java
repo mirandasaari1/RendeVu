@@ -38,7 +38,6 @@ public class ActiveDateActivity extends AppCompatActivity implements View.OnClic
             RendeVuDB db = new RendeVuDB(this);
             db.insertEndTime();
 
-
         }
 
 }

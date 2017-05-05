@@ -66,7 +66,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
 
         //Handle buttons and add onClickListeners
         Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-        Button editBtn = (Button)view.findViewById(R.id.edit_btn);
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -84,17 +83,6 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
 
                 list = theChaperones;
                 //list.remove(position); //or some other task
-                notifyDataSetChanged();
-            }
-        });
-        editBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
-                Log.d(TAG, "edit clicked");
-                Log.d(TAG, list.get(position).getChaperoneName());
-                Log.d(TAG, ""+list.get(position).getChaperoneID());
-
                 notifyDataSetChanged();
             }
         });
