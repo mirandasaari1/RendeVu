@@ -211,15 +211,16 @@ public class AddDateActivity extends AppCompatActivity implements View.OnClickLi
 
             text = "Date Added!";
             duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-            Intent intent = new Intent(AddDateActivity.this, MainActivity.class);
-            startActivity(intent);
-
+//            Toast toast = Toast.makeText(this, text, duration);
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+//            toast.show();
             // adds date information to local db
             RendeVuDB db = new RendeVuDB(this);
             db.insertDate(DateName, DateoDate, TimeoDate, ComfortLevel, DateInfo);
+
+            toastIt("new date added");
+            Intent intent = new Intent(AddDateActivity.this, MainActivity.class);
+            startActivity(intent);
 
         }
     }

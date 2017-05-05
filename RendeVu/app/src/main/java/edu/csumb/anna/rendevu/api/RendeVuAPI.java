@@ -71,7 +71,6 @@ public class RendeVuAPI {
         json.addProperty("timestamp", timestamp);
         Ion.with(anActivity)
                 .load(herokuLocation)
-                .setLogging("RendeVuApi", Log.DEBUG)
                 .setJsonObjectBody(json)
                 .asString()
                 .withResponse()
@@ -80,13 +79,13 @@ public class RendeVuAPI {
                     public void onCompleted(Exception e, Response<String> response) {
                         // response contains both the headers and the string result
                         // print the response code, ie, 200
-                        if(response.getHeaders().code() != 200)
-                            Log.d(TAG,"something went wrong");
-
+                        if(response.getHeaders().code() != 200) {
+//                            Log.d(TAG,"something went wrong");
+                        }
                         else{
-                            Log.d(TAG,"Code: "+response.getHeaders().code());
+//                            Log.d(TAG,"Code: "+response.getHeaders().code());
                             // print the String that was downloaded
-                            Log.d(TAG,"Response: "+response.getResult());
+//                            Log.d(TAG,"Response: "+response.getResult());
 
                             //creates an object out of the result and print outs the values
                             try {
@@ -96,8 +95,8 @@ public class RendeVuAPI {
                                     String key = iter.next();
                                     try {
                                         Object value = json.get(key);
-                                        Log.d(TAG,"from key: "+key);
-                                        Log.d(TAG,"from value: "+value.toString());
+//                                        Log.d(TAG,"from key: "+key);
+//                                        Log.d(TAG,"from value: "+value.toString());
                                     } catch (JSONException ex) {
                                         // Something went wrong!
                                     }
@@ -157,7 +156,7 @@ public class RendeVuAPI {
                     .asString()
                     .get();
 
-            Log.d(TAG, test);
+            //Log.d(TAG, test);
             responseString = test;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -252,7 +251,7 @@ public class RendeVuAPI {
         json.addProperty("chaperones", chapPayload);
         Ion.with(aContext)
                 .load(herokuStartDate)
-                .setLogging("RendeVuApi", Log.DEBUG)
+                //.setLogging("RendeVuApi", Log.DEBUG)
                 .setJsonObjectBody(json)
                 .asString()
                 .withResponse()
@@ -261,13 +260,13 @@ public class RendeVuAPI {
                     public void onCompleted(Exception e, Response<String> response) {
                         // response contains both the headers and the string result
                         // print the response code, ie, 200
-                        if(response.getHeaders().code() != 200)
-                            Log.d(TAG,"something went wrong");
-
+                        if(response.getHeaders().code() != 200) {
+//                            Log.d(TAG,"something went wrong");
+                        }
                         else{
-                            Log.d(TAG,"Code: "+response.getHeaders().code());
+//                            Log.d(TAG,"Code: "+response.getHeaders().code());
                             // print the String that was downloaded
-                            Log.d(TAG,"Response: "+response.getResult());
+//                            Log.d(TAG,"Response: "+response.getResult());
 
                             //creates an object out of the result and print outs the values
                             try {
@@ -277,8 +276,8 @@ public class RendeVuAPI {
                                     String key = iter.next();
                                     try {
                                         Object value = json.get(key);
-                                        Log.d(TAG,"from key: "+key);
-                                        Log.d(TAG,"from value: "+value.toString());
+//                                        Log.d(TAG,"from key: "+key);
+//                                        Log.d(TAG,"from value: "+value.toString());
                                     } catch (JSONException ex) {
                                         // Something went wrong!
                                     }
@@ -300,7 +299,7 @@ public class RendeVuAPI {
         json.addProperty("userID", id);
         Ion.with(aContext)
                 .load(herokuEndDate)
-                .setLogging("RendeVuApi", Log.DEBUG)
+//                .setLogging("RendeVuApi", Log.DEBUG)
                 .setJsonObjectBody(json)
                 .asString()
                 .withResponse()
@@ -309,13 +308,14 @@ public class RendeVuAPI {
                     public void onCompleted(Exception e, Response<String> response) {
                         // response contains both the headers and the string result
                         // print the response code, ie, 200
-                        if(response.getHeaders().code() != 200)
-                            Log.d(TAG,"something went wrong");
+                        if(response.getHeaders().code() != 200) {
+//                            Log.d(TAG, "something went wrong");
+                        }
 
                         else{
-                            Log.d(TAG,"Code: "+response.getHeaders().code());
+//                            Log.d(TAG,"Code: "+response.getHeaders().code());
                             // print the String that was downloaded
-                            Log.d(TAG,"Response: "+response.getResult());
+//                            Log.d(TAG,"Response: "+response.getResult());
 
                             //creates an object out of the result and print outs the values
                             try {
@@ -325,8 +325,8 @@ public class RendeVuAPI {
                                     String key = iter.next();
                                     try {
                                         Object value = json.get(key);
-                                        Log.d(TAG,"from key: "+key);
-                                        Log.d(TAG,"from value: "+value.toString());
+//                                        Log.d(TAG,"from key: "+key);
+//                                        Log.d(TAG,"from value: "+value.toString());
                                     } catch (JSONException ex) {
                                         // Something went wrong!
                                     }
@@ -348,7 +348,7 @@ public class RendeVuAPI {
         json.addProperty("userID", id);
         Ion.with(aContext)
                 .load(herokuEmergency)
-                .setLogging("RendeVuApi", Log.DEBUG)
+//                .setLogging("RendeVuApi", Log.DEBUG)
                 .setJsonObjectBody(json)
                 .asString()
                 .withResponse()
@@ -357,13 +357,14 @@ public class RendeVuAPI {
                     public void onCompleted(Exception e, Response<String> response) {
                         // response contains both the headers and the string result
                         // print the response code, ie, 200
-                        if(response.getHeaders().code() != 200)
-                            Log.d(TAG,"something went wrong");
+                        if(response.getHeaders().code() != 200) {
+//                            Log.d(TAG, "something went wrong");
+                        }
 
                         else{
-                            Log.d(TAG,"Code: "+response.getHeaders().code());
+//                            Log.d(TAG,"Code: "+response.getHeaders().code());
                             // print the String that was downloaded
-                            Log.d(TAG,"Response: "+response.getResult());
+//                            Log.d(TAG,"Response: "+response.getResult());
 
                             //creates an object out of the result and print outs the values
                             try {
@@ -373,8 +374,8 @@ public class RendeVuAPI {
                                     String key = iter.next();
                                     try {
                                         Object value = json.get(key);
-                                        Log.d(TAG,"from key: "+key);
-                                        Log.d(TAG,"from value: "+value.toString());
+//                                        Log.d(TAG,"from key: "+key);
+//                                        Log.d(TAG,"from value: "+value.toString());
                                     } catch (JSONException ex) {
                                         // Something went wrong!
                                     }
@@ -430,7 +431,7 @@ public class RendeVuAPI {
         json.addProperty("timestamp", timestamp);
         Ion.with(aContext)
                 .load(herokuSend)
-                .setLogging("RendeVuApi", Log.DEBUG)
+//                .setLogging("RendeVuApi", Log.DEBUG)
                 .setJsonObjectBody(json)
                 .asString()
                 .withResponse()
@@ -439,13 +440,13 @@ public class RendeVuAPI {
                     public void onCompleted(Exception e, Response<String> response) {
                         // response contains both the headers and the string result
                         // print the response code, ie, 200
-                        if(response.getHeaders().code() != 200)
-                            Log.d(TAG,"something went wrong");
-
+                        if(response.getHeaders().code() != 200) {
+//                            Log.d(TAG, "something went wrong");
+                        }
                         else{
-                            Log.d(TAG,"Code: "+response.getHeaders().code());
+//                            Log.d(TAG,"Code: "+response.getHeaders().code());
                             // print the String that was downloaded
-                            Log.d(TAG,"Response: "+response.getResult());
+//                            Log.d(TAG,"Response: "+response.getResult());
 
                             //creates an object out of the result and print outs the values
                             try {
@@ -455,8 +456,8 @@ public class RendeVuAPI {
                                     String key = iter.next();
                                     try {
                                         Object value = json.get(key);
-                                        Log.d(TAG,"from key: "+key);
-                                        Log.d(TAG,"from value: "+value.toString());
+//                                        Log.d(TAG,"from key: "+key);
+//                                        Log.d(TAG,"from value: "+value.toString());
                                     } catch (JSONException ex) {
                                         // Something went wrong!
                                     }

@@ -92,7 +92,7 @@ public class GetNumberActivity extends AppCompatActivity implements View.OnClick
                 //adds phone number of user to local db
                 RendeVuDB db = new RendeVuDB(this);
                 db.insertPhoneNumber(input);
-                Log.d(TAG, "FROM THE OBJECT...SIGNUP" + resp);
+//                Log.d(TAG, "FROM THE OBJECT...SIGNUP" + resp);
 
 //                SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
 //                SharedPreferences.Editor edit = userDetails.edit();

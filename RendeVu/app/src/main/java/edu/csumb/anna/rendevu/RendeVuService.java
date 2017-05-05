@@ -35,13 +35,13 @@ public class RendeVuService extends Service {
         Location mLastLocation;
 
         public LocationListener(String provider) {
-            Log.e(TAG, "LocationListener " + provider);
+//            Log.e(TAG, "LocationListener " + provider);
             mLastLocation = new Location(provider);
         }
 
         @Override
         public void onLocationChanged(Location location) {
-            Log.e(TAG, "onLocationChanged: " + location);
+//            Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
 
 
@@ -58,17 +58,17 @@ public class RendeVuService extends Service {
 
         @Override
         public void onProviderDisabled(String provider) {
-            Log.e(TAG, "onProviderDisabled: " + provider);
+//            Log.e(TAG, "onProviderDisabled: " + provider);
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-            Log.e(TAG, "onProviderEnabled: " + provider);
+//            Log.e(TAG, "onProviderEnabled: " + provider);
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.e(TAG, "onStatusChanged: " + provider);
+//            Log.e(TAG, "onStatusChanged: " + provider);
         }
     }
 
@@ -84,7 +84,7 @@ public class RendeVuService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e(TAG, "onStartCommand");
+//        Log.e(TAG, "onStartCommand");
         //set notification alarms
         super.onStartCommand(intent, flags, startId);
         return START_STICKY;
@@ -92,7 +92,7 @@ public class RendeVuService extends Service {
 
     @Override
     public void onCreate() {
-        Log.e(TAG, "onCreate");
+//        Log.e(TAG, "onCreate");
         initializeLocationManager();
         //set notification alarms
         //registerAlarm(this);
@@ -102,25 +102,25 @@ public class RendeVuService extends Service {
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                     mLocationListeners[1]);
         } catch (java.lang.SecurityException ex) {
-            Log.i(TAG, "fail to request location update, ignore", ex);
+//            Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
-            Log.d(TAG, "network provider does not exist, " + ex.getMessage());
+//            Log.d(TAG, "network provider does not exist, " + ex.getMessage());
         }
         try {
             mLocationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                     mLocationListeners[0]);
         } catch (java.lang.SecurityException ex) {
-            Log.i(TAG, "fail to request location update, ignore", ex);
+//            Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
-            Log.d(TAG, "gps provider does not exist " + ex.getMessage());
+//            Log.d(TAG, "gps provider does not exist " + ex.getMessage());
         }
     }
 
     @Override
     public void onDestroy() {
         stopRepeatingTask();
-        Log.e(TAG, "onDestroy");
+//        Log.e(TAG, "onDestroy");
         super.onDestroy();
         if (mLocationManager != null) {
             for (int i = 0; i < mLocationListeners.length; i++) {
@@ -137,14 +137,14 @@ public class RendeVuService extends Service {
                     }
                     mLocationManager.removeUpdates(mLocationListeners[i]);
                 } catch (Exception ex) {
-                    Log.i(TAG, "fail to remove location listners, ignore", ex);
+//                    Log.i(TAG, "fail to remove location listners, ignore", ex);
                 }
             }
         }
     }
 
     private void initializeLocationManager() {
-        Log.e(TAG, "initializeLocationManager");
+//        Log.e(TAG, "initializeLocationManager");
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         }

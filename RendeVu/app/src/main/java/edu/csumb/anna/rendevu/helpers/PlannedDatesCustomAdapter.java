@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,6 +90,8 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
                 RendeVuDB db = new RendeVuDB(context);
                 db.deleteDateFromDB(list.get(position).getId());
 
+                toastIt("date deleted");
+
                 //show it
                 ArrayList<PlannedDate> theChaperones = db.getAllDates();
 
@@ -101,18 +104,20 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
             @Override
             public void onClick(View v) {
                 //do something
-                Log.d(TAG, "edit clicked");
-                Log.d(TAG, ""+list.get(position).getId());
-                Log.d(TAG, ""+list.get(position).getName());
+//                Log.d(TAG, "edit clicked");
+//                Log.d(TAG, ""+list.get(position).getId());
+//                Log.d(TAG, ""+list.get(position).getName());
 
                 //update date info
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("kk:mm");
                 String format = simpleDateFormat.format(new Date());
-                Log.d(TAG, "Current Timestamp: " + format);
+//                Log.d(TAG, "Current Timestamp: " + format);
 
 
                 RendeVuDB db = new RendeVuDB(context);
                 db.updateDateStartTime(list.get(position).getId(), format);
+
+                toastIt("date with "+list.get(position).getName()+" started");
 
                 //get current info
                 SharedPreferences userDetails = DatesActivity.getAppContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
@@ -133,12 +138,15 @@ public class PlannedDatesCustomAdapter extends BaseAdapter implements ListAdapte
                 DatesActivity.getAppContext().startService(new Intent(DatesActivity.getAppContext(), RendeVuService.class));
 
                 //go to main activity
-
-
                 notifyDataSetChanged();
             }
         });
 
         return view;
+    }
+
+    public void toastIt(String aMessage){
+        Toast.makeText(DatesActivity.getAppContext(), aMessage,
+                Toast.LENGTH_SHORT).show();
     }
 }

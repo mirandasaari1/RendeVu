@@ -328,7 +328,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         centerMapOnMyLocation();
 
         //ToastIt("Location Changed "+currentLatitude + " WORKS " + currentLongitude + "");
-        Log.d(TAG, "onLocationChanged "+currentLatitude + " , " + currentLongitude + "");
+        //Log.d(TAG, "onLocationChanged "+currentLatitude + " , " + currentLongitude + "");
     }
 
 }

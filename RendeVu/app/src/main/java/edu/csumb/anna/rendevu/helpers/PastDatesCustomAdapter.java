@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,13 +83,13 @@ public class PastDatesCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 //do something
-                Log.d(TAG, "delete clicked");
-                Log.d(TAG, ""+list.get(position).getId());
+                //Log.d(TAG, "delete clicked");
+                //Log.d(TAG, ""+list.get(position).getId());
 
                 //delete from db
                 RendeVuDB db = new RendeVuDB(context);
                 db.deleteDateFromDB(list.get(position).getId());
-
+                toastIt("date deleted");
                 //show it
                 ArrayList<PlannedDate> theChaperones = db.getPastDates();
                 list = theChaperones;
@@ -97,5 +98,9 @@ public class PastDatesCustomAdapter extends BaseAdapter implements ListAdapter {
             }
         });
         return view;
+    }
+    public void toastIt(String aMessage){
+        Toast.makeText(DatesActivity.getAppContext(), aMessage,
+                Toast.LENGTH_SHORT).show();
     }
 }

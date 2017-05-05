@@ -93,10 +93,10 @@ public class LoginSignupActivity extends AppCompatActivity implements
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    //Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
 
 
@@ -142,7 +142,7 @@ public class LoginSignupActivity extends AppCompatActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
-        Log.d(TAG, "onConnectionFailed:" + connectionResult);
+//        Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 
@@ -171,7 +171,7 @@ public class LoginSignupActivity extends AppCompatActivity implements
 
     // [START auth_with_google]
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+//        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         // [START_EXCLUDE silent]
         showProgressDialog();
         // [END_EXCLUDE]
@@ -181,13 +181,13 @@ public class LoginSignupActivity extends AppCompatActivity implements
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+//                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithCredential", task.getException());
+//                            Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(LoginSignupActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -260,13 +260,13 @@ public class LoginSignupActivity extends AppCompatActivity implements
                 if (resp == null)
                     return;
 
-                Log.d(TAG, "FROM THE OBJECT...LOGIN" + resp);
+//                Log.d(TAG, "FROM THE OBJECT...LOGIN" + resp);
 
                 JSONObject json = new JSONObject(resp);
                 if (json != null) {
                     JSONObject data = json.getJSONObject("data");
                     String userIDHeader = data.getString("userID");
-                    Log.d(TAG, "FROM LOGIN JSON" + userIDHeader);
+//                    Log.d(TAG, "FROM LOGIN JSON" + userIDHeader);
 
                     //user has ot signed up
                     if(userIDHeader.equals("false"))

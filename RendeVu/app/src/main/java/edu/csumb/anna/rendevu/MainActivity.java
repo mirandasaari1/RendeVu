@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     //adds end time for date
                     RendeVuDB db = new RendeVuDB(MainActivity.this);
 
-
                     //update date info
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("kk:mm");
                     String format = simpleDateFormat.format(new Date());
@@ -188,6 +187,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     editor.putInt("dateID", -1);
                     editor.commit();
                     stopRendeVuService();
+
+                    toastIt("date ended");
                 }
             }
         });
@@ -198,6 +199,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //posts to end date endpoint
                 RendeVuAPI api = new RendeVuAPI();
                 api.postSend(userID, String.valueOf(currentLatitude), String.valueOf(currentLongitude), MainActivity.this);
+
+                toastIt("texts sent");
             }
         });
 
@@ -366,8 +369,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         welcomeTV.setText("Hello "+userName);
 
-        toastIt("current date: "+dateID);
-        toastIt("current user: "+userID);
+        //toastIt("current date: "+dateID);
+        //toastIt("current user: "+userID);
     }
 
     @Override
