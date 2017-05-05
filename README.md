@@ -17,8 +17,8 @@
 ![alt text](http://res.cloudinary.com/djdt5maoi/image/upload/c_scale,w_250/v1493950497/rende1_vifm49.png)
 
 #### Future Work...
-+Improving UI
-+Enabling users to modify date and chaperone information
-+Gather user data
++ Improving UI
++ Enabling users to modify date and chaperone information
++ Gather user data
 
 ## We Hope You Enjoy RenduVu!
