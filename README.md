@@ -10,6 +10,11 @@
 ##### View your upcoming planned dates as well as your past dates
 
 ![alt text](http://res.cloudinary.com/djdt5maoi/image/upload/c_scale,w_250/v1493950497/rende3_b0kmbf.png)
+![alt text](http://res.cloudinary.com/djdt5maoi/image/upload/c_scale,w_250/v1493950497/rende6_bjfhmp.png)
+![alt text](http://res.cloudinary.com/djdt5maoi/image/upload/c_scale,w_250/v1493950497/rende5_eq1geq.png)
+![alt text](http://res.cloudinary.com/djdt5maoi/image/upload/c_scale,w_250/v1493950497/rende4_mhb8wp.png)
+![alt text](http://res.cloudinary.com/djdt5maoi/image/upload/c_scale,w_250/v1493950498/rende2_hc1tbx.png)
+![alt text](http://res.cloudinary.com/djdt5maoi/image/upload/c_scale,w_250/v1493950497/rende1_vifm49.png)
 
 #### Future Work...
 Improving UI
