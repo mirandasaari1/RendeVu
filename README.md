@@ -9,6 +9,8 @@
 ##### Begin your date which will enable location tracking 
 ##### View your upcoming planned dates as well as your past dates
 
+![alt text](http://res.cloudinary.com/djdt5maoi/image/upload/c_scale,w_250/v1493950497/rende3_b0kmbf.png)
+
 #### Future Work...
 Improving UI
 Enabling users to modify date and chaperone information
