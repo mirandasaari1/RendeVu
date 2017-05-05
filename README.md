@@ -1,7 +1,7 @@
 # RendeVu
 ### Developed by: Anna Pomelov, Josh Smith, Miranda Saari and Sal Hernandez
 
-####RendeVu enables safe modern dating by allowing you to:
+#### RendeVu enables safe modern dating by allowing you to:
 ##### Log in with Google
 ##### Create a profile
 ##### Add a date and relevant date information like name, comfort level, time, location
