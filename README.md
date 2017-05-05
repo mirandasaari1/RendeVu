@@ -14,5 +14,4 @@ Improving UI
 Enabling users to modify date and chaperone information
 Gather user data
 
-
 ## We Hope You Enjoy RenduVu!
