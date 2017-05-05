@@ -21,4 +21,9 @@
 + Enabling users to modify date and chaperone information
 + Gather user data
 
+## Technologies
+![alt text](http://www.programwitherik.com/content/images/2015/06/heroku3.png "heroku")
+![alt text](http://flask.pocoo.org/static/logo/flask.png "twitter api")
+![alt text](https://tctechcrunch2011.files.wordpress.com/2017/02/android-studio-logo.png "android studio")
+
 ## We Hope You Enjoy RenduVu!
